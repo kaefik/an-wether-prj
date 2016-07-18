@@ -1,7 +1,9 @@
 package ru.kaefik.isaifutdinov.an_wether_prj;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -48,8 +50,16 @@ public class MainActivity extends AppCompatActivity {
         listdata.add(new CityModel(4,"tr","Istanbul",0,0,0,0,0,0,0));
         listdata.add(new CityModel(5,"gb","City of London",0,0,0,0,0,0,0));
 
-
         return  listdata;
     }
 
+// ?????
+    public void clickItemCity(View view,int position,long id){
+        myText.setText( "itemClick: position = " + position + ", id = " + id );
+    }
+
+    public void getInfoWeatherCity(View view){
+        Intent intent = new Intent(this,cityInfoActivity.class);
+        startActivity(intent);
+    }
 }

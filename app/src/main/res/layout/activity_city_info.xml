@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ru.kaefik.isaifutdinov.an_wether_prj.cityInfoActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="город"
+        android:id="@+id/nameCity"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="temp"
+        android:id="@+id/tempCity"
+        android:layout_below="@+id/nameCity"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="clouds"
+        android:id="@+id/cloudsCity"
+        android:padding="15dp"
+        android:layout_below="@+id/tempCity"
+        android:layout_alignLeft="@+id/tempCity"
+        android:layout_alignStart="@+id/tempCity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="huminidity"
+        android:id="@+id/huminidityCity"
+        android:padding="15dp"
+        android:layout_below="@+id/cloudsCity"
+        android:layout_alignLeft="@+id/windspeedCity"
+        android:layout_alignStart="@+id/windspeedCity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="pressure"
+        android:id="@+id/pressureCity"
+        android:layout_below="@+id/huminidityCity"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="windspeed"
+        android:id="@+id/windspeedCity"
+        android:layout_below="@+id/pressureCity"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="winddirection"
+        android:id="@+id/winddirectionCity"
+        android:padding="15dp"
+        android:layout_below="@+id/windspeedCity"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Выбрать город"
+        android:id="@+id/btnBack"
+        android:layout_below="@+id/winddirectionCity"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp"
+        android:onClick="goBackMainActivity" />
+
+</RelativeLayout>
