@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
         listdata.add(new CityModel(1,"ru","Kazan",0,0,0,0,0,0,0));
         listdata.add(new CityModel(2,"ru","Moscow",0,0,0,0,0,0,0));
+        listdata.add(new CityModel(3,"ru","Samara",0,0,0,0,0,0,0));
+        listdata.add(new CityModel(4,"tr","Istanbul",0,0,0,0,0,0,0));
+        listdata.add(new CityModel(5,"gb","City of London",0,0,0,0,0,0,0));
 
 
         return  listdata;
