@@ -60,6 +60,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void getInfoWeatherCity(View view){
         Intent intent = new Intent(this,cityInfoActivity.class);
+// передаем данные выбранного города в activity для отображения полученной информации
+        intent.putExtra("name","Казань");
+        intent.putExtra("temp","температура");
+        intent.putExtra("clouds","облачность");
+        intent.putExtra("huminidity","влажность");
+        intent.putExtra("pressure","давление");
+        intent.putExtra("windspeed","ск-ть ветра");
+        intent.putExtra("winddirection","напр-е ветра");
+
         startActivity(intent);
     }
 }
