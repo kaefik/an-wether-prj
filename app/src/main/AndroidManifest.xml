@@ -24,6 +24,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".cityInfoActivity"></activity>
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     </application>
 
 </manifest>
