@@ -50,29 +50,25 @@ public class CityModel {
     public void getHttpWeather()  {
         //api.openweathermap.org/data/2.5/weather?q=London&APPID=9a4be4eeb7de3b88211989559a0849f7
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
 
                 String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+getName()+"&APPID="+getMY_APPID());
                 if (res == null){
-                     System.out.println("Ошибка загрузки");
+                    System.out.println("Ошибка загрузки");
                 } else {
-                    System.out.println(res);
-                    System.out.println(getObjFromJson(res,"main","temp"));
-                    System.out.println(getObjFromJson(res,"main","pressure"));
-                    System.out.println(getObjFromJson(res,"main","humidity"));
-                    System.out.println(getObjFromJson(res,"wind","speed"));
-                    System.out.println(getObjFromJson(res,"wind","deg"));
+//                    System.out.println(res);
+                    setTemp(Float.parseFloat(getObjFromJson(res,"main","temp")));
+                    setPressure(Float.parseFloat(getObjFromJson(res,"main","pressure")));
+                    setHuminidity(Float.parseFloat(getObjFromJson(res,"main","humidity")));
+                    setWindspeed(Float.parseFloat(getObjFromJson(res,"wind","speed")));
+                    setWinddirection(Float.parseFloat(getObjFromJson(res,"wind","deg")));
 //                    System.out.println(getObjFromJson(res,"weather","description")); // clear sky
-                    System.out.println(getObjFromJson(res,"sys","country"));
-                    System.out.println(getObjFromJson(res,"name",null));
-                    System.out.println(getObjFromJson(res,"id",null));
-                    System.out.println(this);
-                }
+                    setCountry(getObjFromJson(res,"sys","country"));
+                    setName(getObjFromJson(res,"name",null));
+                    setId(Long.parseLong(getObjFromJson(res,"id",null)));
 
-            }
-        }).start();
+                    System.out.println(this.name);
+
+                }
     }
 
     public void setMY_APPID(String MY_APPID) {

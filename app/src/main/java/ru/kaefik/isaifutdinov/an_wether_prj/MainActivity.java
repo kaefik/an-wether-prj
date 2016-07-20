@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         listDataCity.add(new CityModel(2, "ru", "Moscow", 0, 0, 0, 0, 0, 0, 0));
         listDataCity.add(new CityModel(3, "ru", "Samara", 0, 0, 0, 0, 0, 0, 0));
         listDataCity.add(new CityModel(4, "tr", "Istanbul", 0, 0, 0, 0, 0, 0, 0));
-        listDataCity.add(new CityModel(5, "gb", "City of London", 0, 0, 0, 0, 0, 0, 0));
+        listDataCity.add(new CityModel(5, "gb", "London", 0, 0, 0, 0, 0, 0, 0));
 
         return listDataCity;
     }
@@ -73,18 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void getInfoWeatherCity(View view) throws Exception {
 
-//        CityModel cc=new CityModel("London");
-//        cc.getHttpWeather();
-
         Intent intent = new Intent(this,cityInfoActivity.class);
         // передаем данные выбранного города в activity для отображения полученной информации
-                intent.putExtra("name","Казань");
-                intent.putExtra("temp","температура");
-                intent.putExtra("clouds","облачность");
-                intent.putExtra("huminidity","влажность");
-                intent.putExtra("pressure","давление");
-                intent.putExtra("windspeed","ск-ть ветра");
-                intent.putExtra("winddirection","напр-е ветра");
+                intent.putExtra("name","Kazan");
                 startActivity(intent);
     }
 
