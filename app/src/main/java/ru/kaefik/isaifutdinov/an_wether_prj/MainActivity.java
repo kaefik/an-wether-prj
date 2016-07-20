@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +26,17 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView nameCity;
     private TextView myText;
+    private String MY_APPID;
 
+
+    public String getMY_APPID() {
+        return MY_APPID;
+    }
+
+    public void setMY_APPID(String MY_APPID) {
+
+        this.MY_APPID = MY_APPID;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
         nameCity = (ListView) findViewById(R.id.listView);
         myText = (TextView) findViewById(R.id.textView);
+        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+
+
 
         CityModelAdapter adapter = new CityModelAdapter(this, initDataCity());
 
@@ -64,39 +80,18 @@ public class MainActivity extends AppCompatActivity {
         myText.setText("itemClick: position = " + position + ", id = " + id);
     }
 
-    // получить текущую погоду из OpenWeatherMap используя id города
-    public CityModel getCurrentWeather(long id) {
-        CityModel res = new CityModel(id, "", "", 0, 0, 0, 0, 0, 0, 0);
-        String strid = "524901";
-        String strurl = "http://api.openweathermap.org/data/2.5/forecast/city?id=" + strid + "&APPID=9a4be4eeb7de3b88211989559a0849f7";
-//        myText.setText(getHTML(strurl));
-        return res;
-    }
+//    // получить текущую погоду из OpenWeatherMap используя id города
+//    public CityModel getCurrentWeather(long id) {
+//        CityModel res = new CityModel(id, "", "", 0, 0, 0, 0, 0, 0, 0);
+//        String strid = "524901";
+//        String strurl = "http://api.openweathermap.org/data/2.5/forecast/city?id=" + strid + "&APPID="+getMY_APPID();
+////        myText.setText(getHTML(strurl));
+//        return res;
+//    }
 
     public void getInfoWeatherCity(View view) throws Exception {
 
         getHttpWeather();
-
-//        DefaultHttpClient hc = new DefaultHttpClient();
-//        ResponseHandler response = new BasicResponseHandler();
-//        HttpGet http = new HttpGet("http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=9a4be4eeb7de3b88211989559a0849f7");
-//        //получаем ответ от сервера
-//        String response = (String) hc.execute(http, response);
-//        myText.setText(response);
-
-//        CityModel currentWeather = getCurrentWeather(524901);
-
-//        Intent intent = new Intent(this,cityInfoActivity.class);
-//// передаем данные выбранного города в activity для отображения полученной информации
-//        intent.putExtra("name","Казань");
-//        intent.putExtra("temp","температура");
-//        intent.putExtra("clouds","облачность");
-//        intent.putExtra("huminidity","влажность");
-//        intent.putExtra("pressure","давление");
-//        intent.putExtra("windspeed","ск-ть ветра");
-//        intent.putExtra("winddirection","напр-е ветра");
-
-//        startActivity(intent);
     }
 
     public void getHttpWeather()  {
@@ -106,17 +101,55 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q=London&APPID=9a4be4eeb7de3b88211989559a0849f7");
+
+                String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q=Kazan&APPID="+getMY_APPID());
+                if (res == null){
+                    myText.setText("Ошибка загрузки");
+                } else {
+                    System.out.println(res);
+                    System.out.println(getObjFromJson(res,"main","temp"));
+                    System.out.println(getObjFromJson(res,"main","pressure"));
+                    System.out.println(getObjFromJson(res,"main","humidity"));
+                    System.out.println(getObjFromJson(res,"wind","speed"));
+                    System.out.println(getObjFromJson(res,"wind","deg"));
+//                    System.out.println(getObjFromJson(res,"weather","description")); // clear sky
+                    System.out.println(getObjFromJson(res,"sys","country"));
+                    System.out.println(getObjFromJson(res,"name",null));
+                    System.out.println(getObjFromJson(res,"id",null));
+
+
+                }
 
             }
         }).start();
+    }
 
-//        myText.setText(finalJson);
+    // получение объектов из json
+    public String getObjFromJson(String sjosn,String nameParrent, String nameChild){
 
+        JSONObject parentObject = null;
+        JSONObject childObject = null;
+        String res=null;
+        try {
+            parentObject = new JSONObject(sjosn);
+            if (nameParrent != null) {
+                res=parentObject.get(nameParrent).toString();
+                if (nameChild != null){
+                    if (res!=null) {
+                        childObject = new JSONObject(res);
+                        res = childObject.get(nameChild).toString();
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  res;
     }
 
     // получение страницы из урла strurl
     public String getHttpRequestFromUrl(String strurl){
+        String resultStr=null;
         try {
             URL url = new URL(strurl);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -126,17 +159,19 @@ public class MainActivity extends AppCompatActivity {
             InputStreamReader reader = new InputStreamReader(stream);
             BufferedReader bufferedReader = new BufferedReader(reader);
             String line;
+            resultStr="";
             while ((line = bufferedReader.readLine()) != null) {
-                System.out.println(line);
+//                System.out.println(line);
+                resultStr+=line;
             }
             bufferedReader.close();
-            return line;
+            return resultStr;
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return resultStr;
     }
 
 }
