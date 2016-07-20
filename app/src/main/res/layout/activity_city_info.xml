@@ -86,9 +86,22 @@
         android:layout_height="wrap_content"
         android:text="Выбрать город"
         android:id="@+id/btnBack"
-        android:layout_below="@+id/winddirectionCity"
-        android:layout_centerHorizontal="true"
         android:padding="15dp"
-        android:onClick="goBackMainActivity" />
+        android:onClick="goBackMainActivity"
+        android:layout_below="@+id/winddirectionCity"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Обновить"
+        android:id="@+id/button2"
+        android:padding="15dp"
+        android:layout_below="@+id/winddirectionCity"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="refreshDataWeather"
+        android:nestedScrollingEnabled="false"/>
 
 </RelativeLayout>

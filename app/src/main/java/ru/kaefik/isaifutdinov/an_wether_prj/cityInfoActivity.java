@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
+
 public class cityInfoActivity extends AppCompatActivity {
 
     TextView nameCity;
@@ -52,6 +54,11 @@ public class cityInfoActivity extends AppCompatActivity {
     public void goBackMainActivity(View view){
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
+    }
+
+    public void refreshDataWeather(View view){
+        CityModel cc=new CityModel("London");
+        cc.getHttpWeather();
     }
 
 }

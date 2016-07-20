@@ -1,7 +1,14 @@
 package ru.kaefik.isaifutdinov.an_wether_prj.city;
 
 
+import static ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils.getHttpRequestFromUrl;
+import static ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils.getObjFromJson;
+
 public class CityModel {
+
+    private String MY_APPID; // уникальный ключ для доступа к сервису OpenWeatherMap
+
+
 
     private long id;
     private String country; // страна
@@ -23,6 +30,58 @@ public class CityModel {
         this.pressure = pressure;
         this.windspeed = windspeed;
         this.winddirection = winddirection;
+        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+    }
+
+    public CityModel(String name) {
+        this.name = name;
+        this.id = id;
+        this.country = "";
+         this.temp = 0.00f;
+        this.clouds = 0.00f;
+        this.huminidity = 0.00f;
+        this.pressure = 0.00f;
+        this.windspeed = 0.00f;
+        this.winddirection = 0.00f;
+        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+    }
+
+    // получение данных с погоды
+    public void getHttpWeather()  {
+        //api.openweathermap.org/data/2.5/weather?q=London&APPID=9a4be4eeb7de3b88211989559a0849f7
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+getName()+"&APPID="+getMY_APPID());
+                if (res == null){
+                     System.out.println("Ошибка загрузки");
+                } else {
+                    System.out.println(res);
+                    System.out.println(getObjFromJson(res,"main","temp"));
+                    System.out.println(getObjFromJson(res,"main","pressure"));
+                    System.out.println(getObjFromJson(res,"main","humidity"));
+                    System.out.println(getObjFromJson(res,"wind","speed"));
+                    System.out.println(getObjFromJson(res,"wind","deg"));
+//                    System.out.println(getObjFromJson(res,"weather","description")); // clear sky
+                    System.out.println(getObjFromJson(res,"sys","country"));
+                    System.out.println(getObjFromJson(res,"name",null));
+                    System.out.println(getObjFromJson(res,"id",null));
+                    System.out.println(this);
+                }
+
+            }
+        }).start();
+    }
+
+    public void setMY_APPID(String MY_APPID) {
+        this.MY_APPID = MY_APPID;
+    }
+
+    public String getMY_APPID() {
+
+        return MY_APPID;
     }
 
     public void setId(long id) {

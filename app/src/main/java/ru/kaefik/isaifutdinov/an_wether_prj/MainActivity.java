@@ -7,16 +7,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,18 +71,10 @@ public class MainActivity extends AppCompatActivity {
         myText.setText("itemClick: position = " + position + ", id = " + id);
     }
 
-//    // получить текущую погоду из OpenWeatherMap используя id города
-//    public CityModel getCurrentWeather(long id) {
-//        CityModel res = new CityModel(id, "", "", 0, 0, 0, 0, 0, 0, 0);
-//        String strid = "524901";
-//        String strurl = "http://api.openweathermap.org/data/2.5/forecast/city?id=" + strid + "&APPID="+getMY_APPID();
-////        myText.setText(getHTML(strurl));
-//        return res;
-//    }
-
     public void getInfoWeatherCity(View view) throws Exception {
 
-        getHttpWeather();
+//        CityModel cc=new CityModel("London");
+//        cc.getHttpWeather();
 
         Intent intent = new Intent(this,cityInfoActivity.class);
         // передаем данные выбранного города в activity для отображения полученной информации
@@ -103,87 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("pressure","давление");
                 intent.putExtra("windspeed","ск-ть ветра");
                 intent.putExtra("winddirection","напр-е ветра");
-
                 startActivity(intent);
-
-//        Intent intent = new Intent(this,activ)
     }
 
-    public void getHttpWeather()  {
-
-        //api.openweathermap.org/data/2.5/weather?q=London&APPID=9a4be4eeb7de3b88211989559a0849f7
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q=Kazan&APPID="+getMY_APPID());
-                if (res == null){
-                    myText.setText("Ошибка загрузки");
-                } else {
-                    System.out.println(res);
-                    System.out.println(getObjFromJson(res,"main","temp"));
-                    System.out.println(getObjFromJson(res,"main","pressure"));
-                    System.out.println(getObjFromJson(res,"main","humidity"));
-                    System.out.println(getObjFromJson(res,"wind","speed"));
-                    System.out.println(getObjFromJson(res,"wind","deg"));
-//                    System.out.println(getObjFromJson(res,"weather","description")); // clear sky
-                    System.out.println(getObjFromJson(res,"sys","country"));
-                    System.out.println(getObjFromJson(res,"name",null));
-                    System.out.println(getObjFromJson(res,"id",null));
-                }
-
-            }
-        }).start();
-    }
-
-    // получение объектов из json
-    public String getObjFromJson(String sjosn,String nameParrent, String nameChild){
-
-        JSONObject parentObject = null;
-        JSONObject childObject = null;
-        String res=null;
-        try {
-            parentObject = new JSONObject(sjosn);
-            if (nameParrent != null) {
-                res=parentObject.get(nameParrent).toString();
-                if (nameChild != null){
-                    if (res!=null) {
-                        childObject = new JSONObject(res);
-                        res = childObject.get(nameChild).toString();
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return  res;
-    }
-
-    // получение страницы из урла strurl
-    public String getHttpRequestFromUrl(String strurl){
-        String resultStr=null;
-        try {
-            URL url = new URL(strurl);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0");
-            InputStream stream = urlConnection.getInputStream();
-            InputStreamReader reader = new InputStreamReader(stream);
-            BufferedReader bufferedReader = new BufferedReader(reader);
-            String line;
-            resultStr="";
-            while ((line = bufferedReader.readLine()) != null) {
-                resultStr+=line;
-            }
-            bufferedReader.close();
-            return resultStr;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return resultStr;
-    }
 
 }
