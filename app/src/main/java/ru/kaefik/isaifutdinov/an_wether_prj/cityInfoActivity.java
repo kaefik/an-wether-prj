@@ -55,12 +55,26 @@ public class cityInfoActivity extends AppCompatActivity {
         winddirectionCity = (TextView) findViewById(R.id.winddirectionCity);
         textTimeRefresh = (TextView) findViewById(R.id.textTimeRefresh);
 
-        String currentName = getIntent().getStringExtra("name").toString();
 
-        cityDataWeather = new CityModel(currentName);
-        nameCity.setText(currentName);
-        tempCity.setText(getIntent().getStringExtra("temp").toString());
-        System.out.println("" + currentName);
+//        tempCity.setText("temp:          "+Float.toString(cityDataWeather.getTemp()));
+//        cloudsCity.setText("clouds:        "+Float.toString(cityDataWeather.getClouds()));
+//        huminidityCity.setText("huminidity:    "+Float.toString(cityDataWeather.getHuminidity()));
+//        pressureCity.setText("pressure:      "+Float.toString(cityDataWeather.getPressure()));
+//        windspeedCity.setText("windspeed:     "+Float.toString(cityDataWeather.getWindspeed()));
+//        winddirectionCity.setText("winddirection: "+Float.toString(cityDataWeather.getWinddirection()));
+//        cityDataWeather.setTimeRefresh();
+//        textTimeRefresh.setText(cityDataWeather.getTimeRefresh().toString());
+
+        cityDataWeather = new CityModel("");
+//        cityDataWeather.setTemp(currentTemp);
+        nameCity.setText(getIntent().getStringExtra("name").toString());
+        tempCity.setText("temp:          "+Float.toString(getIntent().getFloatExtra("temp",0.0f)));
+        cloudsCity.setText("clouds:        "+Float.toString(getIntent().getFloatExtra("clouds",0.0f)));
+        huminidityCity.setText("huminidity:    "+Float.toString(getIntent().getFloatExtra("huminidity",0.0f)));
+        pressureCity.setText("pressure:      "+Float.toString(getIntent().getFloatExtra("pressure",0.0f)));
+        windspeedCity.setText("windspeed:     "+Float.toString(getIntent().getFloatExtra("windspeed",0.0f)));
+        winddirectionCity.setText("winddirection: "+Float.toString(getIntent().getFloatExtra("winddirection",0.0f)));
+//        textTimeRefresh.setText(----);  // сделать передачу времени последнего обновления
 
         task = new cityInfoAsyncTask();
 

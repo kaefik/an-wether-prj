@@ -41,10 +41,12 @@ public class MainActivity extends AppCompatActivity {
         nameCity = (ListView) findViewById(R.id.listView);
         myText = (TextView) findViewById(R.id.textView);
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
-        listDataCity = new ArrayList<CityModel>();
-        listDataCity = initDataCity();
+        if (listDataCity == null) {
+            listDataCity = new ArrayList<CityModel>();
+            listDataCity = initDataCity();
+        }
 
-        final CityModelAdapter adapter = new CityModelAdapter(this, initDataCity());
+        final CityModelAdapter adapter = new CityModelAdapter(this, listDataCity);
         nameCity.setAdapter(adapter);
 
         // Обработка события на клик по элементу списка
@@ -54,14 +56,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), cityInfoActivity.class);
                 // передаем данные выбранного города в activity для отображения полученной информации
                 intent.putExtra("name", adapter.getCityModel(position).getName());
-                intent.putExtra("id",adapter.getCityModel(position).getId());
-                intent.putExtra("country",adapter.getCityModel(position).getCountry());
-                intent.putExtra("temp",adapter.getCityModel(position).getTemp());
-                intent.putExtra("clouds",adapter.getCityModel(position).getClouds());
-                intent.putExtra("pressure",adapter.getCityModel(position).getPressure());
-                intent.putExtra("windspeed",adapter.getCityModel(position).getWindspeed());
-                intent.putExtra("winddirection",adapter.getCityModel(position).getWinddirection());
-                intent.putExtra("timeRefresh",adapter.getCityModel(position).getTimeRefresh());
+                intent.putExtra("id", adapter.getCityModel(position).getId());
+                intent.putExtra("country", adapter.getCityModel(position).getCountry());
+                intent.putExtra("temp", adapter.getCityModel(position).getTemp());
+                intent.putExtra("clouds", adapter.getCityModel(position).getClouds());
+                intent.putExtra("pressure", adapter.getCityModel(position).getPressure());
+                intent.putExtra("windspeed", adapter.getCityModel(position).getWindspeed());
+                intent.putExtra("winddirection", adapter.getCityModel(position).getWinddirection());
+                intent.putExtra("timeRefresh", adapter.getCityModel(position).getTimeRefresh());
 
 
                 startActivityForResult(intent, RequestCode.REQUEST_CODE_CITY_WEATHER);
@@ -89,35 +91,27 @@ public class MainActivity extends AppCompatActivity {
         myText.setText("itemClick: position = " + position + ", id = " + id);
     }
 
-//    public void getInfoWeatherCity(View view) throws Exception {
-//
-//        Intent intent = new Intent(this, cityInfoActivity.class);
-//        // передаем данные выбранного города в activity для отображения полученной информации
-//        intent.putExtra("name", "Kazan");
-//        startActivity(intent);
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK){
-            switch (requestCode){
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case RequestCode.REQUEST_CODE_CITY_WEATHER:
                     CityModel tmpCityData = new CityModel();
 
                     tmpCityData.setName(data.getStringExtra("name"));
-                    tmpCityData.setId(data.getLongExtra("id",0));  ///dsfsdfdsfdsfdsfsdf
+                    tmpCityData.setId(data.getLongExtra("id", 0));  ///dsfsdfdsfdsfdsfsdf
                     tmpCityData.setCountry(data.getStringExtra("country"));
-                    tmpCityData.setTemp(data.getFloatExtra("temp",0.0f));
-                    tmpCityData.setClouds(data.getFloatExtra("clouds",0.0f));
-                    tmpCityData.setPressure(data.getFloatExtra("pressure",0.0f));
-                    tmpCityData.setWindspeed(data.getFloatExtra("windspeed",0.0f));
-                    tmpCityData.setWinddirection(data.getFloatExtra("winddirection",0.0f));
+                    tmpCityData.setTemp(data.getFloatExtra("temp", 0.0f));
+                    tmpCityData.setClouds(data.getFloatExtra("clouds", 0.0f));
+                    tmpCityData.setPressure(data.getFloatExtra("pressure", 0.0f));
+                    tmpCityData.setWindspeed(data.getFloatExtra("windspeed", 0.0f));
+                    tmpCityData.setWinddirection(data.getFloatExtra("winddirection", 0.0f));
 //                    tmpCityData.setTimeRefresh(Date.pa(data.getStringExtra("timeRefresh")));
 
                     // СЮДА ДОБАВИТЬ ОБНОВЛЕНИЕ ИНФОРМАЦИИ О ГОРОДЕ tmpCityData.getName() в listDataCity
-                    for(int i=0;i<listDataCity.size();i++){
-                        if (listDataCity.get(i).getName()==tmpCityData.getName()){
+                    for (int i = 0; i < listDataCity.size(); i++) {
+                        if (listDataCity.get(i).getName().equals(tmpCityData.getName())) {
                             listDataCity.get(i).setTemp(tmpCityData.getTemp());
                             // сюда добавить остальные поля
                         }
@@ -127,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
 //                    System.out.println("Temp City: "+tmpCityData.getTemp());
                     break;
             }
-        }else {
-            Toast.makeText(this,"Error onActivityResult ",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Error onActivityResult (закончился лимит или нет интернета) ", Toast.LENGTH_SHORT).show();
         }
     }
 }
