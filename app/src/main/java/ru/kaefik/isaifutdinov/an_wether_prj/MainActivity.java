@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         listDataCity.add(new CityModel(3, "ru", "Samara", 0, 0, 0, 0, 0, 0, 0));
         listDataCity.add(new CityModel(4, "tr", "Istanbul", 0, 0, 0, 0, 0, 0, 0));
         listDataCity.add(new CityModel(5, "gb", "London", 0, 0, 0, 0, 0, 0, 0));
+        listDataCity.add(new CityModel(6, "gb", "L", 0, 0, 0, 0, 0, 0, 0));
 
         return listDataCity;
     }

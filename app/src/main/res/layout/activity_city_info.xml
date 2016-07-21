@@ -101,7 +101,7 @@
         android:layout_below="@+id/winddirectionCity"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="refreshDataWeather"
+        android:onClick="onClickRefreshDataWeather"
         android:nestedScrollingEnabled="false"/>
 
 </RelativeLayout>

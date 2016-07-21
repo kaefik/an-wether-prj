@@ -60,6 +60,16 @@ public class cityInfoActivity extends AppCompatActivity {
         System.out.println(""+currentName);
 
         task = new cityInfoAsyncTask();
+
+        // обновление погоды
+        try {
+            refreshDataWeather();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void goBackMainActivity(View view) {
@@ -68,7 +78,11 @@ public class cityInfoActivity extends AppCompatActivity {
     }
 
     // обновление данных о погоде
-    public void refreshDataWeather(View view) throws ExecutionException, InterruptedException {
+    public void onClickRefreshDataWeather(View view) throws ExecutionException, InterruptedException {
+        refreshDataWeather();
+    }
+
+    public void  refreshDataWeather() throws ExecutionException, InterruptedException{
         task.execute();
         cityDataWeather = task.get();
 
