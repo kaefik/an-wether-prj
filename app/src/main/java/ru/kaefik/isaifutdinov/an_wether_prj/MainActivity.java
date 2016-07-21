@@ -54,8 +54,16 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), cityInfoActivity.class);
                 // передаем данные выбранного города в activity для отображения полученной информации
                 intent.putExtra("name", adapter.getCityModel(position).getName());
+                intent.putExtra("id",adapter.getCityModel(position).getId());
+                intent.putExtra("country",adapter.getCityModel(position).getCountry());
+                intent.putExtra("temp",adapter.getCityModel(position).getTemp());
+                intent.putExtra("clouds",adapter.getCityModel(position).getClouds());
+                intent.putExtra("pressure",adapter.getCityModel(position).getPressure());
+                intent.putExtra("windspeed",adapter.getCityModel(position).getWindspeed());
+                intent.putExtra("winddirection",adapter.getCityModel(position).getWinddirection());
+                intent.putExtra("timeRefresh",adapter.getCityModel(position).getTimeRefresh());
 
-//                startActivity(intent);
+
                 startActivityForResult(intent, RequestCode.REQUEST_CODE_CITY_WEATHER);
             }
         });
@@ -107,11 +115,16 @@ public class MainActivity extends AppCompatActivity {
                     tmpCityData.setWinddirection(data.getFloatExtra("winddirection",0.0f));
 //                    tmpCityData.setTimeRefresh(Date.pa(data.getStringExtra("timeRefresh")));
 
-
                     // СЮДА ДОБАВИТЬ ОБНОВЛЕНИЕ ИНФОРМАЦИИ О ГОРОДЕ tmpCityData.getName() в listDataCity
-
-                    System.out.println("Name City: "+tmpCityData.getName());
-                    System.out.println("Temp City: "+tmpCityData.getTemp());
+                    for(int i=0;i<listDataCity.size();i++){
+                        if (listDataCity.get(i).getName()==tmpCityData.getName()){
+                            listDataCity.get(i).setTemp(tmpCityData.getTemp());
+                            // сюда добавить остальные поля
+                        }
+                    }
+//
+//                    System.out.println("Name City: "+tmpCityData.getName());
+//                    System.out.println("Temp City: "+tmpCityData.getTemp());
                     break;
             }
         }else {

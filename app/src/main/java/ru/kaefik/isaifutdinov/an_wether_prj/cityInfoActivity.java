@@ -59,6 +59,7 @@ public class cityInfoActivity extends AppCompatActivity {
 
         cityDataWeather = new CityModel(currentName);
         nameCity.setText(currentName);
+        tempCity.setText(getIntent().getStringExtra("temp").toString());
         System.out.println("" + currentName);
 
         task = new cityInfoAsyncTask();
@@ -85,7 +86,7 @@ public class cityInfoActivity extends AppCompatActivity {
         intent.putExtra("name",cityDataWeather.getName());
         intent.putExtra("id",cityDataWeather.getId());
         intent.putExtra("country",cityDataWeather.getCountry());
-        intent.putExtra("temp",Float.toString(cityDataWeather.getTemp()));
+        intent.putExtra("temp",cityDataWeather.getTemp());
         intent.putExtra("clouds",cityDataWeather.getClouds());
         intent.putExtra("pressure",cityDataWeather.getPressure());
         intent.putExtra("windspeed",cityDataWeather.getWindspeed());
