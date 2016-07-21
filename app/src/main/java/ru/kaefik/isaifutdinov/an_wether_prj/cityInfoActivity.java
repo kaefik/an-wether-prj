@@ -80,7 +80,19 @@ public class cityInfoActivity extends AppCompatActivity {
 
     public void goBackMainActivity(View view) {
         Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+//        startActivity(intent);
+
+        intent.putExtra("name",cityDataWeather.getName());
+        intent.putExtra("id",cityDataWeather.getId());
+        intent.putExtra("country",cityDataWeather.getCountry());
+        intent.putExtra("temp",Float.toString(cityDataWeather.getTemp()));
+        intent.putExtra("clouds",cityDataWeather.getClouds());
+        intent.putExtra("pressure",cityDataWeather.getPressure());
+        intent.putExtra("windspeed",cityDataWeather.getWindspeed());
+        intent.putExtra("winddirection",cityDataWeather.getWinddirection());
+        intent.putExtra("timeRefresh",cityDataWeather.getTimeRefresh());
+        setResult(RESULT_OK,intent);
+        finish();
     }
 
     // обновление данных о погоде
@@ -97,7 +109,7 @@ public class cityInfoActivity extends AppCompatActivity {
         task = new cityInfoAsyncTask();  // !!!!! заменить на отмену предыдущего обновления и запуск нового обновления данных о погоде
         task.execute();
         cityDataWeather = task.get();
-    }
+
 
     // получение отправленных данных и отображение данных
     nameCity.setText(cityDataWeather.getName());
@@ -108,11 +120,7 @@ public class cityInfoActivity extends AppCompatActivity {
     windspeedCity.setText("windspeed:     "+Float.toString(cityDataWeather.getWindspeed()));
     winddirectionCity.setText("winddirection: "+Float.toString(cityDataWeather.getWinddirection()));
     cityDataWeather.setTimeRefresh();
-    textTimeRefresh.setText(cityDataWeather.getTimeRefresh().
-
-    toString()
-
-    );
+    textTimeRefresh.setText(cityDataWeather.getTimeRefresh().toString());
 }
 
 }

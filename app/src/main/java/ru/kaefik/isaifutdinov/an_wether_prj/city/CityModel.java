@@ -37,7 +37,20 @@ public class CityModel {
 
     public CityModel(String name) {
         this.name = name;
-        this.id = id;
+        this.id = 0;
+        this.country = "";
+        this.temp = 0.00f;
+        this.clouds = 0.00f;
+        this.huminidity = 0.00f;
+        this.pressure = 0.00f;
+        this.windspeed = 0.00f;
+        this.winddirection = 0.00f;
+        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+    }
+
+    public CityModel() {
+        this.name = "";
+        this.id = 0;
         this.country = "";
         this.temp = 0.00f;
         this.clouds = 0.00f;
@@ -54,6 +67,10 @@ public class CityModel {
         Date date = new Date();
         System.out.println(date);
         this.timeRefresh = date;
+    }
+
+    public void setTimeRefresh(Date timeRefresh) {
+        this.timeRefresh = timeRefresh;
     }
 
     public Date getTimeRefresh() {
@@ -77,8 +94,8 @@ public class CityModel {
             setWinddirection(Float.parseFloat(getObjFromJson(res, "wind", "deg")));
 //                    System.out.println(getObjFromJson(res,"weather","description")); // clear sky
             setCountry(getObjFromJson(res, "sys", "country"));
-            setName(getObjFromJson(res, "name", null));
-            setId(Long.parseLong(getObjFromJson(res, "id", null)));
+            setName(getObjFromJson(res, "name", null)); // сделать парсинг параметра name
+            setId(Long.parseLong(getObjFromJson(res, "id",null))); // сделать парсинг параметра id
 
             System.out.println(this.name);
 
@@ -165,4 +182,5 @@ public class CityModel {
     public float getWinddirection() {
         return winddirection;
     }
+
 }

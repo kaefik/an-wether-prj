@@ -7,12 +7,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.kaefik.isaifutdinov.an_wether_prj.adapter.CityModelAdapter;
 import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
+import ru.kaefik.isaifutdinov.an_wether_prj.utils.RequestCode;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,8 +54,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), cityInfoActivity.class);
                 // передаем данные выбранного города в activity для отображения полученной информации
                 intent.putExtra("name", adapter.getCityModel(position).getName());
-                startActivity(intent);
 
+//                startActivity(intent);
+                startActivityForResult(intent, RequestCode.REQUEST_CODE_CITY_WEATHER);
             }
         });
 
@@ -63,12 +66,12 @@ public class MainActivity extends AppCompatActivity {
     private List<CityModel> initDataCity() {
         List<CityModel> listDataCity = new ArrayList<CityModel>();
 
-        listDataCity.add(new CityModel(1, "ru", "Kazan", 0, 0, 0, 0, 0, 0, 0));
-        listDataCity.add(new CityModel(2, "ru", "Moscow", 0, 0, 0, 0, 0, 0, 0));
-        listDataCity.add(new CityModel(3, "ru", "Samara", 0, 0, 0, 0, 0, 0, 0));
-        listDataCity.add(new CityModel(4, "tr", "Istanbul", 0, 0, 0, 0, 0, 0, 0));
-        listDataCity.add(new CityModel(5, "gb", "London", 0, 0, 0, 0, 0, 0, 0));
-        listDataCity.add(new CityModel(6, "gb", "L", 0, 0, 0, 0, 0, 0, 0));
+        listDataCity.add(new CityModel("Kazan"));
+        listDataCity.add(new CityModel("Moscow"));
+        listDataCity.add(new CityModel("Samara"));
+        listDataCity.add(new CityModel("Istanbul"));
+        listDataCity.add(new CityModel("London"));
+        listDataCity.add(new CityModel("L"));
 
         return listDataCity;
     }
@@ -78,13 +81,41 @@ public class MainActivity extends AppCompatActivity {
         myText.setText("itemClick: position = " + position + ", id = " + id);
     }
 
-    public void getInfoWeatherCity(View view) throws Exception {
+//    public void getInfoWeatherCity(View view) throws Exception {
+//
+//        Intent intent = new Intent(this, cityInfoActivity.class);
+//        // передаем данные выбранного города в activity для отображения полученной информации
+//        intent.putExtra("name", "Kazan");
+//        startActivity(intent);
+//    }
 
-        Intent intent = new Intent(this, cityInfoActivity.class);
-        // передаем данные выбранного города в activity для отображения полученной информации
-        intent.putExtra("name", "Kazan");
-        startActivity(intent);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            switch (requestCode){
+                case RequestCode.REQUEST_CODE_CITY_WEATHER:
+                    CityModel tmpCityData = new CityModel();
+
+                    tmpCityData.setName(data.getStringExtra("name"));
+                    tmpCityData.setId(data.getLongExtra("id",0));  ///dsfsdfdsfdsfdsfsdf
+                    tmpCityData.setCountry(data.getStringExtra("country"));
+                    tmpCityData.setTemp(data.getFloatExtra("temp",0.0f));
+                    tmpCityData.setClouds(data.getFloatExtra("clouds",0.0f));
+                    tmpCityData.setPressure(data.getFloatExtra("pressure",0.0f));
+                    tmpCityData.setWindspeed(data.getFloatExtra("windspeed",0.0f));
+                    tmpCityData.setWinddirection(data.getFloatExtra("winddirection",0.0f));
+//                    tmpCityData.setTimeRefresh(Date.pa(data.getStringExtra("timeRefresh")));
+
+
+                    // СЮДА ДОБАВИТЬ ОБНОВЛЕНИЕ ИНФОРМАЦИИ О ГОРОДЕ tmpCityData.getName() в listDataCity
+
+                    System.out.println("Name City: "+tmpCityData.getName());
+                    System.out.println("Temp City: "+tmpCityData.getTemp());
+                    break;
+            }
+        }else {
+            Toast.makeText(this,"Error onActivityResult ",Toast.LENGTH_SHORT).show();
+        }
     }
-
-
 }
