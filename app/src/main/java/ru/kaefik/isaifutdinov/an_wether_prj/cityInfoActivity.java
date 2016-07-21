@@ -20,6 +20,7 @@ public class cityInfoActivity extends AppCompatActivity {
     TextView pressureCity;
     TextView windspeedCity;
     TextView winddirectionCity;
+    TextView textTimeRefresh;
 
     private CityModel cityDataWeather;
     private cityInfoAsyncTask task;
@@ -52,12 +53,13 @@ public class cityInfoActivity extends AppCompatActivity {
         pressureCity = (TextView) findViewById(R.id.pressureCity);
         windspeedCity = (TextView) findViewById(R.id.windspeedCity);
         winddirectionCity = (TextView) findViewById(R.id.winddirectionCity);
+        textTimeRefresh = (TextView) findViewById(R.id.textTimeRefresh);
 
         String currentName = getIntent().getStringExtra("name").toString();
 
         cityDataWeather = new CityModel(currentName);
         nameCity.setText(currentName);
-        System.out.println(""+currentName);
+        System.out.println("" + currentName);
 
         task = new cityInfoAsyncTask();
 
@@ -69,6 +71,10 @@ public class cityInfoActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        cityDataWeather.setTimeRefresh();
+        textTimeRefresh.setText(cityDataWeather.getTimeRefresh().toString());
+
 
     }
 
@@ -82,7 +88,7 @@ public class cityInfoActivity extends AppCompatActivity {
         refreshDataWeather();
     }
 
-    public void  refreshDataWeather() throws ExecutionException, InterruptedException{
+    public void refreshDataWeather() throws ExecutionException, InterruptedException {
         task.execute();
         cityDataWeather = task.get();
 

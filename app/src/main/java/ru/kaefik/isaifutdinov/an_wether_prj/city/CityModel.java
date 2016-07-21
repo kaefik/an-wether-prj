@@ -1,6 +1,8 @@
 package ru.kaefik.isaifutdinov.an_wether_prj.city;
 
 
+import java.util.Date;
+
 import static ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils.getHttpRequestFromUrl;
 import static ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils.getObjFromJson;
 
@@ -18,6 +20,7 @@ public class CityModel {
     private float pressure; // давление
     private float windspeed; // скорость ветра
     private float winddirection; // направление ветра
+    private Date timeRefresh; // время обновления прогноза погоды
 
     public CityModel(long id, String country, String name, float temp, float clouds, float huminidity, float pressure, float windspeed, float winddirection, int i) {
         this.id = id;
@@ -43,6 +46,18 @@ public class CityModel {
         this.windspeed = 0.00f;
         this.winddirection = 0.00f;
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+    }
+
+    // обновить время обновления текущей датой
+    public void setTimeRefresh() {
+//        DateFormat dateFormat = new DateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        System.out.println(date);
+        this.timeRefresh = date;
+    }
+
+    public Date getTimeRefresh() {
+        return timeRefresh;
     }
 
     // получение данных с погоды

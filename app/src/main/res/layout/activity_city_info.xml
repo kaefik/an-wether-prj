@@ -104,4 +104,15 @@
         android:onClick="onClickRefreshDataWeather"
         android:nestedScrollingEnabled="false"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="время обновления: "
+        android:id="@+id/textTimeRefresh"
+        android:padding="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/winddirectionCity"
+        android:layout_alignEnd="@+id/winddirectionCity"/>
+
 </RelativeLayout>
