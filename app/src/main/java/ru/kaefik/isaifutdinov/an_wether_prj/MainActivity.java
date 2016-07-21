@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,15 +42,20 @@ public class MainActivity extends AppCompatActivity {
         listDataCity = new ArrayList<CityModel>();
         listDataCity = initDataCity();
 
-        CityModelAdapter adapter = new CityModelAdapter(this, initDataCity());
+        final CityModelAdapter adapter = new CityModelAdapter(this, initDataCity());
         nameCity.setAdapter(adapter);
 
-//        // Обработка события на клик по элементу списка
-//        nameCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                myText.setText( "itemClick: position = " + position + ", id = " + id );
-//            }
-//        });
+        // Обработка события на клик по элементу списка
+        nameCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                myText.setText("itemClick: position = " + position + ", id = " + id);
+                Intent intent = new Intent(getApplicationContext(), cityInfoActivity.class);
+                // передаем данные выбранного города в activity для отображения полученной информации
+                intent.putExtra("name", adapter.getCityModel(position).getName());
+                startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -73,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void getInfoWeatherCity(View view) throws Exception {
 
-        Intent intent = new Intent(this,cityInfoActivity.class);
+        Intent intent = new Intent(this, cityInfoActivity.class);
         // передаем данные выбранного города в activity для отображения полученной информации
-                intent.putExtra("name","Kazan");
-                startActivity(intent);
+        intent.putExtra("name", "Kazan");
+        startActivity(intent);
     }
 
 

@@ -2,9 +2,8 @@ package ru.kaefik.isaifutdinov.an_wether_prj;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,9 +22,9 @@ public class cityInfoActivity extends AppCompatActivity {
     TextView winddirectionCity;
 
     private CityModel cityDataWeather;
-    private  cityInfoAsyncTask task;
+    private cityInfoAsyncTask task;
 
-    class cityInfoAsyncTask extends AsyncTask<Void,Void,CityModel>{
+    class cityInfoAsyncTask extends AsyncTask<Void, Void, CityModel> {
         @Override
         protected CityModel doInBackground(Void... voids) {
             System.out.println(cityDataWeather.getName());
@@ -41,15 +40,6 @@ public class cityInfoActivity extends AppCompatActivity {
     }
 
 
-//    intent.putExtra("name","Казань");
-//    intent.putExtra("temp","Казань");
-//    intent.putExtra("clouds","Казань");
-//    intent.putExtra("huminidity","Казань");
-//    intent.putExtra("pressure","Казань");
-//    intent.putExtra("windspeed","Казань");
-//    intent.putExtra("winddirection","Казань");
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +53,17 @@ public class cityInfoActivity extends AppCompatActivity {
         windspeedCity = (TextView) findViewById(R.id.windspeedCity);
         winddirectionCity = (TextView) findViewById(R.id.winddirectionCity);
 
-        cityDataWeather = new CityModel(getIntent().getStringExtra("name").toString());
-        System.out.println(cityDataWeather);
+        String currentName = getIntent().getStringExtra("name").toString();
+
+        cityDataWeather = new CityModel(currentName);
+        nameCity.setText(currentName);
+        System.out.println(""+currentName);
+
         task = new cityInfoAsyncTask();
     }
 
-    public void goBackMainActivity(View view){
-        Intent intent = new Intent(this,MainActivity.class);
+    public void goBackMainActivity(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -80,12 +74,12 @@ public class cityInfoActivity extends AppCompatActivity {
 
         // получение отправленных данных и отображение данных
         nameCity.setText(cityDataWeather.getName());
-        tempCity.setText("temp:          "+Float.toString(cityDataWeather.getTemp()));
-        cloudsCity.setText("clouds:        "+Float.toString(cityDataWeather.getClouds()));
-        huminidityCity.setText("huminidity:    "+Float.toString(cityDataWeather.getHuminidity()));
-        pressureCity.setText("pressure:      "+Float.toString(cityDataWeather.getPressure()));
-        windspeedCity.setText("windspeed:     "+Float.toString(cityDataWeather.getWindspeed()));
-        winddirectionCity.setText("winddirection: "+Float.toString(cityDataWeather.getWinddirection()));
+        tempCity.setText("temp:          " + Float.toString(cityDataWeather.getTemp()));
+        cloudsCity.setText("clouds:        " + Float.toString(cityDataWeather.getClouds()));
+        huminidityCity.setText("huminidity:    " + Float.toString(cityDataWeather.getHuminidity()));
+        pressureCity.setText("pressure:      " + Float.toString(cityDataWeather.getPressure()));
+        windspeedCity.setText("windspeed:     " + Float.toString(cityDataWeather.getWindspeed()));
+        winddirectionCity.setText("winddirection: " + Float.toString(cityDataWeather.getWinddirection()));
     }
 
 }

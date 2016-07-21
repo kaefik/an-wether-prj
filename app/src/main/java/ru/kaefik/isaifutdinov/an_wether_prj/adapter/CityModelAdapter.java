@@ -53,7 +53,7 @@ public class CityModelAdapter extends BaseAdapter {
     }
 
 
-    private CityModel getCityModel(int position) {
+    public CityModel getCityModel(int position) {
         return (CityModel) getItem(position);
     }
 

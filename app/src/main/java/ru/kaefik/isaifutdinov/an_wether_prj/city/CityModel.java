@@ -9,7 +9,6 @@ public class CityModel {
     private String MY_APPID; // уникальный ключ для доступа к сервису OpenWeatherMap
 
 
-
     private long id;
     private String country; // страна
     private String name; // название города
@@ -37,7 +36,7 @@ public class CityModel {
         this.name = name;
         this.id = id;
         this.country = "";
-         this.temp = 0.00f;
+        this.temp = 0.00f;
         this.clouds = 0.00f;
         this.huminidity = 0.00f;
         this.pressure = 0.00f;
@@ -47,28 +46,28 @@ public class CityModel {
     }
 
     // получение данных с погоды
-    public void getHttpWeather()  {
+    public void getHttpWeather() {
         //api.openweathermap.org/data/2.5/weather?q=London&APPID=9a4be4eeb7de3b88211989559a0849f7
 
 
-                String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+getName()+"&APPID="+getMY_APPID());
-                if (res == null){
-                    System.out.println("Ошибка загрузки");
-                } else {
+        String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q=" + getName() + "&APPID=" + getMY_APPID());
+        if (res == null) {
+            System.out.println("Ошибка загрузки");
+        } else {
 //                    System.out.println(res);
-                    setTemp(Float.parseFloat(getObjFromJson(res,"main","temp")));
-                    setPressure(Float.parseFloat(getObjFromJson(res,"main","pressure")));
-                    setHuminidity(Float.parseFloat(getObjFromJson(res,"main","humidity")));
-                    setWindspeed(Float.parseFloat(getObjFromJson(res,"wind","speed")));
-                    setWinddirection(Float.parseFloat(getObjFromJson(res,"wind","deg")));
+            setTemp(Float.parseFloat(getObjFromJson(res, "main", "temp")));
+            setPressure(Float.parseFloat(getObjFromJson(res, "main", "pressure")));
+            setHuminidity(Float.parseFloat(getObjFromJson(res, "main", "humidity")));
+            setWindspeed(Float.parseFloat(getObjFromJson(res, "wind", "speed")));
+            setWinddirection(Float.parseFloat(getObjFromJson(res, "wind", "deg")));
 //                    System.out.println(getObjFromJson(res,"weather","description")); // clear sky
-                    setCountry(getObjFromJson(res,"sys","country"));
-                    setName(getObjFromJson(res,"name",null));
-                    setId(Long.parseLong(getObjFromJson(res,"id",null)));
+            setCountry(getObjFromJson(res, "sys", "country"));
+            setName(getObjFromJson(res, "name", null));
+            setId(Long.parseLong(getObjFromJson(res, "id", null)));
 
-                    System.out.println(this.name);
+            System.out.println(this.name);
 
-                }
+        }
     }
 
     public void setMY_APPID(String MY_APPID) {
