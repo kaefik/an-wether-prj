@@ -63,14 +63,14 @@ public class cityInfoActivity extends AppCompatActivity {
 
         task = new cityInfoAsyncTask();
 
-        // обновление погоды
-        try {
-            refreshDataWeather();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        // обновление погоды
+//        try {
+//            refreshDataWeather();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         cityDataWeather.setTimeRefresh();
         textTimeRefresh.setText(cityDataWeather.getTimeRefresh().toString());
@@ -89,17 +89,30 @@ public class cityInfoActivity extends AppCompatActivity {
     }
 
     public void refreshDataWeather() throws ExecutionException, InterruptedException {
+
+//        if (task != null) {
+//            task.cancel(true);
+//            System.out.println("TASK IS KILLED");
+//        }
+        task = new cityInfoAsyncTask();  // !!!!! заменить на отмену предыдущего обновления и запуск нового обновления данных о погоде
         task.execute();
         cityDataWeather = task.get();
-
-        // получение отправленных данных и отображение данных
-        nameCity.setText(cityDataWeather.getName());
-        tempCity.setText("temp:          " + Float.toString(cityDataWeather.getTemp()));
-        cloudsCity.setText("clouds:        " + Float.toString(cityDataWeather.getClouds()));
-        huminidityCity.setText("huminidity:    " + Float.toString(cityDataWeather.getHuminidity()));
-        pressureCity.setText("pressure:      " + Float.toString(cityDataWeather.getPressure()));
-        windspeedCity.setText("windspeed:     " + Float.toString(cityDataWeather.getWindspeed()));
-        winddirectionCity.setText("winddirection: " + Float.toString(cityDataWeather.getWinddirection()));
     }
+
+    // получение отправленных данных и отображение данных
+    nameCity.setText(cityDataWeather.getName());
+    tempCity.setText("temp:          "+Float.toString(cityDataWeather.getTemp()));
+    cloudsCity.setText("clouds:        "+Float.toString(cityDataWeather.getClouds()));
+    huminidityCity.setText("huminidity:    "+Float.toString(cityDataWeather.getHuminidity()));
+    pressureCity.setText("pressure:      "+Float.toString(cityDataWeather.getPressure()));
+    windspeedCity.setText("windspeed:     "+Float.toString(cityDataWeather.getWindspeed()));
+    winddirectionCity.setText("winddirection: "+Float.toString(cityDataWeather.getWinddirection()));
+    cityDataWeather.setTimeRefresh();
+    textTimeRefresh.setText(cityDataWeather.getTimeRefresh().
+
+    toString()
+
+    );
+}
 
 }
