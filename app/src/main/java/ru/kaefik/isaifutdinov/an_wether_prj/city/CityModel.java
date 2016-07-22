@@ -82,7 +82,7 @@ public class CityModel {
         //api.openweathermap.org/data/2.5/weather?q=London&APPID=9a4be4eeb7de3b88211989559a0849f7
 
 
-        String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q=" + getName() + "&APPID=" + getMY_APPID());
+        String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q=" + getName() + "&units=metric&APPID=" + getMY_APPID());
         if (res == null) {
             System.out.println("Ошибка загрузки");
         } else {

@@ -147,4 +147,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Error onActivityResult (закончился лимит или нет интернета) ", Toast.LENGTH_SHORT).show();
         }
     }
+
+// добавления нового города
+    public  void onClickAddCity(View v){
+
+    }
+
 }

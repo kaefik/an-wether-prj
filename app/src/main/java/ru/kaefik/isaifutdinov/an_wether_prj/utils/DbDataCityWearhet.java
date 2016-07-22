@@ -1,11 +1,11 @@
 package ru.kaefik.isaifutdinov.an_wether_prj.utils;
 
-// БД SQLite для сохранения данных о погоде городов
-public class DbDataCityWearher {
-
-
-
-}
+//// БД SQLite для сохранения данных о погоде городов
+//public class DbDataCityWearher {
+//
+//
+//
+//}
 
 
 //public class DbOpenHelper extends SQLiteOpenHelper {

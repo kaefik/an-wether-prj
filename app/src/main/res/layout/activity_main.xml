@@ -14,30 +14,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
-        android:layout_alignParentTop="true"
+        android:choiceMode="singleChoice"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="186dp"
-        android:choiceMode="singleChoice"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Пусто тута"
-        android:id="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="63dp"
-        android:layout_marginStart="63dp"/>
+        android:layout_above="@+id/button"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="City Weather"
+        android:text="+"
         android:id="@+id/button"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:padding="15dp"
-        android:onClick="getInfoWeatherCity" />
+        android:onClick="onClickAddCity"
+        android:layout_marginRight="44dp"
+        android:layout_marginEnd="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/listView"
+        android:layout_alignEnd="@+id/listView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Список городов"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp" />
 </RelativeLayout>
