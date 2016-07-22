@@ -77,14 +77,14 @@ public class cityInfoActivity extends AppCompatActivity {
 
 //        task = new cityInfoAsyncTask();
 
-//        // обновление погоды
-//        try {
-//            refreshDataWeather();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        // обновление погоды
+        try {
+            refreshDataWeather();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         cityDataWeather.setTimeRefresh();
         textTimeRefresh.setText(cityDataWeather.getTimeRefresh().toString());

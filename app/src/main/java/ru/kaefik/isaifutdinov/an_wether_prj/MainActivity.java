@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         nameCity = (ListView) findViewById(R.id.listView);
-        myText = (TextView) findViewById(R.id.textView);
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
         if (listDataCity == null) {
             listDataCity = new ArrayList<CityModel>();
@@ -52,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         // Обработка события на клик по элементу списка
         nameCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                myText.setText("itemClick: position = " + position + ", id = " + id);
                 Intent intent = new Intent(getApplicationContext(), cityInfoActivity.class);
                 // передаем данные выбранного города в activity для отображения полученной информации
                 intent.putExtra("name", adapter.getCityModel(position).getName());
