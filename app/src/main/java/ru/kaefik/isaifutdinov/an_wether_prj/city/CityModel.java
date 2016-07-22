@@ -97,7 +97,7 @@ public class CityModel {
             setName(getObjFromJson(res, "name", null)); // сделать парсинг параметра name
             setId(Long.parseLong(getObjFromJson(res, "id",null))); // сделать парсинг параметра id
 
-            System.out.println(this.name);
+//            System.out.println(this.name);
 
         }
     }

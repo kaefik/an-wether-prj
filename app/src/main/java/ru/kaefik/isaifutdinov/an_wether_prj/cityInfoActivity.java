@@ -65,7 +65,10 @@ public class cityInfoActivity extends AppCompatActivity {
 //        cityDataWeather.setTimeRefresh();
 //        textTimeRefresh.setText(cityDataWeather.getTimeRefresh().toString());
 
-        cityDataWeather = new CityModel("");
+        cityDataWeather = new CityModel(getIntent().getStringExtra("name").toString());
+        cityDataWeather.setTimeRefresh();
+
+
 //        cityDataWeather.setTemp(currentTemp);
         nameCity.setText(getIntent().getStringExtra("name").toString());
         tempCity.setText("temp:          "+Float.toString(getIntent().getFloatExtra("temp",0.0f)));
@@ -76,7 +79,7 @@ public class cityInfoActivity extends AppCompatActivity {
         winddirectionCity.setText("winddirection: "+Float.toString(getIntent().getFloatExtra("winddirection",0.0f)));
 //        textTimeRefresh.setText(----);  // сделать передачу времени последнего обновления
 
-        task = new cityInfoAsyncTask();
+//        task = new cityInfoAsyncTask();
 
 //        // обновление погоды
 //        try {
@@ -96,7 +99,6 @@ public class cityInfoActivity extends AppCompatActivity {
     public void goBackMainActivity(View view) {
         Intent intent = new Intent(this, MainActivity.class);
 //        startActivity(intent);
-
         intent.putExtra("name",cityDataWeather.getName());
         intent.putExtra("id",cityDataWeather.getId());
         intent.putExtra("country",cityDataWeather.getCountry());
@@ -121,6 +123,9 @@ public class cityInfoActivity extends AppCompatActivity {
 //            task.cancel(true);
 //            System.out.println("TASK IS KILLED");
 //        }
+        if (task!=null) {
+            task.cancel(true);
+        }
         task = new cityInfoAsyncTask();  // !!!!! заменить на отмену предыдущего обновления и запуск нового обновления данных о погоде
         task.execute();
         cityDataWeather = task.get();
