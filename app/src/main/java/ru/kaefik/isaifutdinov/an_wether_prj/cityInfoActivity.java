@@ -55,17 +55,13 @@ public class cityInfoActivity extends AppCompatActivity {
         winddirectionCity = (TextView) findViewById(R.id.winddirectionCity);
         textTimeRefresh = (TextView) findViewById(R.id.textTimeRefresh);
 
-
-//        tempCity.setText("temp:          "+Float.toString(cityDataWeather.getTemp()));
-//        cloudsCity.setText("clouds:        "+Float.toString(cityDataWeather.getClouds()));
-//        huminidityCity.setText("huminidity:    "+Float.toString(cityDataWeather.getHuminidity()));
-//        pressureCity.setText("pressure:      "+Float.toString(cityDataWeather.getPressure()));
-//        windspeedCity.setText("windspeed:     "+Float.toString(cityDataWeather.getWindspeed()));
-//        winddirectionCity.setText("winddirection: "+Float.toString(cityDataWeather.getWinddirection()));
-//        cityDataWeather.setTimeRefresh();
-//        textTimeRefresh.setText(cityDataWeather.getTimeRefresh().toString());
-
         cityDataWeather = new CityModel(getIntent().getStringExtra("name").toString());
+        cityDataWeather.setTemp(getIntent().getFloatExtra("temp",0.0f));
+        cityDataWeather.setClouds(getIntent().getFloatExtra("clouds",0.0f));
+        cityDataWeather.setHuminidity(getIntent().getFloatExtra("huminidity",0.0f));
+        cityDataWeather.setPressure(getIntent().getFloatExtra("pressure",0.0f));
+        cityDataWeather.setWindspeed(getIntent().getFloatExtra("windspeed",0.0f));
+        cityDataWeather.setWinddirection(getIntent().getFloatExtra("winddirection",0.0f));
         cityDataWeather.setTimeRefresh();
 
 
@@ -104,6 +100,7 @@ public class cityInfoActivity extends AppCompatActivity {
         intent.putExtra("country",cityDataWeather.getCountry());
         intent.putExtra("temp",cityDataWeather.getTemp());
         intent.putExtra("clouds",cityDataWeather.getClouds());
+        intent.putExtra("huminidity",cityDataWeather.getHuminidity());
         intent.putExtra("pressure",cityDataWeather.getPressure());
         intent.putExtra("windspeed",cityDataWeather.getWindspeed());
         intent.putExtra("winddirection",cityDataWeather.getWinddirection());
@@ -119,10 +116,6 @@ public class cityInfoActivity extends AppCompatActivity {
 
     public void refreshDataWeather() throws ExecutionException, InterruptedException {
 
-//        if (task != null) {
-//            task.cancel(true);
-//            System.out.println("TASK IS KILLED");
-//        }
         if (task!=null) {
             task.cancel(true);
         }

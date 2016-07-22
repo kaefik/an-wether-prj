@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("pressure", adapter.getCityModel(position).getPressure());
                 intent.putExtra("windspeed", adapter.getCityModel(position).getWindspeed());
                 intent.putExtra("winddirection", adapter.getCityModel(position).getWinddirection());
+                intent.putExtra("huminidity", adapter.getCityModel(position).getHuminidity());
                 intent.putExtra("timeRefresh", adapter.getCityModel(position).getTimeRefresh());
 
 
@@ -86,9 +87,20 @@ public class MainActivity extends AppCompatActivity {
         return listDataCity;
     }
 
-    // ?????
-    public void clickItemCity(View view, int position, long id) {
-        myText.setText("itemClick: position = " + position + ", id = " + id);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        System.out.println("dfdsfsd");
+
+//        cityDataWeather = new CityModel(getIntent().getStringExtra("name").toString());
+//        cityDataWeather.setTemp(getIntent().getFloatExtra("temp",0.0f));
+//        cityDataWeather.setClouds(getIntent().getFloatExtra("clouds",0.0f));
+//        cityDataWeather.setHuminidity(getIntent().getFloatExtra("huminidity",0.0f));
+//        cityDataWeather.setPressure(getIntent().getFloatExtra("pressure",0.0f));
+//        cityDataWeather.setWindspeed(getIntent().getFloatExtra("windspeed",0.0f));
+//        cityDataWeather.setWinddirection(getIntent().getFloatExtra("winddirection",0.0f));
+//        cityDataWeather.setTimeRefresh();
+
     }
 
     @Override
@@ -105,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                     tmpCityData.setTemp(data.getFloatExtra("temp", 0.0f));
                     tmpCityData.setClouds(data.getFloatExtra("clouds", 0.0f));
                     tmpCityData.setPressure(data.getFloatExtra("pressure", 0.0f));
+                    tmpCityData.setHuminidity(data.getFloatExtra("huminidity", 0.0f));
                     tmpCityData.setWindspeed(data.getFloatExtra("windspeed", 0.0f));
                     tmpCityData.setWinddirection(data.getFloatExtra("winddirection", 0.0f));
 //                    tmpCityData.setTimeRefresh(Date.pa(data.getStringExtra("timeRefresh")));
@@ -113,6 +126,15 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < listDataCity.size(); i++) {
                         if (listDataCity.get(i).getName().equals(tmpCityData.getName())) {
                             listDataCity.get(i).setTemp(tmpCityData.getTemp());
+                            listDataCity.get(i).setId(tmpCityData.getId());
+                            listDataCity.get(i).setCountry(tmpCityData.getCountry());
+                            listDataCity.get(i).setClouds(tmpCityData.getClouds());
+                            listDataCity.get(i).setPressure(tmpCityData.getPressure());
+                            listDataCity.get(i).setHuminidity(tmpCityData.getHuminidity());
+                            listDataCity.get(i).setWinddirection(tmpCityData.getWinddirection());
+                            listDataCity.get(i).setWindspeed(tmpCityData.getWindspeed());
+                            listDataCity.get(i).setTimeRefresh(tmpCityData.getTimeRefresh());
+
                             // сюда добавить остальные поля
                         }
                     }
