@@ -143,9 +143,8 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         openQuitDialog();
 
-/        }
-    }
-
+        }
+    
     private void openQuitDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Ого! Важное сообщение!")
@@ -169,28 +168,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-//
-//        AlertDialog.Builder quitDialog = new AlertDialog.Builder(
-//                this);
-//        quitDialog.setTitle("Выход: Вы уверены?");
-//
-//        quitDialog.setPositiveButton("Таки да!", new OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                // TODO Auto-generated method stub
-//                finish();
-//            }
-//        });
-//
-//        quitDialog.setNegativeButton("Нет", new OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                // TODO Auto-generated method stub
-//            }
-//        });
-//
-//        quitDialog.show();
-//    }
 
 }
