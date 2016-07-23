@@ -91,16 +91,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         System.out.println("dfdsfsd");
-
-//        cityDataWeather = new CityModel(getIntent().getStringExtra("name").toString());
-//        cityDataWeather.setTemp(getIntent().getFloatExtra("temp",0.0f));
-//        cityDataWeather.setClouds(getIntent().getFloatExtra("clouds",0.0f));
-//        cityDataWeather.setHuminidity(getIntent().getFloatExtra("huminidity",0.0f));
-//        cityDataWeather.setPressure(getIntent().getFloatExtra("pressure",0.0f));
-//        cityDataWeather.setWindspeed(getIntent().getFloatExtra("windspeed",0.0f));
-//        cityDataWeather.setWinddirection(getIntent().getFloatExtra("winddirection",0.0f));
-//        cityDataWeather.setTimeRefresh();
-
     }
 
     @Override
@@ -135,12 +125,8 @@ public class MainActivity extends AppCompatActivity {
                             listDataCity.get(i).setWindspeed(tmpCityData.getWindspeed());
                             listDataCity.get(i).setTimeRefresh(tmpCityData.getTimeRefresh());
 
-                            // сюда добавить остальные поля
                         }
                     }
-//
-//                    System.out.println("Name City: "+tmpCityData.getName());
-//                    System.out.println("Temp City: "+tmpCityData.getTemp());
                     break;
             }
         } else {
@@ -162,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void openQuitDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//        final Boolean flag;
         builder.setTitle("Ого! Важное сообщение!")
                 .setMessage("Точно хотите выйти?!")
 //                .setIcon(R.drawable.ic_android_cat)
@@ -180,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
                         });
         AlertDialog alert = builder.create();
         alert.show();
-//        return flag;
 
     }
 
