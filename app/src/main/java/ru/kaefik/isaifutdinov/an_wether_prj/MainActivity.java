@@ -1,5 +1,7 @@
 package ru.kaefik.isaifutdinov.an_wether_prj;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -150,5 +152,61 @@ public class MainActivity extends AppCompatActivity {
     public  void onClickAddCity(View v){
 
     }
+
+    @Override
+    public void onBackPressed() {
+        openQuitDialog();
+
+/        }
+    }
+
+    private void openQuitDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//        final Boolean flag;
+        builder.setTitle("Ого! Важное сообщение!")
+                .setMessage("Точно хотите выйти?!")
+//                .setIcon(R.drawable.ic_android_cat)
+                .setCancelable(false)
+                .setPositiveButton("Остаться",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Toast.makeText(getApplicationContext(),"Спасибо что решили с нами остаться",Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                .setNegativeButton("Выйти ",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                MainActivity.super.onBackPressed();                        }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+//        return flag;
+
+    }
+
+
+
+//
+//        AlertDialog.Builder quitDialog = new AlertDialog.Builder(
+//                this);
+//        quitDialog.setTitle("Выход: Вы уверены?");
+//
+//        quitDialog.setPositiveButton("Таки да!", new OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                // TODO Auto-generated method stub
+//                finish();
+//            }
+//        });
+//
+//        quitDialog.setNegativeButton("Нет", new OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                // TODO Auto-generated method stub
+//            }
+//        });
+//
+//        quitDialog.show();
+//    }
 
 }
