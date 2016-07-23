@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         openQuitDialog();
 
         }
-    
+
     private void openQuitDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Ого! Важное сообщение!")

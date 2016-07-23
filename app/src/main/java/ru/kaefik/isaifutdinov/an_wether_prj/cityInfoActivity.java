@@ -92,7 +92,10 @@ public class cityInfoActivity extends AppCompatActivity {
 
     }
 
-    public void goBackMainActivity(View view) {
+    public void goBackMainActivity() {
+        if (task!=null) {
+            task.cancel(true);
+        }
         Intent intent = new Intent(this, MainActivity.class);
 //        startActivity(intent);
         intent.putExtra("name",cityDataWeather.getName());
@@ -107,6 +110,10 @@ public class cityInfoActivity extends AppCompatActivity {
         intent.putExtra("timeRefresh",cityDataWeather.getTimeRefresh());
         setResult(RESULT_OK,intent);
         finish();
+    }
+
+    public void onClickgoBackMainActivity(View view) {
+        goBackMainActivity();
     }
 
     // обновление данных о погоде
@@ -135,5 +142,13 @@ public class cityInfoActivity extends AppCompatActivity {
     cityDataWeather.setTimeRefresh();
     textTimeRefresh.setText(cityDataWeather.getTimeRefresh().toString());
 }
+
+    @Override
+    //обработка нажатия клавиши Назад
+    public void onBackPressed() {
+        goBackMainActivity();
+
+    }
+
 
 }

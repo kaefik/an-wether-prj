@@ -87,7 +87,7 @@
         android:text="Выбрать город"
         android:id="@+id/btnBack"
         android:padding="15dp"
-        android:onClick="goBackMainActivity"
+        android:onClick="onClickgoBackMainActivity"
         android:layout_below="@+id/winddirectionCity"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>
