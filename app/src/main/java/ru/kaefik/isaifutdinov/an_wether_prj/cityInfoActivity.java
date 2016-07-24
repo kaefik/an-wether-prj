@@ -97,7 +97,6 @@ public class cityInfoActivity extends AppCompatActivity {
             task.cancel(true);
         }
         Intent intent = new Intent(this, MainActivity.class);
-//        startActivity(intent);
         intent.putExtra("name",cityDataWeather.getName());
         intent.putExtra("id",cityDataWeather.getId());
         intent.putExtra("country",cityDataWeather.getCountry());
@@ -133,12 +132,12 @@ public class cityInfoActivity extends AppCompatActivity {
 
     // получение отправленных данных и отображение данных
     nameCity.setText(cityDataWeather.getName());
-    tempCity.setText("temp:          "+Float.toString(cityDataWeather.getTemp()));
-    cloudsCity.setText("clouds:        "+Float.toString(cityDataWeather.getClouds()));
-    huminidityCity.setText("huminidity:    "+Float.toString(cityDataWeather.getHuminidity()));
-    pressureCity.setText("pressure:      "+Float.toString(cityDataWeather.getPressure()));
-    windspeedCity.setText("windspeed:     "+Float.toString(cityDataWeather.getWindspeed()));
-    winddirectionCity.setText("winddirection: "+Float.toString(cityDataWeather.getWinddirection()));
+    tempCity.setText(Float.toString(cityDataWeather.getTemp()));
+    cloudsCity.setText(Float.toString(cityDataWeather.getClouds()));
+    huminidityCity.setText(Float.toString(cityDataWeather.getHuminidity()));
+    pressureCity.setText(Float.toString(cityDataWeather.getPressure()));
+    windspeedCity.setText(Float.toString(cityDataWeather.getWindspeed()));
+    winddirectionCity.setText(Float.toString(cityDataWeather.getWinddirection()));
     cityDataWeather.setTimeRefresh();
     textTimeRefresh.setText(cityDataWeather.getTimeRefresh().toString());
 }
