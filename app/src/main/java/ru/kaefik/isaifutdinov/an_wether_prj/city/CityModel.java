@@ -35,6 +35,7 @@ public class CityModel {
         this.pressure = pressure;
         this.windspeed = windspeed;
         this.winddirection = winddirection;
+        this.timeRefresh = new Date();
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
     }
 
@@ -48,6 +49,7 @@ public class CityModel {
         this.pressure = 0.00f;
         this.windspeed = 0.00f;
         this.winddirection = 0.00f;
+        this.timeRefresh = new Date();
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
     }
 
@@ -61,6 +63,7 @@ public class CityModel {
         this.pressure = 0.00f;
         this.windspeed = 0.00f;
         this.winddirection = 0.00f;
+        this.timeRefresh = new Date();
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
     }
 
@@ -68,7 +71,6 @@ public class CityModel {
     public void setTimeRefresh() {
 //        DateFormat dateFormat = new DateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        System.out.println(date);
         this.timeRefresh = date;
     }
 
@@ -89,7 +91,6 @@ public class CityModel {
         if (res == null) {
             System.out.println("Ошибка загрузки");
         } else {
-//                    System.out.println(res);
             setTemp(Float.parseFloat(getObjFromJson(res, "main", "temp")));
             setPressure(Float.parseFloat(getObjFromJson(res, "main", "pressure")));
             setHuminidity(Float.parseFloat(getObjFromJson(res, "main", "humidity")));
@@ -99,9 +100,6 @@ public class CityModel {
             setCountry(getObjFromJson(res, "sys", "country"));
             setName(getObjFromJson(res, "name", null)); // сделать парсинг параметра name
             setId(Long.parseLong(getObjFromJson(res, "id", null))); // сделать парсинг параметра id
-
-//            System.out.println(this.name);
-
         }
     }
 
@@ -186,8 +184,9 @@ public class CityModel {
         return winddirection;
     }
 
+
     // реализация передачи данных через intent
-    public  Intent intentPutExtra(Context context, Class<?> klass) {
+    public  Intent putExtraIntent(Context context, Class<?> klass) {
 
         Intent intent = new Intent(context, klass);
         intent.putExtra("name", getName());
@@ -201,6 +200,21 @@ public class CityModel {
         intent.putExtra("winddirection", getWinddirection());
         intent.putExtra("timeRefresh", getTimeRefresh());
         return intent;
+    }
+
+
+    // реализация получение данных через intent
+    public  void getExtraIntent(Intent intent) {
+        setName(intent.getStringExtra("name"));
+        setId(intent.getLongExtra("id", 0));  ///dsfsdfdsfdsfdsfsdf
+        setCountry(intent.getStringExtra("country"));
+        setTemp(intent.getFloatExtra("temp", 0.0f));
+        setClouds(intent.getFloatExtra("clouds", 0.0f));
+        setPressure(intent.getFloatExtra("pressure", 0.0f));
+        setHuminidity(intent.getFloatExtra("huminidity", 0.0f));
+        setWindspeed(intent.getFloatExtra("windspeed", 0.0f));
+        setWinddirection(intent.getFloatExtra("winddirection", 0.0f));
+//                    setTimeRefresh(Date.pa(data.getStringExtra("timeRefresh")));
     }
 
 }

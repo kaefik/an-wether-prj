@@ -56,26 +56,19 @@ public class cityInfoActivity extends AppCompatActivity {
         winddirectionCity = (TextView) findViewById(R.id.winddirectionCity);
         textTimeRefresh = (TextView) findViewById(R.id.textTimeRefresh);
 
-        cityDataWeather = new CityModel(getIntent().getStringExtra("name").toString());
-        cityDataWeather.setTemp(getIntent().getFloatExtra("temp", 0.0f));
-        cityDataWeather.setClouds(getIntent().getFloatExtra("clouds", 0.0f));
-        cityDataWeather.setHuminidity(getIntent().getFloatExtra("huminidity", 0.0f));
-        cityDataWeather.setPressure(getIntent().getFloatExtra("pressure", 0.0f));
-        cityDataWeather.setWindspeed(getIntent().getFloatExtra("windspeed", 0.0f));
-        cityDataWeather.setWinddirection(getIntent().getFloatExtra("winddirection", 0.0f));
-        cityDataWeather.setTimeRefresh();  // ???? - разобраться с тем как получить дату из intent
+        cityDataWeather = new CityModel();
+        cityDataWeather.getExtraIntent(getIntent());
+//        cityDataWeather = new CityModel(getIntent().getStringExtra("name").toString());
+//        cityDataWeather.setTemp(getIntent().getFloatExtra("temp", 0.0f));
+//        cityDataWeather.setClouds(getIntent().getFloatExtra("clouds", 0.0f));
+//        cityDataWeather.setHuminidity(getIntent().getFloatExtra("huminidity", 0.0f));
+//        cityDataWeather.setPressure(getIntent().getFloatExtra("pressure", 0.0f));
+//        cityDataWeather.setWindspeed(getIntent().getFloatExtra("windspeed", 0.0f));
+//        cityDataWeather.setWinddirection(getIntent().getFloatExtra("winddirection", 0.0f));
+//        cityDataWeather.setTimeRefresh();  // ???? - разобраться с тем как получить дату из intent
 
 
         refreshData2View(cityDataWeather);
-//        nameCity.setText(cityDataWeather.getName());
-//        tempCity.setText(Float.toString(cityDataWeather.getTemp())+" C");
-//        cloudsCity.setText(Float.toString(cityDataWeather.getClouds()));
-//        huminidityCity.setText(cityDataWeather.getHuminidity()+" %");
-//        pressureCity.setText(Float.toString(cityDataWeather.getPressure()*0.75f)+" мм рт.ст."); // 1hPa ~= 0.750064  мм рт. ст.
-//        windspeedCity.setText(Float.toString(cityDataWeather.getPressure())+"м/с");
-//        winddirectionCity.setText(Float.toString(cityDataWeather.getWinddirection()));
-//        textTimeRefresh.setText(cityDataWeather.getTimeRefresh().toString());
-
 
         // обновление погоды
         try {
@@ -95,7 +88,7 @@ public class cityInfoActivity extends AppCompatActivity {
         }
 
 //        setResult(RESULT_OK, Utils.intentPutExtra(this, MainActivity.class, cityDataWeather));
-        setResult(RESULT_OK, cityDataWeather.intentPutExtra(this, MainActivity.class));
+        setResult(RESULT_OK, cityDataWeather.putExtraIntent(this, MainActivity.class));
 
         finish();
     }

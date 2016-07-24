@@ -102,21 +102,5 @@ public class Utils {
 
     }
 
-//    // реализация передачи данных через intent
-//    public static Intent intentPutExtra(Context context, Class<?> klass, CityModel cityModel) {
-//
-//        Intent intent = new Intent(context, klass);
-//        intent.putExtra("name", cityModel.getName());
-//        intent.putExtra("id", cityModel.getId());
-//        intent.putExtra("country", cityModel.getCountry());
-//        intent.putExtra("temp", cityModel.getTemp());
-//        intent.putExtra("clouds", cityModel.getClouds());
-//        intent.putExtra("huminidity", cityModel.getHuminidity());
-//        intent.putExtra("pressure", cityModel.getPressure());
-//        intent.putExtra("windspeed", cityModel.getWindspeed());
-//        intent.putExtra("winddirection", cityModel.getWinddirection());
-//        intent.putExtra("timeRefresh", cityModel.getTimeRefresh());
-//        return intent;
-//    }
 
 }
