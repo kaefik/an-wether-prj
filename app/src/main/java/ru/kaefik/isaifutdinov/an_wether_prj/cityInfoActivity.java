@@ -94,7 +94,9 @@ public class cityInfoActivity extends AppCompatActivity {
             task.cancel(true);
         }
 
-        setResult(RESULT_OK, Utils.intentPutExtra(this, MainActivity.class, cityDataWeather));
+//        setResult(RESULT_OK, Utils.intentPutExtra(this, MainActivity.class, cityDataWeather));
+        setResult(RESULT_OK, cityDataWeather.intentPutExtra(this, MainActivity.class));
+
         finish();
     }
 

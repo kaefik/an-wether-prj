@@ -55,7 +55,10 @@ public class MainActivity extends AppCompatActivity {
         nameCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                startActivityForResult(Utils.intentPutExtra(getApplicationContext(), cityInfoActivity.class, adapter.getCityModel(position)), RequestCode.REQUEST_CODE_CITY_WEATHER);
+                CityModel tmpCityModel = adapter.getCityModel(position);
+
+//                startActivityForResult(Utils.intentPutExtra(getApplicationContext(), cityInfoActivity.class, adapter.getCityModel(position)), RequestCode.REQUEST_CODE_CITY_WEATHER);
+                startActivityForResult(tmpCityModel.intentPutExtra(getApplicationContext(), cityInfoActivity.class), RequestCode.REQUEST_CODE_CITY_WEATHER);
 
             }
         });

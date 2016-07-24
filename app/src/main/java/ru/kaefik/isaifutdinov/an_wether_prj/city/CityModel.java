@@ -1,6 +1,9 @@
 package ru.kaefik.isaifutdinov.an_wether_prj.city;
 
 
+import android.content.Context;
+import android.content.Intent;
+
 import java.util.Date;
 
 import static ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils.getHttpRequestFromUrl;
@@ -181,6 +184,23 @@ public class CityModel {
 
     public float getWinddirection() {
         return winddirection;
+    }
+
+    // реализация передачи данных через intent
+    public  Intent intentPutExtra(Context context, Class<?> klass) {
+
+        Intent intent = new Intent(context, klass);
+        intent.putExtra("name", getName());
+        intent.putExtra("id", getId());
+        intent.putExtra("country", getCountry());
+        intent.putExtra("temp", getTemp());
+        intent.putExtra("clouds", getClouds());
+        intent.putExtra("huminidity", getHuminidity());
+        intent.putExtra("pressure", getPressure());
+        intent.putExtra("windspeed", getWindspeed());
+        intent.putExtra("winddirection", getWinddirection());
+        intent.putExtra("timeRefresh", getTimeRefresh());
+        return intent;
     }
 
 }
