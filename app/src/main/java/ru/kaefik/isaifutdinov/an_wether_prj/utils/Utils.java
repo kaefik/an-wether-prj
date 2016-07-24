@@ -71,8 +71,8 @@ public class Utils {
     }
 
     // перевод градусов в румбы (С, В, Ю, З и т д)
-    public String windGradus2Rumb(Float gradusWind){
-        String windRumb="";
+    public String windGradus2Rumb(Float gradusWind) {
+        String windRumb = "";
 
         Map<Float, String> map = new HashMap<Float, String>();
         map.put(22.0f, "ССВ");
@@ -98,7 +98,6 @@ public class Utils {
 //            case 318.0f: windRumb = "ССЗ";
 
 
-
         return windRumb;
 
     }
@@ -106,16 +105,16 @@ public class Utils {
     public static Intent intentPutExtra(Context context, Class<?> klass, CityModel cityModel) {
 
         Intent intent = new Intent(context, klass);
-        intent.putExtra("name",cityModel.getName());
-     intent.putExtra("id",cityModel.getId());
-     intent.putExtra("country",cityModel.getCountry());
-     intent.putExtra("temp",cityModel.getTemp());
-     intent.putExtra("clouds",cityModel.getClouds());
-     intent.putExtra("huminidity",cityModel.getHuminidity());
-       intent.putExtra("pressure",cityModel.getPressure());
-        intent.putExtra("windspeed",cityModel.getWindspeed());
-      intent.putExtra("winddirection",cityModel.getWinddirection());
-       intent.putExtra("timeRefresh",cityModel.getTimeRefresh());
+        intent.putExtra("name", cityModel.getName());
+        intent.putExtra("id", cityModel.getId());
+        intent.putExtra("country", cityModel.getCountry());
+        intent.putExtra("temp", cityModel.getTemp());
+        intent.putExtra("clouds", cityModel.getClouds());
+        intent.putExtra("huminidity", cityModel.getHuminidity());
+        intent.putExtra("pressure", cityModel.getPressure());
+        intent.putExtra("windspeed", cityModel.getWindspeed());
+        intent.putExtra("winddirection", cityModel.getWinddirection());
+        intent.putExtra("timeRefresh", cityModel.getTimeRefresh());
         return intent;
     }
 

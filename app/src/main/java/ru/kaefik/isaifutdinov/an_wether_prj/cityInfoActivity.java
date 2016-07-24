@@ -57,12 +57,12 @@ public class cityInfoActivity extends AppCompatActivity {
         textTimeRefresh = (TextView) findViewById(R.id.textTimeRefresh);
 
         cityDataWeather = new CityModel(getIntent().getStringExtra("name").toString());
-        cityDataWeather.setTemp(getIntent().getFloatExtra("temp",0.0f));
-        cityDataWeather.setClouds(getIntent().getFloatExtra("clouds",0.0f));
-        cityDataWeather.setHuminidity(getIntent().getFloatExtra("huminidity",0.0f));
-        cityDataWeather.setPressure(getIntent().getFloatExtra("pressure",0.0f));
-        cityDataWeather.setWindspeed(getIntent().getFloatExtra("windspeed",0.0f));
-        cityDataWeather.setWinddirection(getIntent().getFloatExtra("winddirection",0.0f));
+        cityDataWeather.setTemp(getIntent().getFloatExtra("temp", 0.0f));
+        cityDataWeather.setClouds(getIntent().getFloatExtra("clouds", 0.0f));
+        cityDataWeather.setHuminidity(getIntent().getFloatExtra("huminidity", 0.0f));
+        cityDataWeather.setPressure(getIntent().getFloatExtra("pressure", 0.0f));
+        cityDataWeather.setWindspeed(getIntent().getFloatExtra("windspeed", 0.0f));
+        cityDataWeather.setWinddirection(getIntent().getFloatExtra("winddirection", 0.0f));
         cityDataWeather.setTimeRefresh();  // ???? - разобраться с тем как получить дату из intent
 
 
@@ -90,24 +90,11 @@ public class cityInfoActivity extends AppCompatActivity {
 
     // возврат к основной активити MainActivity
     public void goBackMainActivity() {
-        if (task!=null) {
+        if (task != null) {
             task.cancel(true);
         }
 
-
-//        Intent intent = new Intent(this, MainActivity.class);
-//        intent.putExtra("name",cityDataWeather.getName());
-//        intent.putExtra("id",cityDataWeather.getId());
-//        intent.putExtra("country",cityDataWeather.getCountry());
-//        intent.putExtra("temp",cityDataWeather.getTemp());
-//        intent.putExtra("clouds",cityDataWeather.getClouds());
-//        intent.putExtra("huminidity",cityDataWeather.getHuminidity());
-//        intent.putExtra("pressure",cityDataWeather.getPressure());
-//        intent.putExtra("windspeed",cityDataWeather.getWindspeed());
-//        intent.putExtra("winddirection",cityDataWeather.getWinddirection());
-//        intent.putExtra("timeRefresh",cityDataWeather.getTimeRefresh());
-
-        setResult(RESULT_OK, Utils.intentPutExtra(this, MainActivity.class,cityDataWeather));
+        setResult(RESULT_OK, Utils.intentPutExtra(this, MainActivity.class, cityDataWeather));
         finish();
     }
 
@@ -130,7 +117,7 @@ public class cityInfoActivity extends AppCompatActivity {
     // обновление данных о погоде
     public void refreshDataWeather() throws ExecutionException, InterruptedException {
 
-        if (task!=null) {
+        if (task != null) {
             task.cancel(true);
         }
         task = new cityInfoAsyncTask();
@@ -139,24 +126,20 @@ public class cityInfoActivity extends AppCompatActivity {
 
         cityDataWeather.setTimeRefresh();
 
-       refreshData2View(cityDataWeather);
-}
-
-    // отображение данных о погоде выбранного города
-    public void refreshData2View(CityModel cityModel){
-        // получение отправленных данных и отображение данных
-        nameCity.setText(cityModel.getName());
-        tempCity.setText(Float.toString(cityModel.getTemp())+" C");
-        cloudsCity.setText(Float.toString(cityModel.getClouds()));
-        huminidityCity.setText(Float.toString(cityModel.getHuminidity())+" %");
-        pressureCity.setText(Float.toString(cityModel.getPressure()*0.75f)+" мм рт.ст.");
-        windspeedCity.setText(Float.toString(cityModel.getWindspeed())+" м/с");
-        winddirectionCity.setText(Float.toString(cityModel.getWinddirection())+" град.");
-        textTimeRefresh.setText(cityModel.getTimeRefresh().toString());
+        refreshData2View(cityDataWeather);
     }
 
-
-
+    // отображение данных о погоде выбранного города
+    public void refreshData2View(CityModel cityModel) {
+        nameCity.setText(cityModel.getName());
+        tempCity.setText(Float.toString(cityModel.getTemp()) + " C");
+        cloudsCity.setText(Float.toString(cityModel.getClouds()));
+        huminidityCity.setText(Float.toString(cityModel.getHuminidity()) + " %");
+        pressureCity.setText(Float.toString(cityModel.getPressure() * 0.75f) + " мм рт.ст.");
+        windspeedCity.setText(Float.toString(cityModel.getWindspeed()) + " м/с");
+        winddirectionCity.setText(Float.toString(cityModel.getWinddirection()) + " град.");
+        textTimeRefresh.setText(cityModel.getTimeRefresh().toString());
+    }
 
 
 }

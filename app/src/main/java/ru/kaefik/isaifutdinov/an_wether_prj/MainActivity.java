@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         nameCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                startActivityForResult(Utils.intentPutExtra(getApplicationContext(),cityInfoActivity.class,adapter.getCityModel(position)), RequestCode.REQUEST_CODE_CITY_WEATHER);
+                startActivityForResult(Utils.intentPutExtra(getApplicationContext(), cityInfoActivity.class, adapter.getCityModel(position)), RequestCode.REQUEST_CODE_CITY_WEATHER);
 
             }
         });
@@ -123,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-// добавления нового города
-    public  void onClickAddCity(View v){
+    // добавления нового города
+    public void onClickAddCity(View v) {
 
     }
 
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         openQuitDialog();
 
-        }
+    }
 
     private void openQuitDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -143,19 +143,19 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Остаться",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Toast.makeText(getApplicationContext(),"Спасибо что решили с нами остаться",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Спасибо что решили с нами остаться", Toast.LENGTH_SHORT).show();
                             }
                         })
                 .setNegativeButton("Выйти ",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                MainActivity.super.onBackPressed();                        }
+                                MainActivity.super.onBackPressed();
+                            }
                         });
         AlertDialog alert = builder.create();
         alert.show();
 
     }
-
 
 
 }
