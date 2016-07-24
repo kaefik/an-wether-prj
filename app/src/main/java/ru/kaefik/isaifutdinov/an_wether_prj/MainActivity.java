@@ -17,6 +17,7 @@ import java.util.List;
 import ru.kaefik.isaifutdinov.an_wether_prj.adapter.CityModelAdapter;
 import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
 import ru.kaefik.isaifutdinov.an_wether_prj.utils.RequestCode;
+import ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,21 +54,9 @@ public class MainActivity extends AppCompatActivity {
         // Обработка события на клик по элементу списка
         nameCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), cityInfoActivity.class);
-                // передаем данные выбранного города в activity для отображения полученной информации
-                intent.putExtra("name", adapter.getCityModel(position).getName());
-                intent.putExtra("id", adapter.getCityModel(position).getId());
-                intent.putExtra("country", adapter.getCityModel(position).getCountry());
-                intent.putExtra("temp", adapter.getCityModel(position).getTemp());
-                intent.putExtra("clouds", adapter.getCityModel(position).getClouds());
-                intent.putExtra("pressure", adapter.getCityModel(position).getPressure());
-                intent.putExtra("windspeed", adapter.getCityModel(position).getWindspeed());
-                intent.putExtra("winddirection", adapter.getCityModel(position).getWinddirection());
-                intent.putExtra("huminidity", adapter.getCityModel(position).getHuminidity());
-                intent.putExtra("timeRefresh", adapter.getCityModel(position).getTimeRefresh());
 
+                startActivityForResult(Utils.intentPutExtra(getApplicationContext(),cityInfoActivity.class,adapter.getCityModel(position)), RequestCode.REQUEST_CODE_CITY_WEATHER);
 
-                startActivityForResult(intent, RequestCode.REQUEST_CODE_CITY_WEATHER);
             }
         });
 

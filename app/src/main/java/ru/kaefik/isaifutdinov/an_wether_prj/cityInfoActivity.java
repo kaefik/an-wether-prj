@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.concurrent.ExecutionException;
 
 import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
+import ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils;
 
 public class cityInfoActivity extends AppCompatActivity {
 
@@ -62,20 +63,19 @@ public class cityInfoActivity extends AppCompatActivity {
         cityDataWeather.setPressure(getIntent().getFloatExtra("pressure",0.0f));
         cityDataWeather.setWindspeed(getIntent().getFloatExtra("windspeed",0.0f));
         cityDataWeather.setWinddirection(getIntent().getFloatExtra("winddirection",0.0f));
-        cityDataWeather.setTimeRefresh();
+        cityDataWeather.setTimeRefresh();  // ???? - разобраться с тем как получить дату из intent
 
 
-//        cityDataWeather.setTemp(currentTemp);
-        nameCity.setText(getIntent().getStringExtra("name").toString());
-        tempCity.setText("temp:          "+Float.toString(getIntent().getFloatExtra("temp",0.0f)));
-        cloudsCity.setText("clouds:        "+Float.toString(getIntent().getFloatExtra("clouds",0.0f)));
-        huminidityCity.setText("huminidity:    "+Float.toString(getIntent().getFloatExtra("huminidity",0.0f)));
-        pressureCity.setText("pressure:      "+Float.toString(getIntent().getFloatExtra("pressure",0.0f)));
-        windspeedCity.setText("windspeed:     "+Float.toString(getIntent().getFloatExtra("windspeed",0.0f)));
-        winddirectionCity.setText("winddirection: "+Float.toString(getIntent().getFloatExtra("winddirection",0.0f)));
-//        textTimeRefresh.setText(----);  // сделать передачу времени последнего обновления
+        refreshData2View(cityDataWeather);
+//        nameCity.setText(cityDataWeather.getName());
+//        tempCity.setText(Float.toString(cityDataWeather.getTemp())+" C");
+//        cloudsCity.setText(Float.toString(cityDataWeather.getClouds()));
+//        huminidityCity.setText(cityDataWeather.getHuminidity()+" %");
+//        pressureCity.setText(Float.toString(cityDataWeather.getPressure()*0.75f)+" мм рт.ст."); // 1hPa ~= 0.750064  мм рт. ст.
+//        windspeedCity.setText(Float.toString(cityDataWeather.getPressure())+"м/с");
+//        winddirectionCity.setText(Float.toString(cityDataWeather.getWinddirection()));
+//        textTimeRefresh.setText(cityDataWeather.getTimeRefresh().toString());
 
-//        task = new cityInfoAsyncTask();
 
         // обновление погоды
         try {
@@ -86,28 +86,28 @@ public class cityInfoActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        cityDataWeather.setTimeRefresh();
-        textTimeRefresh.setText(cityDataWeather.getTimeRefresh().toString());
-
-
     }
 
+    // возврат к основной активити MainActivity
     public void goBackMainActivity() {
         if (task!=null) {
             task.cancel(true);
         }
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("name",cityDataWeather.getName());
-        intent.putExtra("id",cityDataWeather.getId());
-        intent.putExtra("country",cityDataWeather.getCountry());
-        intent.putExtra("temp",cityDataWeather.getTemp());
-        intent.putExtra("clouds",cityDataWeather.getClouds());
-        intent.putExtra("huminidity",cityDataWeather.getHuminidity());
-        intent.putExtra("pressure",cityDataWeather.getPressure());
-        intent.putExtra("windspeed",cityDataWeather.getWindspeed());
-        intent.putExtra("winddirection",cityDataWeather.getWinddirection());
-        intent.putExtra("timeRefresh",cityDataWeather.getTimeRefresh());
-        setResult(RESULT_OK,intent);
+
+
+//        Intent intent = new Intent(this, MainActivity.class);
+//        intent.putExtra("name",cityDataWeather.getName());
+//        intent.putExtra("id",cityDataWeather.getId());
+//        intent.putExtra("country",cityDataWeather.getCountry());
+//        intent.putExtra("temp",cityDataWeather.getTemp());
+//        intent.putExtra("clouds",cityDataWeather.getClouds());
+//        intent.putExtra("huminidity",cityDataWeather.getHuminidity());
+//        intent.putExtra("pressure",cityDataWeather.getPressure());
+//        intent.putExtra("windspeed",cityDataWeather.getWindspeed());
+//        intent.putExtra("winddirection",cityDataWeather.getWinddirection());
+//        intent.putExtra("timeRefresh",cityDataWeather.getTimeRefresh());
+
+        setResult(RESULT_OK, Utils.intentPutExtra(this, MainActivity.class,cityDataWeather));
         finish();
     }
 
@@ -120,34 +120,43 @@ public class cityInfoActivity extends AppCompatActivity {
         refreshDataWeather();
     }
 
-    public void refreshDataWeather() throws ExecutionException, InterruptedException {
-
-        if (task!=null) {
-            task.cancel(true);
-        }
-        task = new cityInfoAsyncTask();  // !!!!! заменить на отмену предыдущего обновления и запуск нового обновления данных о погоде
-        task.execute();
-        cityDataWeather = task.get();
-
-
-    // получение отправленных данных и отображение данных
-    nameCity.setText(cityDataWeather.getName());
-    tempCity.setText(Float.toString(cityDataWeather.getTemp()));
-    cloudsCity.setText(Float.toString(cityDataWeather.getClouds()));
-    huminidityCity.setText(Float.toString(cityDataWeather.getHuminidity()));
-    pressureCity.setText(Float.toString(cityDataWeather.getPressure()));
-    windspeedCity.setText(Float.toString(cityDataWeather.getWindspeed()));
-    winddirectionCity.setText(Float.toString(cityDataWeather.getWinddirection()));
-    cityDataWeather.setTimeRefresh();
-    textTimeRefresh.setText(cityDataWeather.getTimeRefresh().toString());
-}
-
     @Override
     //обработка нажатия клавиши Назад
     public void onBackPressed() {
         goBackMainActivity();
 
     }
+
+    // обновление данных о погоде
+    public void refreshDataWeather() throws ExecutionException, InterruptedException {
+
+        if (task!=null) {
+            task.cancel(true);
+        }
+        task = new cityInfoAsyncTask();
+        task.execute();
+        cityDataWeather = task.get();
+
+        cityDataWeather.setTimeRefresh();
+
+       refreshData2View(cityDataWeather);
+}
+
+    // отображение данных о погоде выбранного города
+    public void refreshData2View(CityModel cityModel){
+        // получение отправленных данных и отображение данных
+        nameCity.setText(cityModel.getName());
+        tempCity.setText(Float.toString(cityModel.getTemp())+" C");
+        cloudsCity.setText(Float.toString(cityModel.getClouds()));
+        huminidityCity.setText(Float.toString(cityModel.getHuminidity())+" %");
+        pressureCity.setText(Float.toString(cityModel.getPressure()*0.75f)+" мм рт.ст.");
+        windspeedCity.setText(Float.toString(cityModel.getWindspeed())+" м/с");
+        winddirectionCity.setText(Float.toString(cityModel.getWinddirection())+" град.");
+        textTimeRefresh.setText(cityModel.getTimeRefresh().toString());
+    }
+
+
+
 
 
 }
