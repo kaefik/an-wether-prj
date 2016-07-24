@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 CityModel tmpCityModel = adapter.getCityModel(position);
-
-//                startActivityForResult(Utils.intentPutExtra(getApplicationContext(), cityInfoActivity.class, adapter.getCityModel(position)), RequestCode.REQUEST_CODE_CITY_WEATHER);
                 startActivityForResult(tmpCityModel.putExtraIntent(getApplicationContext(), cityInfoActivity.class), RequestCode.REQUEST_CODE_CITY_WEATHER);
 
             }
@@ -93,17 +91,6 @@ public class MainActivity extends AppCompatActivity {
                 case RequestCode.REQUEST_CODE_CITY_WEATHER:
                     CityModel tmpCityData = new CityModel();
                     tmpCityData.getExtraIntent(intent);
-
-//                    tmpCityData.setName(data.getStringExtra("name"));
-//                    tmpCityData.setId(data.getLongExtra("id", 0));  ///dsfsdfdsfdsfdsfsdf
-//                    tmpCityData.setCountry(data.getStringExtra("country"));
-//                    tmpCityData.setTemp(data.getFloatExtra("temp", 0.0f));
-//                    tmpCityData.setClouds(data.getFloatExtra("clouds", 0.0f));
-//                    tmpCityData.setPressure(data.getFloatExtra("pressure", 0.0f));
-//                    tmpCityData.setHuminidity(data.getFloatExtra("huminidity", 0.0f));
-//                    tmpCityData.setWindspeed(data.getFloatExtra("windspeed", 0.0f));
-//                    tmpCityData.setWinddirection(data.getFloatExtra("winddirection", 0.0f));
-////                    tmpCityData.setTimeRefresh(Date.pa(data.getStringExtra("timeRefresh")));
 
                     // СЮДА ДОБАВИТЬ ОБНОВЛЕНИЕ ИНФОРМАЦИИ О ГОРОДЕ tmpCityData.getName() в listDataCity
                     for (int i = 0; i < listDataCity.size(); i++) {

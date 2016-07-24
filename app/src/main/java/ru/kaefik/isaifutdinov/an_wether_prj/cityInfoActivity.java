@@ -58,16 +58,6 @@ public class cityInfoActivity extends AppCompatActivity {
 
         cityDataWeather = new CityModel();
         cityDataWeather.getExtraIntent(getIntent());
-//        cityDataWeather = new CityModel(getIntent().getStringExtra("name").toString());
-//        cityDataWeather.setTemp(getIntent().getFloatExtra("temp", 0.0f));
-//        cityDataWeather.setClouds(getIntent().getFloatExtra("clouds", 0.0f));
-//        cityDataWeather.setHuminidity(getIntent().getFloatExtra("huminidity", 0.0f));
-//        cityDataWeather.setPressure(getIntent().getFloatExtra("pressure", 0.0f));
-//        cityDataWeather.setWindspeed(getIntent().getFloatExtra("windspeed", 0.0f));
-//        cityDataWeather.setWinddirection(getIntent().getFloatExtra("winddirection", 0.0f));
-//        cityDataWeather.setTimeRefresh();  // ???? - разобраться с тем как получить дату из intent
-
-
         refreshData2View(cityDataWeather);
 
         // обновление погоды
@@ -87,9 +77,7 @@ public class cityInfoActivity extends AppCompatActivity {
             task.cancel(true);
         }
 
-//        setResult(RESULT_OK, Utils.intentPutExtra(this, MainActivity.class, cityDataWeather));
         setResult(RESULT_OK, cityDataWeather.putExtraIntent(this, MainActivity.class));
-
         finish();
     }
 
