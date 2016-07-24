@@ -102,5 +102,16 @@ public class Utils {
 
     }
 
+    // возвращает ближайшее из двух чисел ch1 или ch2 число ch
+//    public Float getNearNumber(Float ch,Float ch1,Float ch2){
+//        Float d =  abs(ch2-ch1)/2;
+//        if (ch<=ch1+d){
+//            return ch1;
+//        } else{
+//            return ch2;
+//        }
+//
+//    }
+
 
 }

@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView nameCity;
     private TextView myText;
+    private EditText editTextAddNewCity;
     private String MY_APPID; // уникальный ключ для доступа к сервису OpenWeatherMap
     List<CityModel> listDataCity; // данные прогноза погоды
 
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         nameCity = (ListView) findViewById(R.id.listView);
+        editTextAddNewCity = (EditText) findViewById(R.id.editTextAddNewCity);
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
         if (listDataCity == null) {
             listDataCity = new ArrayList<CityModel>();
@@ -116,13 +121,17 @@ public class MainActivity extends AppCompatActivity {
 
     // добавления нового города
     public void onClickAddCity(View v) {
+        String newCity = editTextAddNewCity.getText().toString();
+        // СЮДА ДОБАВИТЬ ПРОВЕРКИ ВВОДА НАЗВАНИЯ ГОРОДА
+        listDataCity.add(new CityModel(newCity));
+        Toast.makeText(getApplicationContext(), "Добален новый город: "+ newCity, Toast.LENGTH_SHORT).show();
+        editTextAddNewCity.setText("");
 
     }
 
     @Override
     public void onBackPressed() {
         openQuitDialog();
-
     }
 
     private void openQuitDialog() {
