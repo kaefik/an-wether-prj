@@ -1,16 +1,15 @@
 package ru.kaefik.isaifutdinov.an_wether_prj;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.concurrent.ExecutionException;
 
 import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
-import ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils;
 
 public class cityInfoActivity extends AppCompatActivity {
 
@@ -22,6 +21,7 @@ public class cityInfoActivity extends AppCompatActivity {
     TextView windspeedCity;
     TextView winddirectionCity;
     TextView textTimeRefresh;
+    ImageView imageWeatherConditions;
 
     private CityModel cityDataWeather;
     private cityInfoAsyncTask task;
@@ -55,6 +55,7 @@ public class cityInfoActivity extends AppCompatActivity {
         windspeedCity = (TextView) findViewById(R.id.windspeedCity);
         winddirectionCity = (TextView) findViewById(R.id.winddirectionCity);
         textTimeRefresh = (TextView) findViewById(R.id.textTimeRefresh);
+        imageWeatherConditions = (ImageView) findViewById(R.id.imageWeatherConditions);
 
         cityDataWeather = new CityModel();
         cityDataWeather.getExtraIntent(getIntent());
@@ -122,6 +123,7 @@ public class cityInfoActivity extends AppCompatActivity {
         windspeedCity.setText(Float.toString(cityModel.getWindspeed()) + " м/с");
         winddirectionCity.setText(Float.toString(cityModel.getWinddirection()) + " град.");
         textTimeRefresh.setText(cityModel.getTimeRefresh().toString());
+        imageWeatherConditions.setImageResource(R.mipmap.weather01n); // сделать правильный вывод изобращения погоды
     }
 
 

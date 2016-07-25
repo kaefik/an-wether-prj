@@ -1,18 +1,18 @@
 package ru.kaefik.isaifutdinov.an_wether_prj;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +66,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        // Обновление погоды при старте
+//        for(int i=0;i<listDataCity.size();i++){
+//            listDataCity.get(i).getHttpWeather();
+//        }
+
+
     }
 
     // инициализация данных для списка городов
@@ -78,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         listDataCity.add(new CityModel("Istanbul"));
         listDataCity.add(new CityModel("London"));
         listDataCity.add(new CityModel("L"));
+
 
         return listDataCity;
     }
@@ -117,15 +125,21 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Error onActivityResult (закончился лимит или нет интернета) ", Toast.LENGTH_SHORT).show();
         }
+        nameCity.invalidateViews();
     }
 
     // добавления нового города
     public void onClickAddCity(View v) {
-        String newCity = editTextAddNewCity.getText().toString();
+        String newCity = Utils.firstUpCaseString(editTextAddNewCity.getText().toString().trim());
         // СЮДА ДОБАВИТЬ ПРОВЕРКИ ВВОДА НАЗВАНИЯ ГОРОДА
-        listDataCity.add(new CityModel(newCity));
-        Toast.makeText(getApplicationContext(), "Добален новый город: "+ newCity, Toast.LENGTH_SHORT).show();
+        if (!newCity.equals("")) {
+            listDataCity.add(new CityModel(newCity));
+            Toast.makeText(getApplicationContext(), "Добален новый город: " + newCity, Toast.LENGTH_SHORT).show();
+        }
         editTextAddNewCity.setText("");
+        // прячем клавиатуру
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editTextAddNewCity.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
     }
 

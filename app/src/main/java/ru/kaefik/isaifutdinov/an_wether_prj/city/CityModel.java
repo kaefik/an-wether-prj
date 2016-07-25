@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils.getHttpRequestFromUrl;
 import static ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils.getObjFromJson;
@@ -24,6 +26,7 @@ public class CityModel {
     private float windspeed; // скорость ветра
     private float winddirection; // направление ветра
     private Date timeRefresh; // время обновления прогноза погоды
+    private Map weather; // описание и иконка погоды
 
     public CityModel(long id, String country, String name, float temp, float clouds, float huminidity, float pressure, float windspeed, float winddirection, int i) {
         this.id = id;
@@ -37,6 +40,11 @@ public class CityModel {
         this.winddirection = winddirection;
         this.timeRefresh = new Date();
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+        this.weather = new HashMap<String,String>();
+        this.weather.put("id","");
+        this.weather.put("icon","");
+        this.weather.put("description","");
+        this.weather.put("main","");
     }
 
     public CityModel(String name) {
@@ -51,6 +59,11 @@ public class CityModel {
         this.winddirection = 0.00f;
         this.timeRefresh = new Date();
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+        this.weather = new HashMap<String,String>();
+        this.weather.put("id","");
+        this.weather.put("icon","");
+        this.weather.put("description","");
+        this.weather.put("main","");
     }
 
     public CityModel() {
@@ -65,6 +78,11 @@ public class CityModel {
         this.winddirection = 0.00f;
         this.timeRefresh = new Date();
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+        this.weather = new HashMap<String,String>();
+        this.weather.put("id","");
+        this.weather.put("icon","");
+        this.weather.put("description","");
+        this.weather.put("main","");
     }
 
     // обновить время обновления текущей датой
@@ -102,6 +120,23 @@ public class CityModel {
             setId(Long.parseLong(getObjFromJson(res, "id", null))); // сделать парсинг параметра id
         }
     }
+
+//    public Map getWeather() {
+//        return weather;
+//    }
+//
+//    //  получение содержимого по ключу index
+//    public Map getWeather(String index) {
+//        return weather.get(index);
+//    }
+//
+//    public void setWeather(Map weather) {
+//        this.weather = weather;
+//    }
+//
+//    public void setWeather(String index) {
+//        this.weather.put();
+//    }
 
     public void setMY_APPID(String MY_APPID) {
         this.MY_APPID = MY_APPID;

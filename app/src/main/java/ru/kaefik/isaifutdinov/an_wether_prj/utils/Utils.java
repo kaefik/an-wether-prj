@@ -1,9 +1,5 @@
 package ru.kaefik.isaifutdinov.an_wether_prj.utils;
 
-import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,8 +12,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
 
 public class Utils {
 
@@ -68,6 +62,12 @@ public class Utils {
             e.printStackTrace();
         }
         return res;
+    }
+
+    //сделать первую букву заглавной
+    public static String firstUpCaseString(String word) {
+        if (word == null || word.isEmpty()) return "";
+        return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
 
     // перевод градусов в румбы (С, В, Ю, З и т д)
