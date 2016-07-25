@@ -114,29 +114,36 @@ public class CityModel {
             setHuminidity(Float.parseFloat(getObjFromJson(res, "main", "humidity")));
             setWindspeed(Float.parseFloat(getObjFromJson(res, "wind", "speed")));
             setWinddirection(Float.parseFloat(getObjFromJson(res, "wind", "deg")));
-//                    System.out.println(getObjFromJson(res,"weather","description")); // clear sky
             setCountry(getObjFromJson(res, "sys", "country"));
             setName(getObjFromJson(res, "name", null)); // сделать парсинг параметра name
             setId(Long.parseLong(getObjFromJson(res, "id", null))); // сделать парсинг параметра id
+
+            String ss = getObjFromJson(res,"weather",null);
+//            "weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01n"}]
+            String tmp1 = ss.substring(1, ss.length()-1);
+            setWeather("id",(getObjFromJson(tmp1,"id",null)));
+            setWeather("main",(getObjFromJson(tmp1,"main",null)));
+            setWeather("description",(getObjFromJson(tmp1,"description",null)));
+            setWeather("icon",(getObjFromJson(tmp1,"icon",null)));
         }
     }
 
-//    public Map getWeather() {
-//        return weather;
-//    }
-//
-//    //  получение содержимого по ключу index
-//    public Map getWeather(String index) {
-//        return weather.get(index);
-//    }
-//
+    public Map getWeather() {
+        return weather;
+    }
+
+    //  получение содержимого по ключу index
+    public String getWeather(String index) {
+        return weather.get(index).toString();
+    }
+
 //    public void setWeather(Map weather) {
 //        this.weather = weather;
 //    }
-//
-//    public void setWeather(String index) {
-//        this.weather.put();
-//    }
+
+    public void setWeather(String index, String value) {
+        this.weather.put(index,value);
+    }
 
     public void setMY_APPID(String MY_APPID) {
         this.MY_APPID = MY_APPID;

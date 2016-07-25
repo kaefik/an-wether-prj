@@ -22,6 +22,7 @@ public class cityInfoActivity extends AppCompatActivity {
     TextView winddirectionCity;
     TextView textTimeRefresh;
     ImageView imageWeatherConditions;
+    TextView textViewDescriptionWeather;
 
     private CityModel cityDataWeather;
     private cityInfoAsyncTask task;
@@ -56,6 +57,7 @@ public class cityInfoActivity extends AppCompatActivity {
         winddirectionCity = (TextView) findViewById(R.id.winddirectionCity);
         textTimeRefresh = (TextView) findViewById(R.id.textTimeRefresh);
         imageWeatherConditions = (ImageView) findViewById(R.id.imageWeatherConditions);
+        textViewDescriptionWeather = (TextView) findViewById(R.id.textViewDescriptionWeather);
 
         cityDataWeather = new CityModel();
         cityDataWeather.getExtraIntent(getIntent());
@@ -122,8 +124,15 @@ public class cityInfoActivity extends AppCompatActivity {
         pressureCity.setText(Float.toString(cityModel.getPressure() * 0.75f) + " мм рт.ст.");
         windspeedCity.setText(Float.toString(cityModel.getWindspeed()) + " м/с");
         winddirectionCity.setText(Float.toString(cityModel.getWinddirection()) + " град.");
+        imageWeatherConditions.setImageResource(getResourceImageFile("weather"+cityModel.getWeather("icon"))); // сделать правильный вывод изобращения погоды
         textTimeRefresh.setText(cityModel.getTimeRefresh().toString());
-        imageWeatherConditions.setImageResource(R.mipmap.weather01n); // сделать правильный вывод изобращения погоды
+        textViewDescriptionWeather.setText(cityModel.getWeather("description"));
+
+    }
+
+    //  из имени ресурса получить идентификатор на ресурс
+    public int getResourceImageFile(String name){
+        return getResources().getIdentifier(name , "mipmap", getPackageName());
     }
 
 
