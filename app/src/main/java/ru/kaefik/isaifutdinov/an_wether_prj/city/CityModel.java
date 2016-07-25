@@ -104,6 +104,13 @@ public class CityModel {
     public void getHttpWeather() {
         //api.openweathermap.org/data/2.5/weather?q=London&APPID=9a4be4eeb7de3b88211989559a0849f7
 
+//        {"coord":{"lon":49.12,"lat":55.79},
+//         "weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01n"}],
+//         "base":"cmc stations","main":{"temp":293.9,"pressure":1015,"humidity":52,"temp_min":293.71,"temp_max":294.15},
+//         "wind":{"speed":3,"deg":50},"clouds":{"all":0},"dt":1469468475,
+//         "sys":{"type":1,"id":7335,"message":0.0089,"country":"RU","sunrise":1469407055,"sunset":1469466078},
+//         "id":551487,"name":"Kazan","cod":200}
+
 
         String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q=" + getName() + "&units=metric&APPID=" + getMY_APPID());
         if (res == null) {
