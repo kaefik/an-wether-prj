@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">OpenWeatherMap Client</string>
+    <string name="today">СЕЙЧАС</string>
+    <string name="gorod">город</string>
+    <string name="descweather">описание погоды</string>
+    <string name="temp">температура</string>
+    <string name="winddirection">направление ветра</string>
+    <string name="pressure">давление</string>
+    <string name="huminidity">влажность</string>
+    <string name="windspeed">скорость ветра</string>
+    <string name="clouds">clouds</string>
+    <string name="refreshtime">Обновлено около:</string>
+    <string name="refresh">ОБНОВИТЬ</string>
+    <string name="txtviborcity">Выбрать город</string>
 </resources>
