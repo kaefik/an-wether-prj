@@ -26,7 +26,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+"
+        android:text="@string/txtplus"
         android:id="@+id/button"
         android:padding="15dp"
         android:onClick="onClickAddCity"
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Список городов"
+        android:text="@string/txtlistcity"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -53,5 +53,5 @@
         android:layout_toLeftOf="@+id/button"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="Добавь свой город" />
+        android:hint="@string/txtaddcity" />
 </RelativeLayout>

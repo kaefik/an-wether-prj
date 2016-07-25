@@ -27,8 +27,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/gorod"
         android:id="@+id/nameCity"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:padding="5dp"
         android:layout_row="1"
         android:layout_column="0"
@@ -40,7 +38,8 @@
         android:id="@+id/imageWeatherConditions"
         android:layout_row="1"
         android:layout_column="1"
-        android:src="@mipmap/weather01d"/>
+        android:src="@mipmap/weather01d"
+        android:contentDescription="" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,9 +65,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/temp"
             android:id="@+id/tempCity"
-            android:layout_below="@+id/nameCity"
-            android:layout_centerHorizontal="true"
-            android:padding="5dp"
+        android:padding="5dp"
             android:layout_row="3"
             android:layout_column="1" />
 
@@ -87,9 +84,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/windspeed"
             android:id="@+id/windspeedCity"
-            android:layout_below="@+id/pressureCity"
-            android:layout_centerHorizontal="true"
-            android:padding="5dp"
+        android:padding="5dp"
             android:layout_row="4"
             android:layout_column="1" />
 
@@ -109,8 +104,6 @@
         android:text="@string/winddirection"
         android:id="@+id/winddirectionCity"
         android:padding="5dp"
-        android:layout_below="@+id/windspeedCity"
-        android:layout_centerHorizontal="true"
         android:layout_row="5"
         android:layout_column="1" />
 
@@ -130,9 +123,7 @@
             android:text="@string/huminidity"
             android:id="@+id/huminidityCity"
             android:padding="5dp"
-            android:layout_below="@+id/cloudsCity"
-            android:layout_toLeftOf="@+id/textView2"
-            android:layout_toStartOf="@+id/textView2"
+        android:layout_toStartOf="@+id/textView2"
             android:layout_row="6"
             android:layout_column="1" />
 
@@ -153,8 +144,7 @@
             android:text="@string/refreshtime"
             android:id="@+id/textTimeRefresh"
             android:padding="5dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/winddirectionCity"
+        android:layout_alignRight="@+id/winddirectionCity"
             android:layout_alignEnd="@+id/winddirectionCity"
             android:layout_row="10"
             android:layout_column="1" />
@@ -175,9 +165,7 @@
             android:text="@string/clouds"
             android:id="@+id/cloudsCity"
             android:padding="5dp"
-            android:layout_below="@+id/tempCity"
-            android:layout_alignLeft="@+id/tempCity"
-            android:layout_alignStart="@+id/tempCity"
+        android:layout_alignStart="@+id/tempCity"
             android:layout_row="8"
             android:layout_column="1" />
 
@@ -209,9 +197,7 @@
             android:id="@+id/btnBack"
             android:padding="15dp"
             android:onClick="onClickgoBackMainActivity"
-            android:layout_below="@+id/winddirectionCity"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
+        android:layout_alignParentEnd="true"
             android:layout_row="11"
             android:layout_column="0" />
 
