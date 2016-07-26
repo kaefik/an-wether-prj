@@ -30,7 +30,7 @@ public class cityInfoActivity extends AppCompatActivity {
     class cityInfoAsyncTask extends AsyncTask<Void, Void, CityModel> {
         @Override
         protected CityModel doInBackground(Void... voids) {
-            System.out.println(cityDataWeather.getName());
+//            System.out.println(cityDataWeather.getName());
             cityDataWeather.getHttpWeather();   //??? не нравится что использую в этом классе объект cityDataWeather
             return cityDataWeather;
         }
@@ -38,6 +38,7 @@ public class cityInfoActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(CityModel cityModel) {
             super.onPostExecute(cityModel);
+            refreshData2View(cityModel);
 
         }
     }
@@ -63,6 +64,11 @@ public class cityInfoActivity extends AppCompatActivity {
         cityDataWeather.getExtraIntent(getIntent());
         refreshData2View(cityDataWeather);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         // обновление погоды
         try {
             refreshDataWeather();
@@ -71,7 +77,6 @@ public class cityInfoActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 
     // возврат к основной активити MainActivity
