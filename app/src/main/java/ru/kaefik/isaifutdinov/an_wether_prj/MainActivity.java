@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -15,6 +16,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onProgressUpdate(CityModel... values) {
             super.onProgressUpdate(values);
             nameCity.invalidateViews();
+            MainActivity.this.setProgressBarIndeterminateVisibility(false);
 //            refreshData2View(cityModel);
 
         }
@@ -62,26 +67,20 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(List<CityModel> values) {
             super.onPostExecute(values);
 
+
         }
     }
 
 
-    public void onClickRefresh(View v) {
-//        try {
-//            if (task != null) {
-//                task.cancel(true);
-//            }
-        task = new cityInfoAsyncTask();
-        task.execute(listDataCity);
-//            listDataCity =
-//                    task.get();  //  поменять здесь
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        nameCity.invalidateViews();
+
+    public void onClickRefresh(View v) throws JSONException {
+        JSONObject jo = listDataCity.get(0).toJSON();
+        System.out.println("JSONObject :: "+jo);
+        CityModel tmpCityModel = new CityModel(jo);
+        System.out.println("CityModel :: "+tmpCityModel);
+
     }
+
 
     public String getMY_APPID() {
         return MY_APPID;
@@ -95,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); // добавления прогресс бара на заголовок activity
         setContentView(R.layout.activity_main);
 
         nameCity = (ListView) findViewById(R.id.listView);
@@ -119,15 +119,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+   }
 
-        // Обновление погоды при старте
-//        for(int i=0;i<listDataCity.size();i++){
-//            listDataCity.get(i).getHttpWeather();
-//        }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startcityInfoAsyncTask(listDataCity);
+    }
+
+    public void startcityInfoAsyncTask(List<CityModel> listCity){
+        MainActivity.this.setProgressBarIndeterminateVisibility(true);
         task = new cityInfoAsyncTask();
         task.execute(listDataCity);
         System.out.println("");
     }
+
 
 
     // инициализация данных для списка городов
@@ -145,13 +151,7 @@ public class MainActivity extends AppCompatActivity {
         return listDataCity;
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        System.out.println("dfdsfsd");
-    }
-
-    @Override
+     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 //        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         // СЮДА ДОБАВИТЬ ПРОВЕРКИ ВВОДА НАЗВАНИЯ ГОРОДА
         if ((!newCity.equals("")) && (!isExistNameFromList(listDataCity,newCity))) {
             listDataCity.add(new CityModel(newCity));
-            Toast.makeText(getApplicationContext(), "Добален новый город: " + newCity, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.txtaddcityedit) + newCity, Toast.LENGTH_SHORT).show();
         }
         editTextAddNewCity.setText("");
         // прячем клавиатуру

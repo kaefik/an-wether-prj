@@ -4,6 +4,9 @@ package ru.kaefik.isaifutdinov.an_wether_prj.city;
 import android.content.Context;
 import android.content.Intent;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,11 +43,11 @@ public class CityModel {
         this.winddirection = winddirection;
         this.timeRefresh = new Date();
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
-        this.weather = new HashMap<String,String>();
-        this.weather.put("id","");
-        this.weather.put("icon","");
-        this.weather.put("description","");
-        this.weather.put("main","");
+        this.weather = new HashMap<String, String>();
+        this.weather.put("id", "");
+        this.weather.put("icon", "");
+        this.weather.put("description", "");
+        this.weather.put("main", "");
     }
 
     public CityModel(String name) {
@@ -59,11 +62,11 @@ public class CityModel {
         this.winddirection = 0.00f;
         this.timeRefresh = new Date();
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
-        this.weather = new HashMap<String,String>();
-        this.weather.put("id","");
-        this.weather.put("icon","");
-        this.weather.put("description","");
-        this.weather.put("main","");
+        this.weather = new HashMap<String, String>();
+        this.weather.put("id", "");
+        this.weather.put("icon", "");
+        this.weather.put("description", "");
+        this.weather.put("main", "");
     }
 
     public CityModel() {
@@ -78,12 +81,34 @@ public class CityModel {
         this.winddirection = 0.00f;
         this.timeRefresh = new Date();
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
-        this.weather = new HashMap<String,String>();
-        this.weather.put("id","");
-        this.weather.put("icon","");
-        this.weather.put("description","");
-        this.weather.put("main","");
+        this.weather = new HashMap<String, String>();
+        this.weather.put("id", "");
+        this.weather.put("icon", "");
+        this.weather.put("description", "");
+        this.weather.put("main", "");
     }
+
+    public CityModel(JSONObject jo) throws JSONException {
+        this.name = (String) jo.get("name");
+        this.id = (Long) jo.get("id");
+        this.country = (String)  jo.get("country");
+        this.temp = Float.parseFloat(jo.get("temp").toString());
+        this.clouds = Float.parseFloat(jo.get("clouds").toString());
+        this.huminidity = Float.parseFloat(jo.get("huminidity").toString());
+        this.pressure = Float.parseFloat(jo.get("pressure").toString());
+        this.windspeed =Float.parseFloat(jo.get("windspeed").toString());
+        this.winddirection = Float.parseFloat( jo.get("winddirection").toString());
+        this.timeRefresh = (Date) jo.get("timeRefresh");
+        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+        this.weather = (HashMap<String, String>) jo.get("weather");
+//                new HashMap<String, String>();
+//        this.weather.put("id", "");
+//        this.weather.put("icon", "");
+//        this.weather.put("description", "");
+//        this.weather.put("main", "");
+
+    }
+
 
     // обновить время обновления текущей датой
     public void setTimeRefresh() {
@@ -150,7 +175,7 @@ public class CityModel {
 //    }
 
     public void setWeather(String index, String value) {
-        this.weather.put(index,value);
+        this.weather.put(index, value);
     }
 
     public void setMY_APPID(String MY_APPID) {
@@ -236,7 +261,7 @@ public class CityModel {
 
 
     // реализация передачи данных через intent
-    public  Intent putExtraIntent(Context context, Class<?> klass) {
+    public Intent putExtraIntent(Context context, Class<?> klass) {
 
         Intent intent = new Intent(context, klass);
         intent.putExtra("name", getName());
@@ -254,7 +279,7 @@ public class CityModel {
 
 
     // реализация получение данных через intent
-    public  void getExtraIntent(Intent intent) {
+    public void getExtraIntent(Intent intent) {
         setName(intent.getStringExtra("name"));
         setId(intent.getLongExtra("id", 0));  ///dsfsdfdsfdsfdsfsdf
         setCountry(intent.getStringExtra("country"));
@@ -265,6 +290,25 @@ public class CityModel {
         setWindspeed(intent.getFloatExtra("windspeed", 0.0f));
         setWinddirection(intent.getFloatExtra("winddirection", 0.0f));
 //                    setTimeRefresh(Date.pa(data.getStringExtra("timeRefresh")));
+    }
+
+    public JSONObject toJSON() throws JSONException {
+//        String res="";
+        JSONObject jo = new JSONObject();
+        jo.put("name", name);
+        jo.put("id", id);
+        jo.put("country", country);
+        jo.put("temp", temp);
+        jo.put("clouds", clouds);
+        jo.put("huminidity", huminidity);
+        jo.put("pressure", pressure);
+        jo.put("windspeed", windspeed);
+        jo.put("winddirection", winddirection);
+        jo.put("timeRefresh", timeRefresh);
+        jo.put("windspeed", windspeed);
+        jo.put("windspeed", windspeed);
+        jo.put("weather", weather);
+        return jo;
     }
 
 }

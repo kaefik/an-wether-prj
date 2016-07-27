@@ -15,4 +15,5 @@
     <string name="txtlistcity">Список городов</string>
     <string name="txtaddcity">Добавь свой город</string>
     <string name="txtplus">+</string>
+    <string name="txtaddcityedit">"Добален новый город: "</string>
 </resources>

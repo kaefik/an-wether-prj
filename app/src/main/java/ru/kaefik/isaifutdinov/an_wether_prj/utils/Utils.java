@@ -59,7 +59,8 @@ public class Utils {
                 }
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            res = "0";                 // ?????????!!!!!!!!!! сделать адекватную обработку исключения
         }
         return res;
     }
