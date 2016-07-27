@@ -116,22 +116,23 @@ public class CityModel {
         if (res == null) {
             System.out.println("Ошибка загрузки");
         } else {
-            setTemp(Float.parseFloat(getObjFromJson(res, "main", "temp")));
-            setPressure(Float.parseFloat(getObjFromJson(res, "main", "pressure")));
-            setHuminidity(Float.parseFloat(getObjFromJson(res, "main", "humidity")));
-            setWindspeed(Float.parseFloat(getObjFromJson(res, "wind", "speed")));
-            setWinddirection(Float.parseFloat(getObjFromJson(res, "wind", "deg")));
-            setCountry(getObjFromJson(res, "sys", "country"));
-            setName(getObjFromJson(res, "name", null)); // сделать парсинг параметра name
-            setId(Long.parseLong(getObjFromJson(res, "id", null))); // сделать парсинг параметра id
+            if (getObjFromJson(res, "name", null).equals(this.name)) { // сделать парсинг параметра name)
+                setTemp(Float.parseFloat(getObjFromJson(res, "main", "temp")));
+                setPressure(Float.parseFloat(getObjFromJson(res, "main", "pressure")));
+                setHuminidity(Float.parseFloat(getObjFromJson(res, "main", "humidity")));
+                setWindspeed(Float.parseFloat(getObjFromJson(res, "wind", "speed")));
+                setWinddirection(Float.parseFloat(getObjFromJson(res, "wind", "deg")));
+                setCountry(getObjFromJson(res, "sys", "country"));
+                setId(Long.parseLong(getObjFromJson(res, "id", null))); // сделать парсинг параметра id
 
-            String ss = getObjFromJson(res,"weather",null);
+                String ss = getObjFromJson(res, "weather", null);
 //            "weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01n"}]
-            String tmp1 = ss.substring(1, ss.length()-1);
-            setWeather("id",(getObjFromJson(tmp1,"id",null)));
-            setWeather("main",(getObjFromJson(tmp1,"main",null)));
-            setWeather("description",(getObjFromJson(tmp1,"description",null)));
-            setWeather("icon",(getObjFromJson(tmp1,"icon",null)));
+                String tmp1 = ss.substring(1, ss.length() - 1);
+                setWeather("id", (getObjFromJson(tmp1, "id", null)));
+                setWeather("main", (getObjFromJson(tmp1, "main", null)));
+                setWeather("description", (getObjFromJson(tmp1, "description", null)));
+                setWeather("icon", (getObjFromJson(tmp1, "icon", null)));
+            }
         }
     }
 

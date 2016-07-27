@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import ru.kaefik.isaifutdinov.an_wether_prj.adapter.CityModelAdapter;
 import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
@@ -37,46 +36,51 @@ public class MainActivity extends AppCompatActivity {
     private cityInfoAsyncTask task;
 
     // проработать этот AsyncTask применимо к списку городов
-    class cityInfoAsyncTask extends AsyncTask<List<CityModel>, Void, CityModel> {
+    class cityInfoAsyncTask extends AsyncTask<List<CityModel>, CityModel, List<CityModel>> {
         @Override
-        protected CityModel doInBackground(List<CityModel>... listcityModels) {
-//            System.out.println(cityDataWeather.getName());
-            CityModel cityModel = listcityModels[0].get(0);
-            cityModel.getHttpWeather();
-            return cityModel;
+        protected List<CityModel> doInBackground(List<CityModel>... listcityModels) {
+//            CityModel cityModel = listcityModels[0].get(0);
+
+            for (int i = 0; i < listcityModels[0].size(); i++) {
+                listcityModels[0].get(i).getHttpWeather();
+                publishProgress(listcityModels[0].get(i));
+            }
+
+
+            return listcityModels[0];
         }
 
         @Override
-        protected void onProgressUpdate(Void... values) {
+        protected void onProgressUpdate(CityModel... values) {
             super.onProgressUpdate(values);
+            nameCity.invalidateViews();
+//            refreshData2View(cityModel);
 
         }
 
         @Override
-        protected void onPostExecute(CityModel cityModel) {
-            super.onPostExecute(cityModel);
-//            refreshData2View(cityModel);
+        protected void onPostExecute(List<CityModel> values) {
+            super.onPostExecute(values);
 
         }
     }
 
 
     public void onClickRefresh(View v) {
-        try {
+//        try {
 //            if (task != null) {
 //                task.cancel(true);
 //            }
-            task = new cityInfoAsyncTask();
-            task.execute();
-
-            listDataCity.set(0,task.get());  //  поменять здесь
-
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        nameCity.invalidateViews();
+        task = new cityInfoAsyncTask();
+        task.execute(listDataCity);
+//            listDataCity =
+//                    task.get();  //  поменять здесь
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        nameCity.invalidateViews();
     }
 
     public String getMY_APPID() {
@@ -120,9 +124,11 @@ public class MainActivity extends AppCompatActivity {
 //        for(int i=0;i<listDataCity.size();i++){
 //            listDataCity.get(i).getHttpWeather();
 //        }
-
+        task = new cityInfoAsyncTask();
+        task.execute(listDataCity);
 
     }
+
 
     // инициализация данных для списка городов
     private List<CityModel> initDataCity() {
