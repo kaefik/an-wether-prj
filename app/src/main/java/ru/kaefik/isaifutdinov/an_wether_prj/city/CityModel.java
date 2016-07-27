@@ -3,13 +3,17 @@ package ru.kaefik.isaifutdinov.an_wether_prj.city;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateFormat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils;
 
 import static ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils.getHttpRequestFromUrl;
 import static ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils.getObjFromJson;
@@ -89,23 +93,19 @@ public class CityModel {
     }
 
     public CityModel(JSONObject jo) throws JSONException {
-        this.name = (String) jo.get("name");
-        this.id = (Long) jo.get("id");
-        this.country = (String)  jo.get("country");
+        this.name = jo.get("name").toString();
+        this.id = Long.parseLong(jo.get("id").toString());
+        this.country =  jo.get("country").toString();
         this.temp = Float.parseFloat(jo.get("temp").toString());
         this.clouds = Float.parseFloat(jo.get("clouds").toString());
         this.huminidity = Float.parseFloat(jo.get("huminidity").toString());
         this.pressure = Float.parseFloat(jo.get("pressure").toString());
         this.windspeed =Float.parseFloat(jo.get("windspeed").toString());
         this.winddirection = Float.parseFloat( jo.get("winddirection").toString());
-        this.timeRefresh = (Date) jo.get("timeRefresh");
+//        DateFormat format = new SimpleDateFormat();
+//        this.timeRefresh = format.parse(jo.get("timeRefresh").toString());
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
-        this.weather = (HashMap<String, String>) jo.get("weather");
-//                new HashMap<String, String>();
-//        this.weather.put("id", "");
-//        this.weather.put("icon", "");
-//        this.weather.put("description", "");
-//        this.weather.put("main", "");
+//        this.weather = (HashMap<String, String>) jo.get("weather");
 
     }
 
@@ -293,7 +293,6 @@ public class CityModel {
     }
 
     public JSONObject toJSON() throws JSONException {
-//        String res="";
         JSONObject jo = new JSONObject();
         jo.put("name", name);
         jo.put("id", id);
@@ -310,5 +309,10 @@ public class CityModel {
         jo.put("weather", weather);
         return jo;
     }
+
+   public void saveToFile(String nameFile,Context context) throws JSONException {
+       String strJo = this.toJSON().toString();
+       Utils.saveFile(nameFile,strJo,context);
+   }
 
 }

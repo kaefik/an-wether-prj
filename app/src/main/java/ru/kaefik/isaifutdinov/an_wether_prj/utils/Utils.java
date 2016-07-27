@@ -1,9 +1,14 @@
 package ru.kaefik.isaifutdinov.an_wether_prj.utils;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,6 +17,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 public class Utils {
 
@@ -71,6 +78,53 @@ public class Utils {
         return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
 
+
+    //----- работа  с файлами
+
+    // Метод для открытия файла
+    public static String openFile(String filename,Context context) {
+        String res = "";
+        try {
+            FileInputStream inputStream = context.openFileInput(filename);
+
+            if (inputStream != null) {
+                InputStreamReader isr = new InputStreamReader(inputStream);
+                BufferedReader reader = new BufferedReader(isr);
+                String line;
+                StringBuilder builder = new StringBuilder();
+
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+
+                inputStream.close();
+                res = builder.toString();
+            }
+        } catch (Throwable t) {
+//            Toast.makeText(getApplicationContext(),
+//                    "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
+        }
+        return res;
+    }
+
+
+    // Метод для сохранения файла
+    public static void saveFile(String filename,String strText,Context context) {
+        try {
+            FileOutputStream outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
+            OutputStreamWriter osw = new OutputStreamWriter(outputStream);
+            osw.write(strText);
+            osw.close();
+        } catch (Throwable t) {
+//            Toast.makeText(getApplicationContext(),
+//                    "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    //----- END работа  с файлами
+
+
     // перевод градусов в румбы (С, В, Ю, З и т д)
     public String windGradus2Rumb(Float gradusWind) {
         String windRumb = "";
@@ -113,7 +167,6 @@ public class Utils {
 //        }
 //
 //    }
-
 
 
 }

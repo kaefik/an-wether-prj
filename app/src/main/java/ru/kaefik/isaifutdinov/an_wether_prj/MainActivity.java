@@ -72,12 +72,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+// тестовая кнопка для отработки различных сценариев
     public void onClickRefresh(View v) throws JSONException {
-        JSONObject jo = listDataCity.get(0).toJSON();
-        System.out.println("JSONObject :: "+jo);
-        CityModel tmpCityModel = new CityModel(jo);
-        System.out.println("CityModel :: "+tmpCityModel);
+
+        CityModel tmpCityModel = listDataCity.get(0);
+
+        tmpCityModel.saveToFile(tmpCityModel.getName()+".txt",getApplicationContext());
+
+//        JSONObject jo = listDataCity.get(0).toJSON();
+//        System.out.println("JSONObject :: "+jo);
+////        CityModel tmpCityModel = new CityModel(jo);
+////        System.out.println("CityModel :: "+tmpCityModel);
+//        Utils.saveFile("tempfile.txt",jo.toString(),getApplicationContext());
+//
+//        JSONObject jo2 = new JSONObject(Utils.openFile("tempfile.txt",getApplicationContext()));
+//        CityModel tmpCityModel = new CityModel(jo2);
+//        System.out.println("CityModel :: "+tmpCityModel);
 
     }
 
