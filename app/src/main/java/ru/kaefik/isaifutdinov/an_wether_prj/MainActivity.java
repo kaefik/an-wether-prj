@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
         task = new cityInfoAsyncTask();
         task.execute(listDataCity);
-
+        System.out.println("");
     }
 
 
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClickAddCity(View v) {
         String newCity = Utils.firstUpCaseString(editTextAddNewCity.getText().toString().trim());
         // СЮДА ДОБАВИТЬ ПРОВЕРКИ ВВОДА НАЗВАНИЯ ГОРОДА
-        if (!newCity.equals("")) {
+        if ((!newCity.equals("")) && (!isExistNameFromList(listDataCity,newCity))) {
             listDataCity.add(new CityModel(newCity));
             Toast.makeText(getApplicationContext(), "Добален новый город: " + newCity, Toast.LENGTH_SHORT).show();
         }
@@ -226,5 +226,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // проверка на то что namecity есть в списке имен городов, true - есть, false - нет
+    public boolean isExistNameFromList(List<CityModel> listcity, String namecity){
+        boolean flag = false;
+        for(int i=0;i<listcity.size();i++){
+            if (listcity.get(i).getName().equals(namecity)){
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+
+    }
 
 }
