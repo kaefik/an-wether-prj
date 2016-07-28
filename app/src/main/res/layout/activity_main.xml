@@ -63,17 +63,15 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/textView"
         android:layout_toStartOf="@+id/textView"
-        android:onClick="onClickRefresh" />
+        android:onClick="onClickRefreshCityInfo" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="restore"
         android:id="@+id/button2"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button"
+        android:onClick="onClickRefreshCityInfo"
+        android:background="@mipmap/btnrefresh"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView"
-        android:onClick="onClickRestore"/>
+        android:layout_alignBottom="@+id/btnRefresh"/>
 </RelativeLayout>

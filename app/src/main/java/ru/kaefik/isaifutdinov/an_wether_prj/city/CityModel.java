@@ -336,10 +336,16 @@ public class CityModel {
        Utils.saveFile(nameFile,strJo,context);
    }
 
-    // открыть файл nameFile сохраненный в виде Josn и сохранить данные в объект
-   public void openFile(String nameFile,Context context) throws JSONException {
-       JSONObject jo = new JSONObject(Utils.openFile(nameFile,context));
-       this.CityModel( new CityModel(jo));
+    // открыть файл nameFile сохраненный в виде Josn и сохранить данные в объект, возвращает false если произошла ошибка открытия, иначе true
+   public boolean openFile(String nameFile,Context context) {
+       boolean flagStatus = true;
+       try {
+           JSONObject jo = new JSONObject(Utils.openFile(nameFile,context));
+           this.CityModel( new CityModel(jo));
+       } catch (JSONException e) {
+           flagStatus =false;
+       }
+       return flagStatus;
    }
 
 

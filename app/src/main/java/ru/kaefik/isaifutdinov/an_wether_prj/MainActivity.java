@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         final CityModelAdapter adapter = new CityModelAdapter(this, listDataCity);
         nameCity.setAdapter(adapter);
 
+
         // Обработка события на клик по элементу списка
         nameCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -99,51 +100,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         try {
             restoreCityInfoFromFile();
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         startcityInfoAsyncTask(listDataCity);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
 
     public void onClickRestore(View v) throws JSONException {
-        List<CityModel> tmplistDataCity = new ArrayList<CityModel>();
-        for(int i=0;i<listDataCity.size();i++) {
-            String nameFile = listDataCity.get(i).getName();
-            tmplistDataCity.add(new CityModel(nameFile));
-            tmplistDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
-        }
-        listDataCity.clear();
-        for(int i=0;i<tmplistDataCity.size();i++) {
-            listDataCity.add(i,tmplistDataCity.get(i));
-        }
-        nameCity.invalidateViews();
+        restoreCityInfoFromFile();
 
     }
 
-// тестовая кнопка для отработки различных сценариев
-    public void onClickRefresh(View v) throws JSONException {
+    // ручное обновление погоды в списке
+    public void onClickRefreshCityInfo(View v) throws JSONException {
 
-        for(int i=0;i<listDataCity.size();i++) {
-            listDataCity.get(i).saveToFile(listDataCity.get(i).getName() + ".txt", getApplicationContext());
-        }
-
-//        JSONObject jo = listDataCity.get(0).toJSON();
-//        System.out.println("JSONObject :: "+jo);
-////        CityModel tmpCityModel = new CityModel(jo);
-////        System.out.println("CityModel :: "+tmpCityModel);
-//        Utils.saveFile("tempfile.txt",jo.toString(),getApplicationContext());
-//
-//        JSONObject jo2 = new JSONObject(Utils.openFile("tempfile.txt",getApplicationContext()));
-//        CityModel tmpCityModel = new CityModel(jo2);
-//        System.out.println("CityModel :: "+tmpCityModel);
+        startcityInfoAsyncTask(listDataCity);
 
     }
 
@@ -158,13 +140,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void startcityInfoAsyncTask(List<CityModel> listCity){
+    public void startcityInfoAsyncTask(List<CityModel> listCity) {
         MainActivity.this.setProgressBarIndeterminateVisibility(true);
         task = new cityInfoAsyncTask();
         task.execute(listDataCity);
         System.out.println("");
     }
-
 
 
     // инициализация данных для списка городов
@@ -182,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         return listDataCity;
     }
 
-     @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 //        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
@@ -218,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClickAddCity(View v) {
         String newCity = Utils.firstUpCaseString(editTextAddNewCity.getText().toString().trim());
         // СЮДА ДОБАВИТЬ ПРОВЕРКИ ВВОДА НАЗВАНИЯ ГОРОДА
-        if ((!newCity.equals("")) && (!isExistNameFromList(listDataCity,newCity))) {
+        if ((!newCity.equals("")) && (!isExistNameFromList(listDataCity, newCity))) {
             listDataCity.add(new CityModel(newCity));
             Toast.makeText(getApplicationContext(), getString(R.string.txtaddcityedit) + newCity, Toast.LENGTH_SHORT).show();
         }
@@ -258,10 +239,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // проверка на то что namecity есть в списке имен городов, true - есть, false - нет
-    public boolean isExistNameFromList(List<CityModel> listcity, String namecity){
+    public boolean isExistNameFromList(List<CityModel> listcity, String namecity) {
         boolean flag = false;
-        for(int i=0;i<listcity.size();i++){
-            if (listcity.get(i).getName().equals(namecity)){
+        for (int i = 0; i < listcity.size(); i++) {
+            if (listcity.get(i).getName().equals(namecity)) {
                 flag = true;
                 break;
             }
@@ -273,15 +254,19 @@ public class MainActivity extends AppCompatActivity {
     // восстановление сохраненых данных о погоде
     public void restoreCityInfoFromFile() throws JSONException {
         List<CityModel> tmplistDataCity = new ArrayList<CityModel>();
-        for(int i=0;i<listDataCity.size();i++) {
+        Boolean flagExistFile = true;
+        for (int i = 0; i < listDataCity.size(); i++) {
             String nameFile = listDataCity.get(i).getName();
             tmplistDataCity.add(new CityModel(nameFile));
-            tmplistDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
+            flagExistFile = tmplistDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
+            if (flagExistFile) {
+                listDataCity.add(i, tmplistDataCity.get(i));
+            }
         }
-        listDataCity.clear();
-        for(int i=0;i<tmplistDataCity.size();i++) {
-            listDataCity.add(i,tmplistDataCity.get(i));
-        }
+//        listDataCity.clear();
+//        for(int i=0;i<tmplistDataCity.size();i++) {
+//            listDataCity.add(i,tmplistDataCity.get(i));
+//        }
         nameCity.invalidateViews();
     }
 
