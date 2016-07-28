@@ -58,20 +58,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="save"
-        android:id="@+id/btnRefresh"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/textView"
-        android:layout_toStartOf="@+id/textView"
-        android:onClick="onClickRefreshCityInfo" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/button2"
         android:onClick="onClickRefreshCityInfo"
         android:background="@mipmap/btnrefresh"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_alignBottom="@+id/btnRefresh"/>
+        android:layout_toRightOf="@+id/textView" />
 </RelativeLayout>

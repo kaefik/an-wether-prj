@@ -117,11 +117,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void onClickRestore(View v) throws JSONException {
-        restoreCityInfoFromFile();
-
-    }
-
     // ручное обновление погоды в списке
     public void onClickRefreshCityInfo(View v) throws JSONException {
 
@@ -263,10 +258,6 @@ public class MainActivity extends AppCompatActivity {
                 listDataCity.add(i, tmplistDataCity.get(i));
             }
         }
-//        listDataCity.clear();
-//        for(int i=0;i<tmplistDataCity.size();i++) {
-//            listDataCity.add(i,tmplistDataCity.get(i));
-//        }
         nameCity.invalidateViews();
     }
 
