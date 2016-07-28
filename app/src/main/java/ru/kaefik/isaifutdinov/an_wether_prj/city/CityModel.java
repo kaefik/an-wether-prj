@@ -3,12 +3,10 @@ package ru.kaefik.isaifutdinov.an_wether_prj.city;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.format.DateFormat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,9 +102,31 @@ public class CityModel {
         this.winddirection = Float.parseFloat( jo.get("winddirection").toString());
 //        DateFormat format = new SimpleDateFormat();
 //        this.timeRefresh = format.parse(jo.get("timeRefresh").toString());
+        this.timeRefresh = new Date(); // временно
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
 //        this.weather = (HashMap<String, String>) jo.get("weather");
+        this.weather = new HashMap<String, String>();
+        this.weather.put("id", ""); // временно
+        this.weather.put("icon", ""); // временно
+        this.weather.put("description", ""); // временно
+        this.weather.put("main", ""); // временно
 
+    }
+
+// копирование объекта obj в текущий
+    public void CityModel(CityModel obj){
+        this.name = obj.getName();
+        this.id = obj.getId();
+        this.country = obj.getCountry();
+        this.temp = obj.getTemp();
+        this.clouds = obj.getClouds();
+        this.huminidity = obj.getHuminidity();
+        this.pressure = obj.getPressure();
+        this.windspeed = obj.getWindspeed();
+        this.winddirection = obj.getWinddirection();
+        this.timeRefresh = obj.getTimeRefresh();
+        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+        this.weather = obj.getWeather();
     }
 
 
@@ -310,9 +330,19 @@ public class CityModel {
         return jo;
     }
 
+    // сохранить объект в файл nameFile в виде Josn
    public void saveToFile(String nameFile,Context context) throws JSONException {
        String strJo = this.toJSON().toString();
        Utils.saveFile(nameFile,strJo,context);
    }
+
+    // открыть файл nameFile сохраненный в виде Josn и сохранить данные в объект
+   public void openFile(String nameFile,Context context) throws JSONException {
+       JSONObject jo = new JSONObject(Utils.openFile(nameFile,context));
+       this.CityModel( new CityModel(jo));
+   }
+
+
+
 
 }

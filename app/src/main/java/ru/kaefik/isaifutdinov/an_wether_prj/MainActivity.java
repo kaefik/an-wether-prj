@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,35 +71,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-// тестовая кнопка для отработки различных сценариев
-    public void onClickRefresh(View v) throws JSONException {
-
-        CityModel tmpCityModel = listDataCity.get(0);
-
-        tmpCityModel.saveToFile(tmpCityModel.getName()+".txt",getApplicationContext());
-
-//        JSONObject jo = listDataCity.get(0).toJSON();
-//        System.out.println("JSONObject :: "+jo);
-////        CityModel tmpCityModel = new CityModel(jo);
-////        System.out.println("CityModel :: "+tmpCityModel);
-//        Utils.saveFile("tempfile.txt",jo.toString(),getApplicationContext());
-//
-//        JSONObject jo2 = new JSONObject(Utils.openFile("tempfile.txt",getApplicationContext()));
-//        CityModel tmpCityModel = new CityModel(jo2);
-//        System.out.println("CityModel :: "+tmpCityModel);
-
-    }
-
-
-    public String getMY_APPID() {
-        return MY_APPID;
-    }
-
-    public void setMY_APPID(String MY_APPID) {
-
-        this.MY_APPID = MY_APPID;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,13 +99,64 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-   }
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
+        try {
+            restoreCityInfoFromFile();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         startcityInfoAsyncTask(listDataCity);
     }
+
+
+    public void onClickRestore(View v) throws JSONException {
+        List<CityModel> tmplistDataCity = new ArrayList<CityModel>();
+        for(int i=0;i<listDataCity.size();i++) {
+            String nameFile = listDataCity.get(i).getName();
+            tmplistDataCity.add(new CityModel(nameFile));
+            tmplistDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
+        }
+        listDataCity.clear();
+        for(int i=0;i<tmplistDataCity.size();i++) {
+            listDataCity.add(i,tmplistDataCity.get(i));
+        }
+        nameCity.invalidateViews();
+
+    }
+
+// тестовая кнопка для отработки различных сценариев
+    public void onClickRefresh(View v) throws JSONException {
+
+        for(int i=0;i<listDataCity.size();i++) {
+            listDataCity.get(i).saveToFile(listDataCity.get(i).getName() + ".txt", getApplicationContext());
+        }
+
+//        JSONObject jo = listDataCity.get(0).toJSON();
+//        System.out.println("JSONObject :: "+jo);
+////        CityModel tmpCityModel = new CityModel(jo);
+////        System.out.println("CityModel :: "+tmpCityModel);
+//        Utils.saveFile("tempfile.txt",jo.toString(),getApplicationContext());
+//
+//        JSONObject jo2 = new JSONObject(Utils.openFile("tempfile.txt",getApplicationContext()));
+//        CityModel tmpCityModel = new CityModel(jo2);
+//        System.out.println("CityModel :: "+tmpCityModel);
+
+    }
+
+
+    public String getMY_APPID() {
+        return MY_APPID;
+    }
+
+    public void setMY_APPID(String MY_APPID) {
+
+        this.MY_APPID = MY_APPID;
+    }
+
 
     public void startcityInfoAsyncTask(List<CityModel> listCity){
         MainActivity.this.setProgressBarIndeterminateVisibility(true);
@@ -247,6 +268,21 @@ public class MainActivity extends AppCompatActivity {
         }
         return flag;
 
+    }
+
+    // восстановление сохраненых данных о погоде
+    public void restoreCityInfoFromFile() throws JSONException {
+        List<CityModel> tmplistDataCity = new ArrayList<CityModel>();
+        for(int i=0;i<listDataCity.size();i++) {
+            String nameFile = listDataCity.get(i).getName();
+            tmplistDataCity.add(new CityModel(nameFile));
+            tmplistDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
+        }
+        listDataCity.clear();
+        for(int i=0;i<tmplistDataCity.size();i++) {
+            listDataCity.add(i,tmplistDataCity.get(i));
+        }
+        nameCity.invalidateViews();
     }
 
 }
