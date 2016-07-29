@@ -94,24 +94,48 @@ public class MainActivity extends AppCompatActivity {
         nameCity.setAdapter(adapter);
 
 
-        // Обработка события на клик по элементу списка
         nameCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            // Обработка события на клик по элементу списка
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 CityModel tmpCityModel = adapter.getCityModel(position);
                 startActivityForResult(tmpCityModel.putExtraIntent(getApplicationContext(), cityInfoActivity.class), RequestCode.REQUEST_CODE_CITY_WEATHER);
 
             }
+
+
         });
+
+        nameCity.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            // Обработка долгого нажатия на элемент
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                removeCityDialog(parent,position);
+
+//                CityModel selectedItem = (CityModel) parent.getItemAtPosition(position);
+//
+//                if () {
+//
+//                    listDataCity.remove(position);
+//                    adapter.notifyDataSetChanged();
+//                    saveListCity();
+//                    Toast.makeText(getApplicationContext(), getString(R.string.strgorod) + "  " + selectedItem.getName() + " удалён.", Toast.LENGTH_SHORT).show();
+//                }
+
+
+                return true;
+            }
+
+        });
+
 
         try {
             restoreCityInfoFromFile();
         } catch (JSONException e) {
             e.printStackTrace();
-       }
+        }
 
         startcityInfoAsyncTask(listDataCity);
-
 
 
     }
@@ -146,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-      @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 //        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
@@ -223,6 +247,37 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void removeCityDialog(AdapterView<?> parent, final int position) {
+        final CityModel selectedItem = (CityModel) parent.getItemAtPosition(position);
+//        final boolean flag = false;
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Удаление элемента")
+                .setMessage("Точно хотите удалить город "+selectedItem.getName()+"?")
+//                .setIcon(R.drawable.ic_android_cat)
+                .setCancelable(false)
+                .setPositiveButton("Удалить",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                listDataCity.remove(position);
+                                nameCity.invalidateViews();
+//                                adapter.notifyDataSetChanged();
+                                saveListCity();
+                                Toast.makeText(getApplicationContext(), getString(R.string.strgorod) +"  "+ selectedItem.getName() + " удалён.", Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                .setNegativeButton("Оставить",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+
+    }
+
     // проверка на то что namecity есть в списке имен городов, true - есть, false - нет
     public boolean isExistNameFromList(List<CityModel> listcity, String namecity) {
         boolean flag = false;
@@ -252,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
 
     //сохранение данных о погоде каждый город в отдельный файл
     public void saveCityInfoFromFile() throws JSONException {
-        for(int i=0;i<listDataCity.size();i++){
+        for (int i = 0; i < listDataCity.size(); i++) {
             String nameFile = listDataCity.get(i).getName();
             listDataCity.get(i).saveToFile(nameFile + ".txt", getApplicationContext());
         }
@@ -273,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
         stringCityName = loadCityParameters("city");
         System.out.println("onClickLoadListCity -> " + stringCityName);
         String stringListCityNames[] = stringCityName.split(",");
-        if(!stringCityName.trim().equals("")) {
+        if (!stringCityName.trim().equals("")) {
             listDataCity.clear();
             for (int i = 0; i < stringListCityNames.length; i++) {
                 listDataCity.add(i, new CityModel(stringListCityNames[i]));
@@ -281,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if(listDataCity.size()==0) {
+        if (listDataCity.size() == 0) {
             listDataCity.add(new CityModel("Kazan"));
             listDataCity.add(new CityModel("Moscow"));
             listDataCity.add(new CityModel("Samara"));
@@ -307,7 +362,7 @@ public class MainActivity extends AppCompatActivity {
         return resSet;
     }
 
-    public void onClickSave(View v){
+    public void onClickSave(View v) {
         saveListCity();
     }
 }

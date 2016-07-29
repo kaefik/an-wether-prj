@@ -16,4 +16,5 @@
     <string name="txtaddcity">Добавь свой город</string>
     <string name="txtplus">+</string>
     <string name="txtaddcityedit">"Добален новый город: "</string>
+    <string name="strgorod">город</string>
 </resources>
