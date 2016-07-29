@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
         if (listDataCity == null) {
             listDataCity = new ArrayList<CityModel>();
-            listDataCity = initDataCity();
+            loadListCity();
         }
 
         final CityModelAdapter adapter = new CityModelAdapter(this, listDataCity);
@@ -101,19 +101,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        try {
-//            restoreCityInfoFromFile();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            restoreCityInfoFromFile();
+        } catch (JSONException e) {
+            e.printStackTrace();
+       }
 
         startcityInfoAsyncTask(listDataCity);
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
 
     }
 
@@ -143,22 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // инициализация данных для списка городов
-    private List<CityModel> initDataCity() {
-        List<CityModel> listDataCity = new ArrayList<CityModel>();
-
-        listDataCity.add(new CityModel("Kazan"));
-        listDataCity.add(new CityModel("Moscow"));
-        listDataCity.add(new CityModel("Samara"));
-        listDataCity.add(new CityModel("Istanbul"));
-        listDataCity.add(new CityModel("London"));
-        listDataCity.add(new CityModel("L"));
-
-
-        return listDataCity;
-    }
-
-    @Override
+      @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 //        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
@@ -202,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         // прячем клавиатуру
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editTextAddNewCity.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-
+        saveListCity();
     }
 
     @Override
@@ -243,7 +222,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return flag;
-
     }
 
     // восстановление сохраненых данных о погоде
@@ -262,46 +240,56 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void onClickSaveListCity(View v) {
+    // сохранение списка названий городов
+    public void saveListCity() {
         String stringCityName = "";
         for (int i = 0; i < listDataCity.size(); i++) {
             stringCityName += listDataCity.get(i).getName() + ",";
         }
-        System.out.println("onClickSaveListCity ->  " + stringCityName);
-        saveListCity(stringCityName);
+        saveCityParameters("city", stringCityName);
     }
 
-
-    public void onClickLoadListCity(View v) {
+    // загрузка списка названий городов
+    public void loadListCity() {
         String stringCityName = "";
-        stringCityName = loadListCity();
+        stringCityName = loadCityParameters("city");
         System.out.println("onClickLoadListCity -> " + stringCityName);
         String stringListCityNames[] = stringCityName.split(",");
-        listDataCity.clear();
-        for (int i = 0; i < stringListCityNames.length; i++) {
-            listDataCity.add(i, new CityModel(stringListCityNames[i]));
-            System.out.println("onClickLoadListCity -> " + listDataCity.get(i).getName());
+        if(!stringCityName.trim().equals("")) {
+            listDataCity.clear();
+            for (int i = 0; i < stringListCityNames.length; i++) {
+                listDataCity.add(i, new CityModel(stringListCityNames[i]));
+                System.out.println("onClickLoadListCity -> " + listDataCity.get(i).getName());
+            }
         }
-        System.out.println("onClickLoadListCity -> " + listDataCity.toString());
+
+        if(listDataCity.size()==0) {
+            listDataCity.add(new CityModel("Kazan"));
+            listDataCity.add(new CityModel("Moscow"));
+            listDataCity.add(new CityModel("Samara"));
+            listDataCity.add(new CityModel("Istanbul"));
+            listDataCity.add(new CityModel("London"));
+        }
         nameCity.invalidateViews();
     }
 
-    //сохранение списка городов
-    public void saveListCity(String parameters) {
+    //сохранение параметра  в файл параметров
+    public void saveCityParameters(String parameters, String values) {
         sPref = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
-        ed.putString("city", parameters);
+        ed.putString(parameters, values);
         ed.apply();
-        Toast.makeText(getApplicationContext(), "Saved List City", Toast.LENGTH_SHORT);
     }
 
-    // загрузка списка городов
-    public String loadListCity() {
+    // загрузка списка городов из файл параметров
+    public String loadCityParameters(String parameters) {
         String resSet = "";
         sPref = getPreferences(MODE_PRIVATE);
-        resSet = sPref.getString("city", "");
-        Toast.makeText(getApplicationContext(), "Load List City", Toast.LENGTH_SHORT);
+        resSet = sPref.getString(parameters, "");
         return resSet;
     }
 
+    public void onClickSave(View v){
+        saveListCity();
+    }
 }

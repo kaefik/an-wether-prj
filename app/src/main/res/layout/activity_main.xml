@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button2"
-        android:onClick="onClickLoadListCity"
+        android:onClick="onClickRefreshDataWeather"
         android:background="@mipmap/btnrefresh"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/textView" />
@@ -72,5 +72,5 @@
         android:layout_alignBottom="@+id/textView"
         android:layout_toLeftOf="@+id/textView"
         android:layout_toStartOf="@+id/textView"
-        android:onClick="onClickSaveListCity"/>
+        />
 </RelativeLayout>
