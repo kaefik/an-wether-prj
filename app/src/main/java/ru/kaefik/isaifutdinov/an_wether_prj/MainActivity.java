@@ -67,8 +67,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<CityModel> values) {
             super.onPostExecute(values);
-
-
+            try {
+                saveCityInfoFromFile();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -108,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
        }
 
         startcityInfoAsyncTask(listDataCity);
+
+
 
     }
 
@@ -181,7 +186,9 @@ public class MainActivity extends AppCompatActivity {
         // прячем клавиатуру
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editTextAddNewCity.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        saveListCity();
+        startcityInfoAsyncTask(listDataCity);
+//        saveListCity();
+
     }
 
     @Override
@@ -224,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         return flag;
     }
 
-    // восстановление сохраненых данных о погоде
+    // восстановление сохраненых данных о погоде (каждый город в отдельный файл)
     public void restoreCityInfoFromFile() throws JSONException {
         List<CityModel> tmplistDataCity = new ArrayList<CityModel>();
         Boolean flagExistFile = true;
@@ -239,6 +246,13 @@ public class MainActivity extends AppCompatActivity {
         nameCity.invalidateViews();
     }
 
+    //сохранение данных о погоде каждый город в отдельный файл
+    public void saveCityInfoFromFile() throws JSONException {
+        for(int i=0;i<listDataCity.size();i++){
+            String nameFile = listDataCity.get(i).getName();
+            listDataCity.get(i).saveToFile(nameFile + ".txt", getApplicationContext());
+        }
+    }
 
     // сохранение списка названий городов
     public void saveListCity() {
