@@ -120,7 +120,11 @@ public class MainActivity extends AppCompatActivity {
     // ручное обновление погоды в списке
     public void onClickRefreshCityInfo(View v) throws JSONException {
 
-        startcityInfoAsyncTask(listDataCity);
+        try {
+            startcityInfoAsyncTask(listDataCity);
+        } catch (Exception e) {
+
+        }
 
     }
 
@@ -187,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editTextAddNewCity.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         startcityInfoAsyncTask(listDataCity);
-//        saveListCity();
+        saveListCity();
 
     }
 
@@ -240,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
             tmplistDataCity.add(new CityModel(nameFile));
             flagExistFile = tmplistDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
             if (flagExistFile) {
-                listDataCity.add(i, tmplistDataCity.get(i));
+                listDataCity.set(i, tmplistDataCity.get(i));
             }
         }
         nameCity.invalidateViews();
