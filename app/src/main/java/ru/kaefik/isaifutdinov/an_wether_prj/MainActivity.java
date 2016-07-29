@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextAddNewCity;
     private Button btnRefresh;
     private String MY_APPID; // уникальный ключ для доступа к сервису OpenWeatherMap
+    private SharedPreferences sPref;
     List<CityModel> listDataCity; // данные прогноза погоды
 
     private cityInfoAsyncTask task;
@@ -78,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         nameCity = (ListView) findViewById(R.id.listView);
-        btnRefresh = (Button) findViewById(R.id.btnRefresh);
         editTextAddNewCity = (EditText) findViewById(R.id.editTextAddNewCity);
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
         if (listDataCity == null) {
@@ -100,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        try {
-            restoreCityInfoFromFile();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            restoreCityInfoFromFile();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         startcityInfoAsyncTask(listDataCity);
 
@@ -139,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.setProgressBarIndeterminateVisibility(true);
         task = new cityInfoAsyncTask();
         task.execute(listDataCity);
-        System.out.println("");
     }
 
 
@@ -259,6 +259,49 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         nameCity.invalidateViews();
+    }
+
+
+    public void onClickSaveListCity(View v) {
+        String stringCityName = "";
+        for (int i = 0; i < listDataCity.size(); i++) {
+            stringCityName += listDataCity.get(i).getName() + ",";
+        }
+        System.out.println("onClickSaveListCity ->  " + stringCityName);
+        saveListCity(stringCityName);
+    }
+
+
+    public void onClickLoadListCity(View v) {
+        String stringCityName = "";
+        stringCityName = loadListCity();
+        System.out.println("onClickLoadListCity -> " + stringCityName);
+        String stringListCityNames[] = stringCityName.split(",");
+        listDataCity.clear();
+        for (int i = 0; i < stringListCityNames.length; i++) {
+            listDataCity.add(i, new CityModel(stringListCityNames[i]));
+            System.out.println("onClickLoadListCity -> " + listDataCity.get(i).getName());
+        }
+        System.out.println("onClickLoadListCity -> " + listDataCity.toString());
+        nameCity.invalidateViews();
+    }
+
+    //сохранение списка городов
+    public void saveListCity(String parameters) {
+        sPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putString("city", parameters);
+        ed.apply();
+        Toast.makeText(getApplicationContext(), "Saved List City", Toast.LENGTH_SHORT);
+    }
+
+    // загрузка списка городов
+    public String loadListCity() {
+        String resSet = "";
+        sPref = getPreferences(MODE_PRIVATE);
+        resSet = sPref.getString("city", "");
+        Toast.makeText(getApplicationContext(), "Load List City", Toast.LENGTH_SHORT);
+        return resSet;
     }
 
 }

@@ -59,8 +59,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button2"
-        android:onClick="onClickRefreshCityInfo"
+        android:onClick="onClickLoadListCity"
         android:background="@mipmap/btnrefresh"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/textView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAVE"
+        android:id="@+id/button3"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toLeftOf="@+id/textView"
+        android:layout_toStartOf="@+id/textView"
+        android:onClick="onClickSaveListCity"/>
 </RelativeLayout>
