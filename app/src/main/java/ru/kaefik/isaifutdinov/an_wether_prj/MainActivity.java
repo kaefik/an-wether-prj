@@ -40,18 +40,14 @@ public class MainActivity extends AppCompatActivity {
 
     private cityInfoAsyncTask task;
 
-    // проработать этот AsyncTask применимо к списку городов
+
     class cityInfoAsyncTask extends AsyncTask<List<CityModel>, CityModel, List<CityModel>> {
         @Override
         protected List<CityModel> doInBackground(List<CityModel>... listcityModels) {
-//            CityModel cityModel = listcityModels[0].get(0);
-
             for (int i = 0; i < listcityModels[0].size(); i++) {
                 listcityModels[0].get(i).getHttpWeather();
                 publishProgress(listcityModels[0].get(i));
             }
-
-
             return listcityModels[0];
         }
 
@@ -60,15 +56,13 @@ public class MainActivity extends AppCompatActivity {
             super.onProgressUpdate(values);
             nameCity.invalidateViews();
             MainActivity.this.setProgressBarIndeterminateVisibility(false);
-//            refreshData2View(cityModel);
-
         }
 
         @Override
         protected void onPostExecute(List<CityModel> values) {
             super.onPostExecute(values);
             try {
-                saveCityInfoFromFile();
+                saveCityInfoToFile();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -97,35 +91,38 @@ public class MainActivity extends AppCompatActivity {
         nameCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             // Обработка события на клик по элементу списка
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 CityModel tmpCityModel = adapter.getCityModel(position);
                 startActivityForResult(tmpCityModel.putExtraIntent(getApplicationContext(), cityInfoActivity.class), RequestCode.REQUEST_CODE_CITY_WEATHER);
-
             }
-
-
         });
 
         nameCity.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
             // Обработка долгого нажатия на элемент
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                removeCityDialog(parent,position);
-
-//                CityModel selectedItem = (CityModel) parent.getItemAtPosition(position);
-//
-//                if () {
-//
-//                    listDataCity.remove(position);
-//                    adapter.notifyDataSetChanged();
-//                    saveListCity();
-//                    Toast.makeText(getApplicationContext(), getString(R.string.strgorod) + "  " + selectedItem.getName() + " удалён.", Toast.LENGTH_SHORT).show();
-//                }
-
-
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                //removeCityDialog(parent, position);
+                final CityModel selectedItem = (CityModel) parent.getItemAtPosition(position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Удаление элемента")
+                        .setMessage("Точно хотите удалить город " + selectedItem.getName() + "?")
+                        .setCancelable(false)
+                        .setPositiveButton("Удалить",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        listDataCity.remove(position);
+                                        nameCity.invalidateViews();
+                                        saveListCity();
+                                        Toast.makeText(getApplicationContext(), getString(R.string.strgorod) + "  " + selectedItem.getName() + " удалён.", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                        .setNegativeButton("Оставить",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                    }
+                                });
+                AlertDialog alert = builder.create();
+                alert.show();
                 return true;
             }
-
         });
 
 
@@ -136,23 +133,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         startcityInfoAsyncTask(listDataCity);
-
-
     }
 
 
     // ручное обновление погоды в списке
     public void onClickRefreshCityInfo(View v) throws JSONException {
-
         try {
             startcityInfoAsyncTask(listDataCity);
         } catch (Exception e) {
-
+            Toast.makeText(getApplicationContext(), "Ошибка при обновлении данных", Toast.LENGTH_SHORT);
         }
-
     }
 
 
+    // ----- задействовать данный параметр
     public String getMY_APPID() {
         return MY_APPID;
     }
@@ -161,8 +155,10 @@ public class MainActivity extends AppCompatActivity {
 
         this.MY_APPID = MY_APPID;
     }
+    // ----- END задействовать данный параметр
 
 
+    // запуск задание cityInfoAsyncTask на обновления информации списка городов
     public void startcityInfoAsyncTask(List<CityModel> listCity) {
         MainActivity.this.setProgressBarIndeterminateVisibility(true);
         task = new cityInfoAsyncTask();
@@ -171,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
+    // прием данных CityModel выбраного города из другое активити
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 //        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
@@ -197,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         } else {
-            Toast.makeText(this, "Error onActivityResult (закончился лимит или нет интернета) ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Ошибка при обновлении данных", Toast.LENGTH_SHORT);
         }
         nameCity.invalidateViews();
     }
@@ -216,15 +213,10 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(editTextAddNewCity.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         startcityInfoAsyncTask(listDataCity);
         saveListCity();
-
     }
 
     @Override
-    public void onBackPressed() {
-        openQuitDialog();
-    }
-
-    private void openQuitDialog() {
+    public void onBackPressed() {  // обработка нажатия кнопки Назад
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Ого! Важное сообщение!")
                 .setMessage("Точно хотите выйти?!")
@@ -244,38 +236,6 @@ public class MainActivity extends AppCompatActivity {
                         });
         AlertDialog alert = builder.create();
         alert.show();
-
-    }
-
-    private void removeCityDialog(AdapterView<?> parent, final int position) {
-        final CityModel selectedItem = (CityModel) parent.getItemAtPosition(position);
-//        final boolean flag = false;
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Удаление элемента")
-                .setMessage("Точно хотите удалить город "+selectedItem.getName()+"?")
-//                .setIcon(R.drawable.ic_android_cat)
-                .setCancelable(false)
-                .setPositiveButton("Удалить",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                listDataCity.remove(position);
-                                nameCity.invalidateViews();
-//                                adapter.notifyDataSetChanged();
-                                saveListCity();
-                                Toast.makeText(getApplicationContext(), getString(R.string.strgorod) +"  "+ selectedItem.getName() + " удалён.", Toast.LENGTH_SHORT).show();
-
-                            }
-                        })
-                .setNegativeButton("Оставить",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
-                        });
-        AlertDialog alert = builder.create();
-        alert.show();
-
-
     }
 
     // проверка на то что namecity есть в списке имен городов, true - есть, false - нет
@@ -290,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
         return flag;
     }
 
-    // восстановление сохраненых данных о погоде (каждый город в отдельный файл)
+    // восстановление сохраненых данных о погоде (каждый город - отдельный файл сJosn)
     public void restoreCityInfoFromFile() throws JSONException {
         List<CityModel> tmplistDataCity = new ArrayList<CityModel>();
         Boolean flagExistFile = true;
@@ -306,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //сохранение данных о погоде каждый город в отдельный файл
-    public void saveCityInfoFromFile() throws JSONException {
+    public void saveCityInfoToFile() throws JSONException {
         for (int i = 0; i < listDataCity.size(); i++) {
             String nameFile = listDataCity.get(i).getName();
             listDataCity.get(i).saveToFile(nameFile + ".txt", getApplicationContext());
@@ -342,6 +302,7 @@ public class MainActivity extends AppCompatActivity {
             listDataCity.add(new CityModel("Samara"));
             listDataCity.add(new CityModel("Istanbul"));
             listDataCity.add(new CityModel("London"));
+            Toast.makeText(getApplicationContext(), "Загрузка городов по умолчанию.", Toast.LENGTH_SHORT);
         }
         nameCity.invalidateViews();
     }
@@ -362,6 +323,8 @@ public class MainActivity extends AppCompatActivity {
         return resSet;
     }
 
+
+    // тестовая кнопка для отработки различных сценариев
     public void onClickSave(View v) {
         saveListCity();
     }

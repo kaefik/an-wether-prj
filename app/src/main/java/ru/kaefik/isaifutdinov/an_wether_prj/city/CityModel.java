@@ -3,6 +3,7 @@ package ru.kaefik.isaifutdinov.an_wether_prj.city;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -93,13 +94,13 @@ public class CityModel {
     public CityModel(JSONObject jo) throws JSONException {
         this.name = jo.get("name").toString();
         this.id = Long.parseLong(jo.get("id").toString());
-        this.country =  jo.get("country").toString();
+        this.country = jo.get("country").toString();
         this.temp = Float.parseFloat(jo.get("temp").toString());
         this.clouds = Float.parseFloat(jo.get("clouds").toString());
         this.huminidity = Float.parseFloat(jo.get("huminidity").toString());
         this.pressure = Float.parseFloat(jo.get("pressure").toString());
-        this.windspeed =Float.parseFloat(jo.get("windspeed").toString());
-        this.winddirection = Float.parseFloat( jo.get("winddirection").toString());
+        this.windspeed = Float.parseFloat(jo.get("windspeed").toString());
+        this.winddirection = Float.parseFloat(jo.get("winddirection").toString());
 //        DateFormat format = new SimpleDateFormat();
 //        this.timeRefresh = format.parse(jo.get("timeRefresh").toString());
         this.timeRefresh = new Date(); // временно
@@ -113,8 +114,8 @@ public class CityModel {
 
     }
 
-// копирование объекта obj в текущий
-    public void CityModel(CityModel obj){
+    // копирование объекта obj в текущий
+    public void CityModel(CityModel obj) {
         this.name = obj.getName();
         this.id = obj.getId();
         this.country = obj.getCountry();
@@ -159,7 +160,7 @@ public class CityModel {
 
         String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q=" + getName() + "&units=metric&APPID=" + getMY_APPID());
         if (res == null) {
-            System.out.println("Ошибка загрузки");
+            System.out.println("Ошибка при обновлении данных");
         } else {
             if (getObjFromJson(res, "name", null).equals(this.name)) { // сделать парсинг параметра name)
                 setTemp(Float.parseFloat(getObjFromJson(res, "main", "temp")));
@@ -331,24 +332,22 @@ public class CityModel {
     }
 
     // сохранить объект в файл nameFile в виде Josn
-   public void saveToFile(String nameFile,Context context) throws JSONException {
-       String strJo = this.toJSON().toString();
-       Utils.saveFile(nameFile,strJo,context);
-   }
+    public void saveToFile(String nameFile, Context context) throws JSONException {
+        String strJo = this.toJSON().toString();
+        Utils.saveFile(nameFile, strJo, context);
+    }
 
     // открыть файл nameFile сохраненный в виде Josn и сохранить данные в объект, возвращает false если произошла ошибка открытия, иначе true
-   public boolean openFile(String nameFile,Context context) {
-       boolean flagStatus = true;
-       try {
-           JSONObject jo = new JSONObject(Utils.openFile(nameFile,context));
-           this.CityModel( new CityModel(jo));
-       } catch (JSONException e) {
-           flagStatus =false;
-       }
-       return flagStatus;
-   }
-
-
+    public boolean openFile(String nameFile, Context context) {
+        boolean flagStatus = true;
+        try {
+            JSONObject jo = new JSONObject(Utils.openFile(nameFile, context));
+            this.CityModel(new CityModel(jo));
+        } catch (JSONException e) {
+            flagStatus = false;
+        }
+        return flagStatus;
+    }
 
 
 }
