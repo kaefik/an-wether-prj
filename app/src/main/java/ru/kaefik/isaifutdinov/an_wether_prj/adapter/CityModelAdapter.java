@@ -38,16 +38,17 @@ public class CityModelAdapter extends BaseAdapter {
     }
 
     @Override
+    //определение как будет выглядеть на экране элемент списка ListView
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if (view == null) {
-            view = layoutinflater.inflate(R.layout.itemcity_layout,parent,false);
+            view = layoutinflater.inflate(R.layout.itemcity_layout, parent, false);
         }
 
-       CityModel cityModel = getCityModel(position);
+        CityModel cityModel = getCityModel(position);
 
         TextView textView = (TextView) view.findViewById(R.id.textItemCity);
-        textView.setText(cityModel.getName()+"   "+cityModel.getTemp()+" C");
+        textView.setText(cityModel.getName() + "   " + cityModel.getTemp() + " C");
 
         return view;
     }

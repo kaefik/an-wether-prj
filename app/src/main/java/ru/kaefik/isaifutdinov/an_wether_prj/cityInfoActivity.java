@@ -30,7 +30,6 @@ public class cityInfoActivity extends AppCompatActivity {
     class cityInfoAsyncTask extends AsyncTask<Void, Void, CityModel> {
         @Override
         protected CityModel doInBackground(Void... voids) {
-//            System.out.println(cityDataWeather.getName());
             cityDataWeather.getHttpWeather();   //??? не нравится что использую в этом классе объект cityDataWeather
             return cityDataWeather;
         }
@@ -129,15 +128,15 @@ public class cityInfoActivity extends AppCompatActivity {
         pressureCity.setText(Float.toString(cityModel.getPressure() * 0.75f) + " мм рт.ст.");
         windspeedCity.setText(Float.toString(cityModel.getWindspeed()) + " м/с");
         winddirectionCity.setText(Float.toString(cityModel.getWinddirection()) + " град.");
-        imageWeatherConditions.setImageResource(getResourceImageFile("weather"+cityModel.getWeather("icon"))); // сделать правильный вывод изобращения погоды
+        imageWeatherConditions.setImageResource(getResourceImageFile("weather" + cityModel.getWeather("icon"))); // сделать правильный вывод изобращения погоды
         textTimeRefresh.setText(cityModel.getTimeRefresh().toString());
         textViewDescriptionWeather.setText(cityModel.getWeather("description"));
 
     }
 
     //  из имени ресурса получить идентификатор на ресурс
-    public int getResourceImageFile(String name){
-        return getResources().getIdentifier(name , "mipmap", getPackageName());
+    public int getResourceImageFile(String name) {
+        return getResources().getIdentifier(name, "mipmap", getPackageName());
     }
 
 

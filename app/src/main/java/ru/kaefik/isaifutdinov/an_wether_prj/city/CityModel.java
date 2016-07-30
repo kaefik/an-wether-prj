@@ -191,10 +191,6 @@ public class CityModel {
         return weather.get(index).toString();
     }
 
-//    public void setWeather(Map weather) {
-//        this.weather = weather;
-//    }
-
     public void setWeather(String index, String value) {
         this.weather.put(index, value);
     }
@@ -313,6 +309,7 @@ public class CityModel {
 //                    setTimeRefresh(Date.pa(data.getStringExtra("timeRefresh")));
     }
 
+    // преобразование объекта CityModel в Josn
     public JSONObject toJSON() throws JSONException {
         JSONObject jo = new JSONObject();
         jo.put("name", name);
@@ -348,6 +345,5 @@ public class CityModel {
         }
         return flagStatus;
     }
-
 
 }
