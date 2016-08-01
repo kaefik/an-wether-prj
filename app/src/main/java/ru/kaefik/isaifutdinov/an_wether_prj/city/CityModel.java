@@ -105,13 +105,12 @@ public class CityModel {
         this.winddirection = Float.parseFloat(jo.get("winddirection").toString());
         this.timeRefresh = jo.get("timeRefresh").toString();
 
-//        this.weather = (HashMap<String, String>) jo.get("weather");
-
         this.weather = new HashMap<String, String>();
-        this.weather.put("id", ""); // временно
-        this.weather.put("icon", ""); // временно
-        this.weather.put("description", ""); // временно
-        this.weather.put("main", ""); // временно
+        this.weather.put("id",  jo.get("weather-id").toString()); // временно
+        this.weather.put("icon", jo.get("weather-icon").toString()); // временно
+        this.weather.put("description", jo.get("weather-description").toString()); // временно
+        this.weather.put("main", jo.get("weather-main").toString()); // временно
+
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
 
     }
@@ -132,6 +131,27 @@ public class CityModel {
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
     }
 
+
+    // преобразование объекта CityModel в Josn
+    public JSONObject toJSON() throws JSONException {
+        JSONObject jo = new JSONObject();
+        jo.put("name", getName());
+        jo.put("id", getId());
+        jo.put("country", getCountry());
+        jo.put("temp", getTemp());
+        jo.put("clouds", getClouds());
+        jo.put("huminidity", getHuminidity());
+        jo.put("pressure", getPressure());
+        jo.put("windspeed", getWindspeed());
+        jo.put("winddirection", getWinddirection());
+        jo.put("timeRefresh", getTimeRefresh());
+        jo.put("weather-id", getWeather("id"));
+        jo.put("weather-icon", getWeather("icon"));
+        jo.put("weather-description", getWeather("description"));
+        jo.put("weather-main",getWeather("main"));
+
+        return jo;
+    }
 
     // обновить время обновления текущей датой
     public void setTimeRefresh() throws ParseException {
@@ -293,13 +313,13 @@ public class CityModel {
         intent.putExtra("windspeed", getWindspeed());
         intent.putExtra("winddirection", getWinddirection());
         intent.putExtra("timeRefresh", getTimeRefresh());
-//        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-//        if (getTimeRefresh() != null) {
-//            String d1 = df.format(getTimeRefresh());
-//            intent.putExtra("timeRefresh", d1);
-//        } else {
-//            intent.putExtra("timeRefresh", "");
-//        }
+
+        //  передача данных параметра weather
+        intent.putExtra("weather-id", getWeather("id"));
+        intent.putExtra("weather-icon", getWeather("icon"));
+        intent.putExtra("weather-description", getWeather("description"));
+        intent.putExtra("weather-main", getWeather("main"));
+
         return intent;
     }
 
@@ -315,31 +335,19 @@ public class CityModel {
         setHuminidity(intent.getFloatExtra("huminidity", 0.0f));
         setWindspeed(intent.getFloatExtra("windspeed", 0.0f));
         setWinddirection(intent.getFloatExtra("winddirection", 0.0f));
-//        if (intent.getStringExtra("timeRefresh") != null) {
-//            DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-//            Date d1 = df.parse(intent.getStringExtra("timeRefresh"));
         setTimeRefresh(intent.getStringExtra("timeRefresh"));
+
+        //  получение данных параметра weather
+        setWeather("id",intent.getStringExtra("weather-id"));
+        setWeather("icon",intent.getStringExtra("weather-icon"));
+        setWeather("description",intent.getStringExtra("weather-description"));
+        setWeather("main",intent.getStringExtra("weather-main"));
+
+
 //        }
     }
 
-    // преобразование объекта CityModel в Josn
-    public JSONObject toJSON() throws JSONException {
-        JSONObject jo = new JSONObject();
-        jo.put("name", name);
-        jo.put("id", id);
-        jo.put("country", country);
-        jo.put("temp", temp);
-        jo.put("clouds", clouds);
-        jo.put("huminidity", huminidity);
-        jo.put("pressure", pressure);
-        jo.put("windspeed", windspeed);
-        jo.put("winddirection", winddirection);
-        jo.put("timeRefresh", timeRefresh);
-        jo.put("windspeed", windspeed);
-        jo.put("windspeed", windspeed);
-        jo.put("weather", weather);
-        return jo;
-    }
+
 
     // сохранить объект в файл nameFile в виде Josn
     public void saveToFile(String nameFile, Context context) throws JSONException {
