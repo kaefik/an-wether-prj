@@ -3,11 +3,13 @@ package ru.kaefik.isaifutdinov.an_wether_prj.city;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,13 +46,13 @@ public class CityModel {
         this.pressure = pressure;
         this.windspeed = windspeed;
         this.winddirection = winddirection;
-        this.timeRefresh = new Date();
-        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+//        this.timeRefresh = new Date();
         this.weather = new HashMap<String, String>();
         this.weather.put("id", "");
         this.weather.put("icon", "");
         this.weather.put("description", "");
         this.weather.put("main", "");
+        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
     }
 
     public CityModel(String name) {
@@ -63,13 +65,13 @@ public class CityModel {
         this.pressure = 0.00f;
         this.windspeed = 0.00f;
         this.winddirection = 0.00f;
-        this.timeRefresh = new Date();
-        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+//        this.timeRefresh = new Date();
         this.weather = new HashMap<String, String>();
         this.weather.put("id", "");
         this.weather.put("icon", "");
         this.weather.put("description", "");
         this.weather.put("main", "");
+        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
     }
 
     public CityModel() {
@@ -82,16 +84,16 @@ public class CityModel {
         this.pressure = 0.00f;
         this.windspeed = 0.00f;
         this.winddirection = 0.00f;
-        this.timeRefresh = new Date();
-        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+//        this.timeRefresh = new Date();
         this.weather = new HashMap<String, String>();
         this.weather.put("id", "");
         this.weather.put("icon", "");
         this.weather.put("description", "");
         this.weather.put("main", "");
+        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
     }
 
-    public CityModel(JSONObject jo) throws JSONException {
+    public CityModel(JSONObject jo) throws JSONException, ParseException {
         this.name = jo.get("name").toString();
         this.id = Long.parseLong(jo.get("id").toString());
         this.country = jo.get("country").toString();
@@ -101,16 +103,20 @@ public class CityModel {
         this.pressure = Float.parseFloat(jo.get("pressure").toString());
         this.windspeed = Float.parseFloat(jo.get("windspeed").toString());
         this.winddirection = Float.parseFloat(jo.get("winddirection").toString());
-//        DateFormat format = new SimpleDateFormat();
-//        this.timeRefresh = format.parse(jo.get("timeRefresh").toString());
-        this.timeRefresh = new Date(); // временно
-        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+
 //        this.weather = (HashMap<String, String>) jo.get("weather");
+
+//        DateFormat df = new SimpleDateFormat();
+//        this.timeRefresh = (Date) df.parse(jo.get("timeRefresh").toString());
+
+
+
         this.weather = new HashMap<String, String>();
         this.weather.put("id", ""); // временно
         this.weather.put("icon", ""); // временно
         this.weather.put("description", ""); // временно
         this.weather.put("main", ""); // временно
+        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
 
     }
 
@@ -126,16 +132,16 @@ public class CityModel {
         this.windspeed = obj.getWindspeed();
         this.winddirection = obj.getWinddirection();
         this.timeRefresh = obj.getTimeRefresh();
-        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
         this.weather = obj.getWeather();
+        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
     }
 
 
     // обновить время обновления текущей датой
-    public void setTimeRefresh() {
-//        DateFormat dateFormat = new DateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
-        this.timeRefresh = date;
+    public void setTimeRefresh() throws ParseException {
+//        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//        String  strDate = df.format(new Date());
+        this.timeRefresh = new Date();
     }
 
     public void setTimeRefresh(Date timeRefresh) {
@@ -147,7 +153,7 @@ public class CityModel {
     }
 
     // получение данных с погоды
-    public void getHttpWeather() {
+    public void getHttpWeather() throws ParseException {
         //api.openweathermap.org/data/2.5/weather?q=London&APPID=9a4be4eeb7de3b88211989559a0849f7
 
 //        {"coord":{"lon":49.12,"lat":55.79},
@@ -178,6 +184,7 @@ public class CityModel {
                 setWeather("main", (getObjFromJson(tmp1, "main", null)));
                 setWeather("description", (getObjFromJson(tmp1, "description", null)));
                 setWeather("icon", (getObjFromJson(tmp1, "icon", null)));
+                setTimeRefresh();
             }
         }
     }
@@ -278,7 +285,7 @@ public class CityModel {
 
 
     // реализация передачи данных через intent
-    public Intent putExtraIntent(Context context, Class<?> klass) {
+    public Intent putExtraIntent(Context context, Class<?> klass) throws ParseException {
 
         Intent intent = new Intent(context, klass);
         intent.putExtra("name", getName());
@@ -290,13 +297,19 @@ public class CityModel {
         intent.putExtra("pressure", getPressure());
         intent.putExtra("windspeed", getWindspeed());
         intent.putExtra("winddirection", getWinddirection());
-        intent.putExtra("timeRefresh", getTimeRefresh());
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        if (getTimeRefresh() != null) {
+            String d1 = df.format(getTimeRefresh());
+            intent.putExtra("timeRefresh", d1);
+        } else {
+            intent.putExtra("timeRefresh", "");
+        }
         return intent;
     }
 
 
     // реализация получение данных через intent
-    public void getExtraIntent(Intent intent) {
+    public void getExtraIntent(Intent intent) throws ParseException {
         setName(intent.getStringExtra("name"));
         setId(intent.getLongExtra("id", 0));  ///dsfsdfdsfdsfdsfsdf
         setCountry(intent.getStringExtra("country"));
@@ -306,7 +319,11 @@ public class CityModel {
         setHuminidity(intent.getFloatExtra("huminidity", 0.0f));
         setWindspeed(intent.getFloatExtra("windspeed", 0.0f));
         setWinddirection(intent.getFloatExtra("winddirection", 0.0f));
-//                    setTimeRefresh(Date.pa(data.getStringExtra("timeRefresh")));
+        if (intent.getStringExtra("timeRefresh") != null) {
+            DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            Date d1 = df.parse(intent.getStringExtra("timeRefresh"));
+            setTimeRefresh(d1);
+        }
     }
 
     // преобразование объекта CityModel в Josn
@@ -321,7 +338,11 @@ public class CityModel {
         jo.put("pressure", pressure);
         jo.put("windspeed", windspeed);
         jo.put("winddirection", winddirection);
-        jo.put("timeRefresh", timeRefresh);
+        if (timeRefresh != null) {
+            jo.put("timeRefresh", timeRefresh.toString());
+        } else {
+            jo.put("timeRefresh", null);
+        }
         jo.put("windspeed", windspeed);
         jo.put("windspeed", windspeed);
         jo.put("weather", weather);
@@ -342,6 +363,8 @@ public class CityModel {
             this.CityModel(new CityModel(jo));
         } catch (JSONException e) {
             flagStatus = false;
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         return flagStatus;
     }

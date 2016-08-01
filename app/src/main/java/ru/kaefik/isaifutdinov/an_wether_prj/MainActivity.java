@@ -20,8 +20,12 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import ru.kaefik.isaifutdinov.an_wether_prj.adapter.CityModelAdapter;
 import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
@@ -45,7 +49,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected List<CityModel> doInBackground(List<CityModel>... listcityModels) {
             for (int i = 0; i < listcityModels[0].size(); i++) {
-                listcityModels[0].get(i).getHttpWeather();
+                try {
+                    listcityModels[0].get(i).getHttpWeather();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 publishProgress(listcityModels[0].get(i));
             }
             return listcityModels[0];
@@ -66,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+//            saveListCity();
         }
     }
 
@@ -92,7 +101,11 @@ public class MainActivity extends AppCompatActivity {
             // Обработка события на клик по элементу списка
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CityModel tmpCityModel = adapter.getCityModel(position);
-                startActivityForResult(tmpCityModel.putExtraIntent(getApplicationContext(), cityInfoActivity.class), RequestCode.REQUEST_CODE_CITY_WEATHER);
+                try {
+                    startActivityForResult(tmpCityModel.putExtraIntent(getApplicationContext(), cityInfoActivity.class), RequestCode.REQUEST_CODE_CITY_WEATHER);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -143,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Ошибка при обновлении данных", Toast.LENGTH_SHORT);
         }
+
     }
 
 
@@ -163,6 +177,18 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.setProgressBarIndeterminateVisibility(true);
         task = new cityInfoAsyncTask();
         task.execute(listDataCity);
+
+        try {
+            task.get(3, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Toast.makeText(this,"Ошибка обновления данных погоды",Toast.LENGTH_SHORT);
+        } catch (ExecutionException e) {
+            Toast.makeText(this,"Ошибка обновления данных погоды",Toast.LENGTH_SHORT);
+        } catch (TimeoutException e) {
+            Toast.makeText(this,"Ошибка обновления данных погоды",Toast.LENGTH_SHORT);
+        }
+        saveListCity();
+
     }
 
 
@@ -174,7 +200,11 @@ public class MainActivity extends AppCompatActivity {
             switch (requestCode) {
                 case RequestCode.REQUEST_CODE_CITY_WEATHER:
                     CityModel tmpCityData = new CityModel();
-                    tmpCityData.getExtraIntent(intent);
+                    try {
+                        tmpCityData.getExtraIntent(intent);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
 
                     // СЮДА ДОБАВИТЬ ОБНОВЛЕНИЕ ИНФОРМАЦИИ О ГОРОДЕ tmpCityData.getName() в listDataCity
                     for (int i = 0; i < listDataCity.size(); i++) {
@@ -252,15 +282,15 @@ public class MainActivity extends AppCompatActivity {
 
     // восстановление сохраненых данных о погоде (каждый город - отдельный файл сJosn)
     public void restoreCityInfoFromFile() throws JSONException {
-        List<CityModel> tmplistDataCity = new ArrayList<CityModel>();
+//        List<CityModel> tmplistDataCity = new ArrayList<CityModel>();
         Boolean flagExistFile = true;
         for (int i = 0; i < listDataCity.size(); i++) {
             String nameFile = listDataCity.get(i).getName();
-            tmplistDataCity.add(new CityModel(nameFile));
-            flagExistFile = tmplistDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
-            if (flagExistFile) {
-                listDataCity.set(i, tmplistDataCity.get(i));
-            }
+//            tmplistDataCity.add(new CityModel(nameFile));
+            flagExistFile = listDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
+//            if (flagExistFile) {
+//                listDataCity.set(i, tmplistDataCity.get(i));
+//            }
         }
         nameCity.invalidateViews();
     }
@@ -286,13 +316,11 @@ public class MainActivity extends AppCompatActivity {
     public void loadListCity() {
         String stringCityName = "";
         stringCityName = loadCityParameters("city");
-        System.out.println("onClickLoadListCity -> " + stringCityName);
         String stringListCityNames[] = stringCityName.split(",");
         if (!stringCityName.trim().equals("")) {
             listDataCity.clear();
             for (int i = 0; i < stringListCityNames.length; i++) {
                 listDataCity.add(i, new CityModel(stringListCityNames[i]));
-                System.out.println("onClickLoadListCity -> " + listDataCity.get(i).getName());
             }
         }
 

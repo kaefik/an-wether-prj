@@ -6,8 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
 
@@ -30,7 +34,11 @@ public class cityInfoActivity extends AppCompatActivity {
     class cityInfoAsyncTask extends AsyncTask<Void, Void, CityModel> {
         @Override
         protected CityModel doInBackground(Void... voids) {
-            cityDataWeather.getHttpWeather();   //??? не нравится что использую в этом классе объект cityDataWeather
+            try {
+                cityDataWeather.getHttpWeather();   //??? не нравится что использую в этом классе объект cityDataWeather
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             return cityDataWeather;
         }
 
@@ -60,7 +68,11 @@ public class cityInfoActivity extends AppCompatActivity {
         textViewDescriptionWeather = (TextView) findViewById(R.id.textViewDescriptionWeather);
 
         cityDataWeather = new CityModel();
-        cityDataWeather.getExtraIntent(getIntent());
+        try {
+            cityDataWeather.getExtraIntent(getIntent());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         refreshData2View(cityDataWeather);
 
     }
@@ -79,7 +91,7 @@ public class cityInfoActivity extends AppCompatActivity {
     }
 
     // возврат к основной активити MainActivity
-    public void goBackMainActivity() {
+    public void goBackMainActivity() throws ParseException {
         if (task != null) {
             task.cancel(true);
         }
@@ -88,7 +100,7 @@ public class cityInfoActivity extends AppCompatActivity {
         finish();
     }
 
-    public void onClickgoBackMainActivity(View view) {
+    public void onClickgoBackMainActivity(View view) throws ParseException {
         goBackMainActivity();
     }
 
@@ -100,7 +112,11 @@ public class cityInfoActivity extends AppCompatActivity {
     @Override
     //обработка нажатия клавиши Назад
     public void onBackPressed() {
-        goBackMainActivity();
+        try {
+            goBackMainActivity();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -111,10 +127,12 @@ public class cityInfoActivity extends AppCompatActivity {
             task.cancel(true);
         }
         task = new cityInfoAsyncTask();
-        task.execute();
-        cityDataWeather = task.get();
-
-        cityDataWeather.setTimeRefresh();
+        try {
+            task.execute();
+            cityDataWeather = task.get(3, TimeUnit.SECONDS);
+        } catch (TimeoutException e) {
+            Toast.makeText(this,"Ошибка обновления данных погоды",Toast.LENGTH_SHORT);
+        }
 
         refreshData2View(cityDataWeather);
     }
@@ -128,9 +146,13 @@ public class cityInfoActivity extends AppCompatActivity {
         pressureCity.setText(Float.toString(cityModel.getPressure() * 0.75f) + " мм рт.ст.");
         windspeedCity.setText(Float.toString(cityModel.getWindspeed()) + " м/с");
         winddirectionCity.setText(Float.toString(cityModel.getWinddirection()) + " град.");
-        imageWeatherConditions.setImageResource(getResourceImageFile("weather" + cityModel.getWeather("icon"))); // сделать правильный вывод изобращения погоды
-        textTimeRefresh.setText(cityModel.getTimeRefresh().toString());
+        imageWeatherConditions.setImageResource(getResourceImageFile("weather" + cityModel.getWeather("icon")));
         textViewDescriptionWeather.setText(cityModel.getWeather("description"));
+        if(cityModel.getTimeRefresh()!=null) {
+            textTimeRefresh.setText(cityModel.getTimeRefresh().toString());
+        }else{
+            textTimeRefresh.setText(R.string.unknown);
+        }
 
     }
 

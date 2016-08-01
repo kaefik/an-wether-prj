@@ -17,4 +17,5 @@
     <string name="txtplus">+</string>
     <string name="txtaddcityedit">"Добален новый город: "</string>
     <string name="strgorod">город</string>
+    <string name="unknown">неизвестно</string>
 </resources>
