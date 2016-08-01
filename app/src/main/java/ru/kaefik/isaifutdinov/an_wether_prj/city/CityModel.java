@@ -33,7 +33,7 @@ public class CityModel {
     private float pressure; // давление
     private float windspeed; // скорость ветра
     private float winddirection; // направление ветра
-    private Date timeRefresh; // время обновления прогноза погоды
+    private String timeRefresh; // время обновления прогноза погоды
     private Map weather; // описание и иконка погоды
 
     public CityModel(long id, String country, String name, float temp, float clouds, float huminidity, float pressure, float windspeed, float winddirection, int i) {
@@ -46,7 +46,7 @@ public class CityModel {
         this.pressure = pressure;
         this.windspeed = windspeed;
         this.winddirection = winddirection;
-//        this.timeRefresh = new Date();
+        this.timeRefresh = "";
         this.weather = new HashMap<String, String>();
         this.weather.put("id", "");
         this.weather.put("icon", "");
@@ -65,7 +65,7 @@ public class CityModel {
         this.pressure = 0.00f;
         this.windspeed = 0.00f;
         this.winddirection = 0.00f;
-//        this.timeRefresh = new Date();
+        this.timeRefresh = "";
         this.weather = new HashMap<String, String>();
         this.weather.put("id", "");
         this.weather.put("icon", "");
@@ -84,7 +84,7 @@ public class CityModel {
         this.pressure = 0.00f;
         this.windspeed = 0.00f;
         this.winddirection = 0.00f;
-//        this.timeRefresh = new Date();
+        this.timeRefresh = "";
         this.weather = new HashMap<String, String>();
         this.weather.put("id", "");
         this.weather.put("icon", "");
@@ -103,13 +103,9 @@ public class CityModel {
         this.pressure = Float.parseFloat(jo.get("pressure").toString());
         this.windspeed = Float.parseFloat(jo.get("windspeed").toString());
         this.winddirection = Float.parseFloat(jo.get("winddirection").toString());
+        this.timeRefresh = jo.get("timeRefresh").toString();
 
 //        this.weather = (HashMap<String, String>) jo.get("weather");
-
-//        DateFormat df = new SimpleDateFormat();
-//        this.timeRefresh = (Date) df.parse(jo.get("timeRefresh").toString());
-
-
 
         this.weather = new HashMap<String, String>();
         this.weather.put("id", ""); // временно
@@ -139,16 +135,15 @@ public class CityModel {
 
     // обновить время обновления текущей датой
     public void setTimeRefresh() throws ParseException {
-//        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-//        String  strDate = df.format(new Date());
-        this.timeRefresh = new Date();
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        this.timeRefresh = df.format(new Date());
     }
 
-    public void setTimeRefresh(Date timeRefresh) {
+    public void setTimeRefresh(String timeRefresh) {
         this.timeRefresh = timeRefresh;
     }
 
-    public Date getTimeRefresh() {
+    public String getTimeRefresh() {
         return timeRefresh;
     }
 
@@ -297,13 +292,14 @@ public class CityModel {
         intent.putExtra("pressure", getPressure());
         intent.putExtra("windspeed", getWindspeed());
         intent.putExtra("winddirection", getWinddirection());
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        if (getTimeRefresh() != null) {
-            String d1 = df.format(getTimeRefresh());
-            intent.putExtra("timeRefresh", d1);
-        } else {
-            intent.putExtra("timeRefresh", "");
-        }
+        intent.putExtra("timeRefresh", getTimeRefresh());
+//        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//        if (getTimeRefresh() != null) {
+//            String d1 = df.format(getTimeRefresh());
+//            intent.putExtra("timeRefresh", d1);
+//        } else {
+//            intent.putExtra("timeRefresh", "");
+//        }
         return intent;
     }
 
@@ -319,11 +315,11 @@ public class CityModel {
         setHuminidity(intent.getFloatExtra("huminidity", 0.0f));
         setWindspeed(intent.getFloatExtra("windspeed", 0.0f));
         setWinddirection(intent.getFloatExtra("winddirection", 0.0f));
-        if (intent.getStringExtra("timeRefresh") != null) {
-            DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            Date d1 = df.parse(intent.getStringExtra("timeRefresh"));
-            setTimeRefresh(d1);
-        }
+//        if (intent.getStringExtra("timeRefresh") != null) {
+//            DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//            Date d1 = df.parse(intent.getStringExtra("timeRefresh"));
+        setTimeRefresh(intent.getStringExtra("timeRefresh"));
+//        }
     }
 
     // преобразование объекта CityModel в Josn
@@ -338,11 +334,7 @@ public class CityModel {
         jo.put("pressure", pressure);
         jo.put("windspeed", windspeed);
         jo.put("winddirection", winddirection);
-        if (timeRefresh != null) {
-            jo.put("timeRefresh", timeRefresh.toString());
-        } else {
-            jo.put("timeRefresh", null);
-        }
+        jo.put("timeRefresh", timeRefresh);
         jo.put("windspeed", windspeed);
         jo.put("windspeed", windspeed);
         jo.put("weather", weather);
