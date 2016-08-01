@@ -52,6 +52,7 @@ public class CityModel {
         this.weather.put("icon", "");
         this.weather.put("description", "");
         this.weather.put("main", "");
+
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
     }
 
@@ -71,6 +72,7 @@ public class CityModel {
         this.weather.put("icon", "");
         this.weather.put("description", "");
         this.weather.put("main", "");
+
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
     }
 
@@ -90,6 +92,7 @@ public class CityModel {
         this.weather.put("icon", "");
         this.weather.put("description", "");
         this.weather.put("main", "");
+
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
     }
 
@@ -106,10 +109,10 @@ public class CityModel {
         this.timeRefresh = jo.get("timeRefresh").toString();
 
         this.weather = new HashMap<String, String>();
-        this.weather.put("id",  jo.get("weather-id").toString()); // временно
-        this.weather.put("icon", jo.get("weather-icon").toString()); // временно
-        this.weather.put("description", jo.get("weather-description").toString()); // временно
-        this.weather.put("main", jo.get("weather-main").toString()); // временно
+        this.weather.put("id",  jo.get("weather-id").toString());
+        this.weather.put("icon", jo.get("weather-icon").toString());
+        this.weather.put("description", jo.get("weather-description").toString()); /
+        this.weather.put("main", jo.get("weather-main").toString());
 
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
 
@@ -128,6 +131,7 @@ public class CityModel {
         this.winddirection = obj.getWinddirection();
         this.timeRefresh = obj.getTimeRefresh();
         this.weather = obj.getWeather();
+
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
     }
 
