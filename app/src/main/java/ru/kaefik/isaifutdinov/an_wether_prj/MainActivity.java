@@ -87,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
 
         nameCity = (ListView) findViewById(R.id.listView);
         editTextAddNewCity = (EditText) findViewById(R.id.editTextAddNewCity);
-        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+
+        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7"); // со временем можно сделать настрйоку чтобы можно было в программе менять APPID
+
         if (listDataCity == null) {
             listDataCity = new ArrayList<CityModel>();
             loadListCity();
@@ -200,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
             switch (requestCode) {
                 case RequestCode.REQUEST_CODE_CITY_WEATHER:
                     CityModel tmpCityData = new CityModel();
+//                    tmpCityData.getMY_APPID(getMY_APPID());
                     try {
                         tmpCityData.getExtraIntent(intent);
                     } catch (ParseException e) {
@@ -234,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
         String newCity = Utils.firstUpCaseString(editTextAddNewCity.getText().toString().trim());
         // СЮДА ДОБАВИТЬ ПРОВЕРКИ ВВОДА НАЗВАНИЯ ГОРОДА
         if ((!newCity.equals("")) && (!isExistNameFromList(listDataCity, newCity))) {
-            listDataCity.add(new CityModel(newCity));
+            listDataCity.add(new CityModel(newCity,getMY_APPID()));
             Toast.makeText(getApplicationContext(), getString(R.string.txtaddcityedit) + newCity, Toast.LENGTH_SHORT).show();
         }
         editTextAddNewCity.setText("");
@@ -286,11 +289,7 @@ public class MainActivity extends AppCompatActivity {
         Boolean flagExistFile = true;
         for (int i = 0; i < listDataCity.size(); i++) {
             String nameFile = listDataCity.get(i).getName();
-//            tmplistDataCity.add(new CityModel(nameFile));
-            flagExistFile = listDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
-//            if (flagExistFile) {
-//                listDataCity.set(i, tmplistDataCity.get(i));
-//            }
+            listDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
         }
         nameCity.invalidateViews();
     }
@@ -325,11 +324,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (listDataCity.size() == 0) {
-            listDataCity.add(new CityModel("Kazan"));
-            listDataCity.add(new CityModel("Moscow"));
-            listDataCity.add(new CityModel("Samara"));
-            listDataCity.add(new CityModel("Istanbul"));
-            listDataCity.add(new CityModel("London"));
+            listDataCity.add(new CityModel("Kazan",getMY_APPID()));
+            listDataCity.add(new CityModel("Moscow",getMY_APPID()));
+            listDataCity.add(new CityModel("Samara",getMY_APPID()));
+            listDataCity.add(new CityModel("Istanbul",getMY_APPID()));
+            listDataCity.add(new CityModel("London",getMY_APPID()));
             Toast.makeText(getApplicationContext(), "Загрузка городов по умолчанию.", Toast.LENGTH_SHORT);
         }
         nameCity.invalidateViews();

@@ -23,7 +23,6 @@ public class CityModel {
 
     private String MY_APPID; // уникальный ключ для доступа к сервису OpenWeatherMap
 
-
     private long id;
     private String country; // страна
     private String name; // название города
@@ -52,8 +51,7 @@ public class CityModel {
         this.weather.put("icon", "");
         this.weather.put("description", "");
         this.weather.put("main", "");
-
-        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+        setMY_APPID("");
     }
 
     public CityModel(String name) {
@@ -72,8 +70,26 @@ public class CityModel {
         this.weather.put("icon", "");
         this.weather.put("description", "");
         this.weather.put("main", "");
+        setMY_APPID("");
+    }
 
-        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+    public CityModel(String name,String appid) {
+        this.name = name;
+        this.id = 0;
+        this.country = "";
+        this.temp = 0.00f;
+        this.clouds = 0.00f;
+        this.huminidity = 0.00f;
+        this.pressure = 0.00f;
+        this.windspeed = 0.00f;
+        this.winddirection = 0.00f;
+        this.timeRefresh = "";
+        this.weather = new HashMap<String, String>();
+        this.weather.put("id", "");
+        this.weather.put("icon", "");
+        this.weather.put("description", "");
+        this.weather.put("main", "");
+        setMY_APPID(appid);
     }
 
     public CityModel() {
@@ -92,8 +108,7 @@ public class CityModel {
         this.weather.put("icon", "");
         this.weather.put("description", "");
         this.weather.put("main", "");
-
-        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+        setMY_APPID("");
     }
 
     public CityModel(JSONObject jo) throws JSONException, ParseException {
@@ -109,13 +124,11 @@ public class CityModel {
         this.timeRefresh = jo.get("timeRefresh").toString();
 
         this.weather = new HashMap<String, String>();
-        this.weather.put("id",  jo.get("weather-id").toString());
+        this.weather.put("id", jo.get("weather-id").toString());
         this.weather.put("icon", jo.get("weather-icon").toString());
-        this.weather.put("description", jo.get("weather-description").toString()); /
+        this.weather.put("description", jo.get("weather-description").toString());
         this.weather.put("main", jo.get("weather-main").toString());
-
-        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
-
+        setMY_APPID(jo.get("appid").toString());
     }
 
     // копирование объекта obj в текущий
@@ -131,8 +144,7 @@ public class CityModel {
         this.winddirection = obj.getWinddirection();
         this.timeRefresh = obj.getTimeRefresh();
         this.weather = obj.getWeather();
-
-        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7");
+        setMY_APPID(obj.getMY_APPID());
     }
 
 
@@ -152,7 +164,8 @@ public class CityModel {
         jo.put("weather-id", getWeather("id"));
         jo.put("weather-icon", getWeather("icon"));
         jo.put("weather-description", getWeather("description"));
-        jo.put("weather-main",getWeather("main"));
+        jo.put("weather-main", getWeather("main"));
+        jo.put("appid", getMY_APPID());
 
         return jo;
     }
@@ -317,6 +330,7 @@ public class CityModel {
         intent.putExtra("windspeed", getWindspeed());
         intent.putExtra("winddirection", getWinddirection());
         intent.putExtra("timeRefresh", getTimeRefresh());
+        intent.putExtra("appid", getMY_APPID());
 
         //  передача данных параметра weather
         intent.putExtra("weather-id", getWeather("id"));
@@ -342,15 +356,16 @@ public class CityModel {
         setTimeRefresh(intent.getStringExtra("timeRefresh"));
 
         //  получение данных параметра weather
-        setWeather("id",intent.getStringExtra("weather-id"));
-        setWeather("icon",intent.getStringExtra("weather-icon"));
-        setWeather("description",intent.getStringExtra("weather-description"));
-        setWeather("main",intent.getStringExtra("weather-main"));
+        setWeather("id", intent.getStringExtra("weather-id"));
+        setWeather("icon", intent.getStringExtra("weather-icon"));
+        setWeather("description", intent.getStringExtra("weather-description"));
+        setWeather("main", intent.getStringExtra("weather-main"));
+
+        setMY_APPID(intent.getStringExtra("appid"));
 
 
 //        }
     }
-
 
 
     // сохранить объект в файл nameFile в виде Josn
