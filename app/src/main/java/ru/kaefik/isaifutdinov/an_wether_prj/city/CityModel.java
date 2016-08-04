@@ -194,8 +194,7 @@ public class CityModel {
 
         String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q=" + getName() + "&units=metric&APPID=" + getMYAPPID());
         if (res == null) {
-            // сгенерировать исключение чтобы на верхнем уровне обработать ее
-            res="";
+            // TODO: подумать как лучше обработать данную ветку
             System.out.println("Ошибка при обновлении данных");
         } else {
             if (getObjFromJson(res, "name", null).equals(this.mName)) {
@@ -207,7 +206,7 @@ public class CityModel {
                 setCountry(getObjFromJson(res, "sys", "country"));
                 setId(Long.parseLong(getObjFromJson(res, "id", null)));
                 String ss = getObjFromJson(res, "weather", null);
-            //  "mWeather":[{"mId":800,"main":"Clear","description":"clear sky","icon":"01n"}]
+                //  "mWeather":[{"mId":800,"main":"Clear","description":"clear sky","icon":"01n"}]
                 String tmp1 = ss.substring(1, ss.length() - 1);
                 setWeather("id", (getObjFromJson(tmp1, "id", null)));
                 setWeather("main", (getObjFromJson(tmp1, "main", null)));
@@ -370,7 +369,7 @@ public class CityModel {
         } catch (JSONException e) {
             flagStatus = false;
         } catch (ParseException e) {
-            e.printStackTrace();
+            flagStatus = false;
         }
         return flagStatus;
     }

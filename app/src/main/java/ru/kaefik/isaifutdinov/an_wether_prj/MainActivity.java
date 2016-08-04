@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     startActivityForResult(tmpCityModel.putExtraIntent(getApplicationContext(), cityInfoActivity.class), RequestCode.REQUEST_CODE_CITY_WEATHER);
                 } catch (ParseException e) {
+                    // TODO: нужно обработать исключение
                     e.printStackTrace();
                 }
             }
@@ -142,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             restoreCityInfoFromFile();
         } catch (JSONException e) {
+            // TODO: нужно обработать исключение
             e.printStackTrace();
         }
 
@@ -158,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // ----- задействовать данный параметр
+
     public String getMY_APPID() {
         return mMY_APPID;
     }
@@ -167,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
 
         this.mMY_APPID = MY_APPID;
     }
-    // ----- END задействовать данный параметр
 
 
     // запуск задание cityInfoAsyncTask на обновления информации списка городов
@@ -227,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
     // добавления нового города
     public void onClickAddCity(View v) {
         String newCity = Utils.firstUpCaseString(mEditTextAddNewCity.getText().toString().trim());
-        // СЮДА ДОБАВИТЬ ДОПОЛНИТЕЛЬНЫЕ ПРОВЕРКИ ВВОДА НАЗВАНИЯ ГОРОДА
+        // TODO: СЮДА ДОБАВИТЬ ДОПОЛНИТЕЛЬНЫЕ ПРОВЕРКИ ВВОДА НАЗВАНИЯ ГОРОДА
         if ((!newCity.equals("")) && (!isExistNameFromList(mListDataCity, newCity))) {
             mListDataCity.add(new CityModel(newCity, getMY_APPID()));
             Toast.makeText(getApplicationContext(), getString(R.string.txtaddcityedit) + newCity, Toast.LENGTH_SHORT).show();

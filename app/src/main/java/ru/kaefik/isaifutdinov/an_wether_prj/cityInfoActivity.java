@@ -35,7 +35,8 @@ public class cityInfoActivity extends AppCompatActivity {
         @Override
         protected CityModel doInBackground(Void... voids) {
             try {
-                mCityDataWeather.getHttpWeather();   //??? не нравится что использую в этом классе объект mCityDataWeather
+                // TODO: не нравится что использую в этом классе объект mCityDataWeather
+                mCityDataWeather.getHttpWeather();
             } catch (ParseException e) {
                 e.printStackTrace();
             }

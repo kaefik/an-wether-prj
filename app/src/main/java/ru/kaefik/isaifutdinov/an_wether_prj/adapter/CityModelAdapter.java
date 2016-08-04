@@ -11,6 +11,7 @@ import java.util.List;
 
 import ru.kaefik.isaifutdinov.an_wether_prj.R;
 import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
+
 // адаптер для отображения списка городов на экране в MainActivity
 public class CityModelAdapter extends BaseAdapter {
 
