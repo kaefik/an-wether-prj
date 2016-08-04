@@ -17,29 +17,29 @@ import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
 
 public class cityInfoActivity extends AppCompatActivity {
 
-    TextView nameCity;
-    TextView tempCity;
-    TextView cloudsCity;
-    TextView huminidityCity;
-    TextView pressureCity;
-    TextView windspeedCity;
-    TextView winddirectionCity;
-    TextView textTimeRefresh;
-    ImageView imageWeatherConditions;
-    TextView textViewDescriptionWeather;
+    TextView mNameCity;
+    TextView mTempCity;
+    TextView mCloudsCity;
+    TextView mHuminidityCity;
+    TextView mPressureCity;
+    TextView mWindspeedCity;
+    TextView mWinddirectionCity;
+    TextView mTextTimeRefresh;
+    ImageView mImageWeatherConditions;
+    TextView mTextViewDescriptionWeather;
 
-    private CityModel cityDataWeather;
-    private cityInfoAsyncTask task;
+    private CityModel mCityDataWeather;
+    private cityInfoAsyncTask mTask;
 
     class cityInfoAsyncTask extends AsyncTask<Void, Void, CityModel> {
         @Override
         protected CityModel doInBackground(Void... voids) {
             try {
-                cityDataWeather.getHttpWeather();   //??? не нравится что использую в этом классе объект cityDataWeather
+                mCityDataWeather.getHttpWeather();   //??? не нравится что использую в этом классе объект mCityDataWeather
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            return cityDataWeather;
+            return mCityDataWeather;
         }
 
         @Override
@@ -56,24 +56,24 @@ public class cityInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_info);
 
-        nameCity = (TextView) findViewById(R.id.nameCity);
-        tempCity = (TextView) findViewById(R.id.tempCity);
-        cloudsCity = (TextView) findViewById(R.id.cloudsCity);
-        huminidityCity = (TextView) findViewById(R.id.huminidityCity);
-        pressureCity = (TextView) findViewById(R.id.pressureCity);
-        windspeedCity = (TextView) findViewById(R.id.windspeedCity);
-        winddirectionCity = (TextView) findViewById(R.id.winddirectionCity);
-        textTimeRefresh = (TextView) findViewById(R.id.textTimeRefresh);
-        imageWeatherConditions = (ImageView) findViewById(R.id.imageWeatherConditions);
-        textViewDescriptionWeather = (TextView) findViewById(R.id.textViewDescriptionWeather);
+        mNameCity = (TextView) findViewById(R.id.nameCity);
+        mTempCity = (TextView) findViewById(R.id.tempCity);
+        mCloudsCity = (TextView) findViewById(R.id.cloudsCity);
+        mHuminidityCity = (TextView) findViewById(R.id.huminidityCity);
+        mPressureCity = (TextView) findViewById(R.id.pressureCity);
+        mWindspeedCity = (TextView) findViewById(R.id.windspeedCity);
+        mWinddirectionCity = (TextView) findViewById(R.id.winddirectionCity);
+        mTextTimeRefresh = (TextView) findViewById(R.id.textTimeRefresh);
+        mImageWeatherConditions = (ImageView) findViewById(R.id.imageWeatherConditions);
+        mTextViewDescriptionWeather = (TextView) findViewById(R.id.textViewDescriptionWeather);
 
-        cityDataWeather = new CityModel();
+        mCityDataWeather = new CityModel();
         try {
-            cityDataWeather.getExtraIntent(getIntent());
+            mCityDataWeather.getExtraIntent(getIntent());
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        refreshData2View(cityDataWeather);
+        refreshData2View(mCityDataWeather);
 
     }
 
@@ -92,11 +92,11 @@ public class cityInfoActivity extends AppCompatActivity {
 
     // возврат к основной активити MainActivity
     public void goBackMainActivity() throws ParseException {
-        if (task != null) {
-            task.cancel(true);
+        if (mTask != null) {
+            mTask.cancel(true);
         }
 
-        setResult(RESULT_OK, cityDataWeather.putExtraIntent(this, MainActivity.class));
+        setResult(RESULT_OK, mCityDataWeather.putExtraIntent(this, MainActivity.class));
         finish();
     }
 
@@ -123,35 +123,35 @@ public class cityInfoActivity extends AppCompatActivity {
     // обновление данных о погоде
     public void refreshDataWeather() throws ExecutionException, InterruptedException {
 
-        if (task != null) {
-            task.cancel(true);
+        if (mTask != null) {
+            mTask.cancel(true);
         }
-        task = new cityInfoAsyncTask();
+        mTask = new cityInfoAsyncTask();
         try {
-            task.execute();
-            cityDataWeather = task.get(3, TimeUnit.SECONDS);
+            mTask.execute();
+            mCityDataWeather = mTask.get(3, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
             Toast.makeText(this,"Ошибка обновления данных погоды",Toast.LENGTH_SHORT);
         }
 
-        refreshData2View(cityDataWeather);
+        refreshData2View(mCityDataWeather);
     }
 
     // отображение данных о погоде выбранного города
     public void refreshData2View(CityModel cityModel) {
-        nameCity.setText(cityModel.getName());
-        tempCity.setText(Float.toString(cityModel.getTemp()) + " C");
-        cloudsCity.setText(Float.toString(cityModel.getClouds()));
-        huminidityCity.setText(Float.toString(cityModel.getHuminidity()) + " %");
-        pressureCity.setText(Float.toString(cityModel.getPressure() * 0.75f) + " мм рт.ст.");
-        windspeedCity.setText(Float.toString(cityModel.getWindspeed()) + " м/с");
-        winddirectionCity.setText(Float.toString(cityModel.getWinddirection()) + " град.");
-        imageWeatherConditions.setImageResource(getResourceImageFile("weather" + cityModel.getWeather("icon")));
-        textViewDescriptionWeather.setText(cityModel.getWeather("description"));
+        mNameCity.setText(cityModel.getName());
+        mTempCity.setText(Float.toString(cityModel.getTemp()) + " C");
+        mCloudsCity.setText(Float.toString(cityModel.getClouds()));
+        mHuminidityCity.setText(Float.toString(cityModel.getHuminidity()) + " %");
+        mPressureCity.setText(Float.toString(cityModel.getPressure() * 0.75f) + " мм рт.ст.");
+        mWindspeedCity.setText(Float.toString(cityModel.getWindspeed()) + " м/с");
+        mWinddirectionCity.setText(Float.toString(cityModel.getWinddirection()) + " град.");
+        mImageWeatherConditions.setImageResource(getResourceImageFile("weather" + cityModel.getWeather("icon")));
+        mTextViewDescriptionWeather.setText(cityModel.getWeather("description"));
         if(cityModel.getTimeRefresh()!=null) {
-            textTimeRefresh.setText(cityModel.getTimeRefresh().toString());
+            mTextTimeRefresh.setText(cityModel.getTimeRefresh().toString());
         }else{
-            textTimeRefresh.setText(R.string.unknown);
+            mTextTimeRefresh.setText(R.string.unknown);
         }
 
     }

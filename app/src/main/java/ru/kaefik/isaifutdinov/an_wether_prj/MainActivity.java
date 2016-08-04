@@ -12,10 +12,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -34,15 +32,13 @@ import ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView nameCity;
-    private TextView myText;
-    private EditText editTextAddNewCity;
-    private Button btnRefresh;
-    private String MY_APPID; // уникальный ключ для доступа к сервису OpenWeatherMap
-    private SharedPreferences sPref;
-    List<CityModel> listDataCity; // данные прогноза погоды
+    private ListView mNameCity;
+    private EditText mEditTextAddNewCity;
+    private String mMY_APPID; // уникальный ключ для доступа к сервису OpenWeatherMap
+    private SharedPreferences mSPref;
+    List<CityModel> mListDataCity; // данные прогноза погоды
 
-    private cityInfoAsyncTask task;
+    private cityInfoAsyncTask mTask;
 
 
     class cityInfoAsyncTask extends AsyncTask<List<CityModel>, CityModel, List<CityModel>> {
@@ -62,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(CityModel... values) {
             super.onProgressUpdate(values);
-            nameCity.invalidateViews();
+            mNameCity.invalidateViews();
             MainActivity.this.setProgressBarIndeterminateVisibility(false);
         }
 
@@ -85,21 +81,21 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); // добавления прогресс бара на заголовок activity
         setContentView(R.layout.activity_main);
 
-        nameCity = (ListView) findViewById(R.id.listView);
-        editTextAddNewCity = (EditText) findViewById(R.id.editTextAddNewCity);
+        mNameCity = (ListView) findViewById(R.id.listView);
+        mEditTextAddNewCity = (EditText) findViewById(R.id.editTextAddNewCity);
 
         setMY_APPID("9a4be4eeb7de3b88211989559a0849f7"); // со временем можно сделать настрйоку чтобы можно было в программе менять APPID
 
-        if (listDataCity == null) {
-            listDataCity = new ArrayList<CityModel>();
+        if (mListDataCity == null) {
+            mListDataCity = new ArrayList<CityModel>();
             loadListCity();
         }
 
-        final CityModelAdapter adapter = new CityModelAdapter(this, listDataCity);
-        nameCity.setAdapter(adapter);
+        final CityModelAdapter adapter = new CityModelAdapter(this, mListDataCity);
+        mNameCity.setAdapter(adapter);
 
 
-        nameCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mNameCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             // Обработка события на клик по элементу списка
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CityModel tmpCityModel = adapter.getCityModel(position);
@@ -111,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        nameCity.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        mNameCity.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             // Обработка долгого нажатия на элемент
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 //removeCityDialog(parent, position);
@@ -123,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton("Удалить",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        listDataCity.remove(position);
-                                        nameCity.invalidateViews();
+                                        mListDataCity.remove(position);
+                                        mNameCity.invalidateViews();
                                         saveListCity();
                                         Toast.makeText(getApplicationContext(), getString(R.string.strgorod) + "  " + selectedItem.getName() + " удалён.", Toast.LENGTH_SHORT).show();
                                     }
@@ -147,14 +143,14 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        startcityInfoAsyncTask(listDataCity);
+        startcityInfoAsyncTask(mListDataCity);
     }
 
 
     // ручное обновление погоды в списке
     public void onClickRefreshCityInfo(View v) throws JSONException {
         try {
-            startcityInfoAsyncTask(listDataCity);
+            startcityInfoAsyncTask(mListDataCity);
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Ошибка при обновлении данных", Toast.LENGTH_SHORT);
         }
@@ -164,12 +160,12 @@ public class MainActivity extends AppCompatActivity {
 
     // ----- задействовать данный параметр
     public String getMY_APPID() {
-        return MY_APPID;
+        return mMY_APPID;
     }
 
     public void setMY_APPID(String MY_APPID) {
 
-        this.MY_APPID = MY_APPID;
+        this.mMY_APPID = MY_APPID;
     }
     // ----- END задействовать данный параметр
 
@@ -177,11 +173,11 @@ public class MainActivity extends AppCompatActivity {
     // запуск задание cityInfoAsyncTask на обновления информации списка городов
     public void startcityInfoAsyncTask(List<CityModel> listCity) {
         MainActivity.this.setProgressBarIndeterminateVisibility(true);
-        task = new cityInfoAsyncTask();
-        task.execute(listDataCity);
+        mTask = new cityInfoAsyncTask();
+        mTask.execute(mListDataCity);
 
         try {
-            task.get(3, TimeUnit.SECONDS);
+            mTask.get(3, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             Toast.makeText(this,"Ошибка обновления данных погоды",Toast.LENGTH_SHORT);
         } catch (ExecutionException e) {
@@ -209,18 +205,18 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    // СЮДА ДОБАВИТЬ ОБНОВЛЕНИЕ ИНФОРМАЦИИ О ГОРОДЕ tmpCityData.getName() в listDataCity
-                    for (int i = 0; i < listDataCity.size(); i++) {
-                        if (listDataCity.get(i).getName().equals(tmpCityData.getName())) {
-                            listDataCity.get(i).setTemp(tmpCityData.getTemp());
-                            listDataCity.get(i).setId(tmpCityData.getId());
-                            listDataCity.get(i).setCountry(tmpCityData.getCountry());
-                            listDataCity.get(i).setClouds(tmpCityData.getClouds());
-                            listDataCity.get(i).setPressure(tmpCityData.getPressure());
-                            listDataCity.get(i).setHuminidity(tmpCityData.getHuminidity());
-                            listDataCity.get(i).setWinddirection(tmpCityData.getWinddirection());
-                            listDataCity.get(i).setWindspeed(tmpCityData.getWindspeed());
-                            listDataCity.get(i).setTimeRefresh(tmpCityData.getTimeRefresh());
+                    // СЮДА ДОБАВИТЬ ОБНОВЛЕНИЕ ИНФОРМАЦИИ О ГОРОДЕ tmpCityData.getName() в mListDataCity
+                    for (int i = 0; i < mListDataCity.size(); i++) {
+                        if (mListDataCity.get(i).getName().equals(tmpCityData.getName())) {
+                            mListDataCity.get(i).setTemp(tmpCityData.getTemp());
+                            mListDataCity.get(i).setId(tmpCityData.getId());
+                            mListDataCity.get(i).setCountry(tmpCityData.getCountry());
+                            mListDataCity.get(i).setClouds(tmpCityData.getClouds());
+                            mListDataCity.get(i).setPressure(tmpCityData.getPressure());
+                            mListDataCity.get(i).setHuminidity(tmpCityData.getHuminidity());
+                            mListDataCity.get(i).setWinddirection(tmpCityData.getWinddirection());
+                            mListDataCity.get(i).setWindspeed(tmpCityData.getWindspeed());
+                            mListDataCity.get(i).setTimeRefresh(tmpCityData.getTimeRefresh());
 
                         }
                     }
@@ -229,22 +225,22 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Ошибка при обновлении данных", Toast.LENGTH_SHORT);
         }
-        nameCity.invalidateViews();
+        mNameCity.invalidateViews();
     }
 
     // добавления нового города
     public void onClickAddCity(View v) {
-        String newCity = Utils.firstUpCaseString(editTextAddNewCity.getText().toString().trim());
+        String newCity = Utils.firstUpCaseString(mEditTextAddNewCity.getText().toString().trim());
         // СЮДА ДОБАВИТЬ ПРОВЕРКИ ВВОДА НАЗВАНИЯ ГОРОДА
-        if ((!newCity.equals("")) && (!isExistNameFromList(listDataCity, newCity))) {
-            listDataCity.add(new CityModel(newCity,getMY_APPID()));
+        if ((!newCity.equals("")) && (!isExistNameFromList(mListDataCity, newCity))) {
+            mListDataCity.add(new CityModel(newCity,getMY_APPID()));
             Toast.makeText(getApplicationContext(), getString(R.string.txtaddcityedit) + newCity, Toast.LENGTH_SHORT).show();
         }
-        editTextAddNewCity.setText("");
+        mEditTextAddNewCity.setText("");
         // прячем клавиатуру
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editTextAddNewCity.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        startcityInfoAsyncTask(listDataCity);
+        imm.hideSoftInputFromWindow(mEditTextAddNewCity.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        startcityInfoAsyncTask(mListDataCity);
         saveListCity();
     }
 
@@ -287,26 +283,26 @@ public class MainActivity extends AppCompatActivity {
     public void restoreCityInfoFromFile() throws JSONException {
 //        List<CityModel> tmplistDataCity = new ArrayList<CityModel>();
         Boolean flagExistFile = true;
-        for (int i = 0; i < listDataCity.size(); i++) {
-            String nameFile = listDataCity.get(i).getName();
-            listDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
+        for (int i = 0; i < mListDataCity.size(); i++) {
+            String nameFile = mListDataCity.get(i).getName();
+            mListDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
         }
-        nameCity.invalidateViews();
+        mNameCity.invalidateViews();
     }
 
     //сохранение данных о погоде каждый город в отдельный файл
     public void saveCityInfoToFile() throws JSONException {
-        for (int i = 0; i < listDataCity.size(); i++) {
-            String nameFile = listDataCity.get(i).getName();
-            listDataCity.get(i).saveToFile(nameFile + ".txt", getApplicationContext());
+        for (int i = 0; i < mListDataCity.size(); i++) {
+            String nameFile = mListDataCity.get(i).getName();
+            mListDataCity.get(i).saveToFile(nameFile + ".txt", getApplicationContext());
         }
     }
 
     // сохранение списка названий городов
     public void saveListCity() {
         String stringCityName = "";
-        for (int i = 0; i < listDataCity.size(); i++) {
-            stringCityName += listDataCity.get(i).getName() + ",";
+        for (int i = 0; i < mListDataCity.size(); i++) {
+            stringCityName += mListDataCity.get(i).getName() + ",";
         }
         saveCityParameters("city", stringCityName);
     }
@@ -317,27 +313,27 @@ public class MainActivity extends AppCompatActivity {
         stringCityName = loadCityParameters("city");
         String stringListCityNames[] = stringCityName.split(",");
         if (!stringCityName.trim().equals("")) {
-            listDataCity.clear();
+            mListDataCity.clear();
             for (int i = 0; i < stringListCityNames.length; i++) {
-                listDataCity.add(i, new CityModel(stringListCityNames[i]));
+                mListDataCity.add(i, new CityModel(stringListCityNames[i]));
             }
         }
 
-        if (listDataCity.size() == 0) {
-            listDataCity.add(new CityModel("Kazan",getMY_APPID()));
-            listDataCity.add(new CityModel("Moscow",getMY_APPID()));
-            listDataCity.add(new CityModel("Samara",getMY_APPID()));
-            listDataCity.add(new CityModel("Istanbul",getMY_APPID()));
-            listDataCity.add(new CityModel("London",getMY_APPID()));
+        if (mListDataCity.size() == 0) {
+            mListDataCity.add(new CityModel("Kazan",getMY_APPID()));
+            mListDataCity.add(new CityModel("Moscow",getMY_APPID()));
+            mListDataCity.add(new CityModel("Samara",getMY_APPID()));
+            mListDataCity.add(new CityModel("Istanbul",getMY_APPID()));
+            mListDataCity.add(new CityModel("London",getMY_APPID()));
             Toast.makeText(getApplicationContext(), "Загрузка городов по умолчанию.", Toast.LENGTH_SHORT);
         }
-        nameCity.invalidateViews();
+        mNameCity.invalidateViews();
     }
 
     //сохранение параметра  в файл параметров
     public void saveCityParameters(String parameters, String values) {
-        sPref = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
+        mSPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = mSPref.edit();
         ed.putString(parameters, values);
         ed.apply();
     }
@@ -345,8 +341,8 @@ public class MainActivity extends AppCompatActivity {
     // загрузка списка городов из файл параметров
     public String loadCityParameters(String parameters) {
         String resSet = "";
-        sPref = getPreferences(MODE_PRIVATE);
-        resSet = sPref.getString(parameters, "");
+        mSPref = getPreferences(MODE_PRIVATE);
+        resSet = mSPref.getString(parameters, "");
         return resSet;
     }
 
