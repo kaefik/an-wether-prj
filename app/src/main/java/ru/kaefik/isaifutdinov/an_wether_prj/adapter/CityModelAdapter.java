@@ -46,7 +46,7 @@ public class CityModelAdapter extends BaseAdapter {
         }
         CityModel cityModel = getCityModel(position);
         TextView textView = (TextView) view.findViewById(R.id.textItemCity);
-        textView.setText(cityModel.getName() + "   " + cityModel.getTemp() + R.string.strCelcium);
+        textView.setText(cityModel.getName() + "   " + cityModel.getTemp() + " C");
         return view;
     }
 

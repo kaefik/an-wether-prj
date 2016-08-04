@@ -136,12 +136,12 @@ public class cityInfoActivity extends AppCompatActivity {
     // отображение данных о погоде выбранного города
     public void refreshData2View(CityModel cityModel) {
         mNameCity.setText(cityModel.getName());
-        mTempCity.setText(Float.toString(cityModel.getTemp()) + R.string.strCelcium);
+        mTempCity.setText(Float.toString(cityModel.getTemp()) + getString(R.string.strCelcium));
         mCloudsCity.setText(Float.toString(cityModel.getClouds()));
-        mHuminidityCity.setText(Float.toString(cityModel.getHuminidity()) + " %");
-        mPressureCity.setText(Float.toString(cityModel.getPressure() * 0.75f) + " мм рт.ст.");
-        mWindspeedCity.setText(Float.toString(cityModel.getWindspeed()) + " м/с");
-        mWinddirectionCity.setText(Float.toString(cityModel.getWinddirection()) + " град.");
+        mHuminidityCity.setText(Float.toString(cityModel.getHuminidity()) + getString(R.string.znak_procent));
+        mPressureCity.setText(Float.toString(cityModel.getPressure() * 0.75f) + getString(R.string.mm_rt_st));
+        mWindspeedCity.setText(Float.toString(cityModel.getWindspeed()) + getString(R.string.metr_v_sec));
+        mWinddirectionCity.setText(Float.toString(cityModel.getWinddirection()) + getString(R.string.gradus));
         mImageWeatherConditions.setImageResource(getResourceImageFile("weather" + cityModel.getWeather("icon")));
         mTextViewDescriptionWeather.setText(cityModel.getWeather("description"));
         if ((cityModel.getTimeRefresh() != null) | (cityModel.getTimeRefresh().trim().equals(""))) {

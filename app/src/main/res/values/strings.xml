@@ -30,4 +30,14 @@
     <string name="strErrorUpdateCityInfo">Ошибка при обновлении данных</string>
     <string name="strDwnloadCityDefault">Загрузка городов по умолчанию.</string>
     <string name="strCelcium">" C"</string>
+    <string name="znak_procent">" %"</string>
+    <string name="mm_rt_st">" мм рт.ст."</string>
+    <string name="metr_v_sec">" м/с"</string>
+    <string name="gradus">" град."</string>
+    <string name="APPID">9a4be4eeb7de3b88211989559a0849f7</string>
+    <string name="Kazan">Kazan</string>
+    <string name="Moscow">Moscow</string>
+    <string name="Samara">Samara</string>
+    <string name="Istanbul">Istanbul</string>
+    <string name="London">London</string>
 </resources>

@@ -236,7 +236,6 @@ public class CityModel {
     }
 
     public String getMYAPPID() {
-
         return this.mMYAPPID;
     }
 

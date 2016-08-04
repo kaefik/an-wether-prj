@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         mNameCity = (ListView) findViewById(R.id.listView);
         mEditTextAddNewCity = (EditText) findViewById(R.id.editTextAddNewCity);
 
-        setMY_APPID("9a4be4eeb7de3b88211989559a0849f7"); // со временем можно сделать настрйоку чтобы можно было в программе менять APPID
+        setMY_APPID(getString(R.string.APPID)); // со временем можно сделать настрйоку чтобы можно было в программе менять APPID
 
         if (mListDataCity == null) {
             mListDataCity = new ArrayList<CityModel>();
@@ -203,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    // СЮДА ДОБАВИТЬ ОБНОВЛЕНИЕ ИНФОРМАЦИИ О ГОРОДЕ tmpCityData.getName() в mListDataCity
                     for (int i = 0; i < mListDataCity.size(); i++) {
                         if (mListDataCity.get(i).getName().equals(tmpCityData.getName())) {
                             mListDataCity.get(i).setTemp(tmpCityData.getTemp());
@@ -228,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
     // добавления нового города
     public void onClickAddCity(View v) {
         String newCity = Utils.firstUpCaseString(mEditTextAddNewCity.getText().toString().trim());
-        // СЮДА ДОБАВИТЬ ПРОВЕРКИ ВВОДА НАЗВАНИЯ ГОРОДА
+        // СЮДА ДОБАВИТЬ ДОПОЛНИТЕЛЬНЫЕ ПРОВЕРКИ ВВОДА НАЗВАНИЯ ГОРОДА
         if ((!newCity.equals("")) && (!isExistNameFromList(mListDataCity, newCity))) {
             mListDataCity.add(new CityModel(newCity, getMY_APPID()));
             Toast.makeText(getApplicationContext(), getString(R.string.txtaddcityedit) + newCity, Toast.LENGTH_SHORT).show();
@@ -316,11 +315,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         if (mListDataCity.size() == 0) {
-            mListDataCity.add(new CityModel("Kazan", getMY_APPID()));
-            mListDataCity.add(new CityModel("Moscow", getMY_APPID()));
-            mListDataCity.add(new CityModel("Samara", getMY_APPID()));
-            mListDataCity.add(new CityModel("Istanbul", getMY_APPID()));
-            mListDataCity.add(new CityModel("London", getMY_APPID()));
+            mListDataCity.add(new CityModel(getString(R.string.Kazan), getMY_APPID()));
+            mListDataCity.add(new CityModel(getString(R.string.Moscow), getMY_APPID()));
+            mListDataCity.add(new CityModel(getString(R.string.Samara), getMY_APPID()));
+            mListDataCity.add(new CityModel(getString(R.string.Istanbul), getMY_APPID()));
+            mListDataCity.add(new CityModel(getString(R.string.London), getMY_APPID()));
             Toast.makeText(getApplicationContext(), R.string.strDwnloadCityDefault, Toast.LENGTH_SHORT);
         }
         mNameCity.invalidateViews();
