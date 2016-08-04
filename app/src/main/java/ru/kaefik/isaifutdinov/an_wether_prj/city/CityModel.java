@@ -73,7 +73,7 @@ public class CityModel {
         setMYAPPID("");
     }
 
-    public CityModel(String name,String appid) {
+    public CityModel(String name, String appid) {
         this.mName = name;
         this.mId = 0;
         this.mCountry = "";
@@ -111,6 +111,7 @@ public class CityModel {
         setMYAPPID("");
     }
 
+    // копирование данных json jo в объект класса CityModel
     public CityModel(JSONObject jo) throws JSONException, ParseException {
         this.mName = jo.get("name").toString();
         this.mId = Long.parseLong(jo.get("id").toString());
@@ -122,7 +123,6 @@ public class CityModel {
         this.mWindspeed = Float.parseFloat(jo.get("windspeed").toString());
         this.mWinddirection = Float.parseFloat(jo.get("winddirection").toString());
         this.mTimeRefresh = jo.get("timeRefresh").toString();
-
         this.mWeather = new HashMap<String, String>();
         this.mWeather.put("id", jo.get("weather-id").toString());
         this.mWeather.put("icon", jo.get("weather-icon").toString());
@@ -147,7 +147,6 @@ public class CityModel {
         setMYAPPID(obj.getMYAPPID());
     }
 
-
     // преобразование объекта CityModel в Josn
     public JSONObject toJSON() throws JSONException {
         JSONObject jo = new JSONObject();
@@ -166,7 +165,6 @@ public class CityModel {
         jo.put("weather-description", getWeather("description"));
         jo.put("weather-main", getWeather("main"));
         jo.put("appid", getMYAPPID());
-
         return jo;
     }
 
@@ -187,30 +185,29 @@ public class CityModel {
     // получение данных с погоды
     public void getHttpWeather() throws ParseException {
         //api.openweathermap.org/data/2.5/mWeather?q=London&APPID=9a4be4eeb7de3b88211989559a0849f7
-
-//        {"coord":{"lon":49.12,"lat":55.79},
-//         "mWeather":[{"mId":800,"main":"Clear","description":"clear sky","icon":"01n"}],
-//         "base":"cmc stations","main":{"mTemp":293.9,"mPressure":1015,"humidity":52,"temp_min":293.71,"temp_max":294.15},
-//         "wind":{"speed":3,"deg":50},"mClouds":{"all":0},"dt":1469468475,
-//         "sys":{"type":1,"mId":7335,"message":0.0089,"mCountry":"RU","sunrise":1469407055,"sunset":1469466078},
-//         "mId":551487,"mName":"Kazan","cod":200}
-
+        //        {"coord":{"lon":49.12,"lat":55.79},
+        //         "mWeather":[{"mId":800,"main":"Clear","description":"clear sky","icon":"01n"}],
+        //         "base":"cmc stations","main":{"mTemp":293.9,"mPressure":1015,"humidity":52,"temp_min":293.71,"temp_max":294.15},
+        //         "wind":{"speed":3,"deg":50},"mClouds":{"all":0},"dt":1469468475,
+        //         "sys":{"type":1,"mId":7335,"message":0.0089,"mCountry":"RU","sunrise":1469407055,"sunset":1469466078},
+        //         "mId":551487,"mName":"Kazan","cod":200}
 
         String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q=" + getName() + "&units=metric&APPID=" + getMYAPPID());
         if (res == null) {
+            // сгенерировать исключение чтобы на верхнем уровне обработать ее
+            res="";
             System.out.println("Ошибка при обновлении данных");
         } else {
-            if (getObjFromJson(res, "name", null).equals(this.mName)) { // сделать парсинг параметра mName)
+            if (getObjFromJson(res, "name", null).equals(this.mName)) {
                 setTemp(Float.parseFloat(getObjFromJson(res, "main", "temp")));
                 setPressure(Float.parseFloat(getObjFromJson(res, "main", "pressure")));
                 setHuminidity(Float.parseFloat(getObjFromJson(res, "main", "humidity")));
                 setWindspeed(Float.parseFloat(getObjFromJson(res, "wind", "speed")));
                 setWinddirection(Float.parseFloat(getObjFromJson(res, "wind", "deg")));
                 setCountry(getObjFromJson(res, "sys", "country"));
-                setId(Long.parseLong(getObjFromJson(res, "id", null))); // сделать парсинг параметра mId
-
+                setId(Long.parseLong(getObjFromJson(res, "id", null)));
                 String ss = getObjFromJson(res, "weather", null);
-//            "mWeather":[{"mId":800,"main":"Clear","description":"clear sky","icon":"01n"}]
+            //  "mWeather":[{"mId":800,"main":"Clear","description":"clear sky","icon":"01n"}]
                 String tmp1 = ss.substring(1, ss.length() - 1);
                 setWeather("id", (getObjFromJson(tmp1, "id", null)));
                 setWeather("main", (getObjFromJson(tmp1, "main", null)));
@@ -318,7 +315,6 @@ public class CityModel {
 
     // реализация передачи данных через intent
     public Intent putExtraIntent(Context context, Class<?> klass) throws ParseException {
-
         Intent intent = new Intent(context, klass);
         intent.putExtra("name", getName());
         intent.putExtra("id", getId());
@@ -331,13 +327,11 @@ public class CityModel {
         intent.putExtra("winddirection", getWinddirection());
         intent.putExtra("timeRefresh", getTimeRefresh());
         intent.putExtra("appid", getMYAPPID());
-
         //  передача данных параметра mWeather
         intent.putExtra("weather-id", getWeather("id"));
         intent.putExtra("weather-icon", getWeather("icon"));
         intent.putExtra("weather-description", getWeather("description"));
         intent.putExtra("weather-main", getWeather("main"));
-
         return intent;
     }
 
@@ -345,7 +339,7 @@ public class CityModel {
     // реализация получение данных через intent
     public void getExtraIntent(Intent intent) throws ParseException {
         setName(intent.getStringExtra("name"));
-        setId(intent.getLongExtra("id", 0));  ///dsfsdfdsfdsfdsfsdf
+        setId(intent.getLongExtra("id", 0));
         setCountry(intent.getStringExtra("country"));
         setTemp(intent.getFloatExtra("temp", 0.0f));
         setClouds(intent.getFloatExtra("clouds", 0.0f));
@@ -354,19 +348,13 @@ public class CityModel {
         setWindspeed(intent.getFloatExtra("windspeed", 0.0f));
         setWinddirection(intent.getFloatExtra("winddirection", 0.0f));
         setTimeRefresh(intent.getStringExtra("timeRefresh"));
-
         //  получение данных параметра mWeather
         setWeather("mId", intent.getStringExtra("weather-id"));
         setWeather("icon", intent.getStringExtra("weather-icon"));
         setWeather("description", intent.getStringExtra("weather-description"));
         setWeather("main", intent.getStringExtra("weather-main"));
-
         setMYAPPID(intent.getStringExtra("appid"));
-
-
-//        }
     }
-
 
     // сохранить объект в файл nameFile в виде Josn
     public void saveToFile(String nameFile, Context context) throws JSONException {

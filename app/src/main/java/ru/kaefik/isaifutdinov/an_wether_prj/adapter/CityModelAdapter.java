@@ -11,7 +11,7 @@ import java.util.List;
 
 import ru.kaefik.isaifutdinov.an_wether_prj.R;
 import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
-
+// адаптер для отображения списка городов на экране в MainActivity
 public class CityModelAdapter extends BaseAdapter {
 
     private List<CityModel> mListcity;
@@ -44,15 +44,11 @@ public class CityModelAdapter extends BaseAdapter {
         if (view == null) {
             view = mLayoutInflater.inflate(R.layout.itemcity_layout, parent, false);
         }
-
         CityModel cityModel = getCityModel(position);
-
         TextView textView = (TextView) view.findViewById(R.id.textItemCity);
-        textView.setText(cityModel.getName() + "   " + cityModel.getTemp() + " C");
-
+        textView.setText(cityModel.getName() + "   " + cityModel.getTemp() + R.string.strCelcium);
         return view;
     }
-
 
     public CityModel getCityModel(int position) {
         return (CityModel) getItem(position);

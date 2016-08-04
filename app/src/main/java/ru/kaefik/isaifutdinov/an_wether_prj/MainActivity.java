@@ -36,11 +36,12 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEditTextAddNewCity;
     private String mMY_APPID; // уникальный ключ для доступа к сервису OpenWeatherMap
     private SharedPreferences mSPref;
-    List<CityModel> mListDataCity; // данные прогноза погоды
+    List<CityModel> mListDataCity; // данные прогноза погоды списка городов
 
     private cityInfoAsyncTask mTask;
 
 
+    // task для обновления у списка городов прогноза погоды
     class cityInfoAsyncTask extends AsyncTask<List<CityModel>, CityModel, List<CityModel>> {
         @Override
         protected List<CityModel> doInBackground(List<CityModel>... listcityModels) {
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
+        // вывод промежуточных результатов
         protected void onProgressUpdate(CityModel... values) {
             super.onProgressUpdate(values);
             mNameCity.invalidateViews();
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
+        // после обновления всех прогнозов, сохранение данных в файлах
         protected void onPostExecute(List<CityModel> values) {
             super.onPostExecute(values);
             try {
@@ -93,9 +96,9 @@ public class MainActivity extends AppCompatActivity {
         final CityModelAdapter adapter = new CityModelAdapter(this, mListDataCity);
         mNameCity.setAdapter(adapter);
 
-
+        // Обработка события на клик по элементу списка
         mNameCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            // Обработка события на клик по элементу списка
+
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CityModel tmpCityModel = adapter.getCityModel(position);
                 try {
@@ -106,10 +109,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Обработка долгого нажатия на элемент
         mNameCity.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            // Обработка долгого нажатия на элемент
+
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                //removeCityDialog(parent, position);
                 final CityModel selectedItem = (CityModel) parent.getItemAtPosition(position);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle(R.string.strDeleteIte)
@@ -153,9 +156,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), R.string.strErrorUpdateCityInfo, Toast.LENGTH_SHORT);
         }
-
     }
-
 
     // ----- задействовать данный параметр
     public String getMY_APPID() {
@@ -214,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
                             mListDataCity.get(i).setWinddirection(tmpCityData.getWinddirection());
                             mListDataCity.get(i).setWindspeed(tmpCityData.getWindspeed());
                             mListDataCity.get(i).setTimeRefresh(tmpCityData.getTimeRefresh());
-
                         }
                     }
                     break;
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         String newCity = Utils.firstUpCaseString(mEditTextAddNewCity.getText().toString().trim());
         // СЮДА ДОБАВИТЬ ПРОВЕРКИ ВВОДА НАЗВАНИЯ ГОРОДА
         if ((!newCity.equals("")) && (!isExistNameFromList(mListDataCity, newCity))) {
-            mListDataCity.add(new CityModel(newCity,getMY_APPID()));
+            mListDataCity.add(new CityModel(newCity, getMY_APPID()));
             Toast.makeText(getApplicationContext(), getString(R.string.txtaddcityedit) + newCity, Toast.LENGTH_SHORT).show();
         }
         mEditTextAddNewCity.setText("");
@@ -242,7 +242,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {  // обработка нажатия кнопки Назад
+    // обработка нажатия кнопки Назад
+    public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(R.string.strImportantMessage)
                 .setMessage(R.string.strQuitQuestion)
@@ -276,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
         return flag;
     }
 
-    // восстановление сохраненых данных о погоде (каждый город - отдельный файл сJosn)
+    // восстановление сохраненых данных о погоде (каждый город - отдельный файл с Josn)
     public void restoreCityInfoFromFile() throws JSONException {
         Boolean flagExistFile = true;
         for (int i = 0; i < mListDataCity.size(); i++) {
@@ -314,13 +315,12 @@ public class MainActivity extends AppCompatActivity {
                 mListDataCity.add(i, new CityModel(stringListCityNames[i]));
             }
         }
-
         if (mListDataCity.size() == 0) {
-            mListDataCity.add(new CityModel("Kazan",getMY_APPID()));
-            mListDataCity.add(new CityModel("Moscow",getMY_APPID()));
-            mListDataCity.add(new CityModel("Samara",getMY_APPID()));
-            mListDataCity.add(new CityModel("Istanbul",getMY_APPID()));
-            mListDataCity.add(new CityModel("London",getMY_APPID()));
+            mListDataCity.add(new CityModel("Kazan", getMY_APPID()));
+            mListDataCity.add(new CityModel("Moscow", getMY_APPID()));
+            mListDataCity.add(new CityModel("Samara", getMY_APPID()));
+            mListDataCity.add(new CityModel("Istanbul", getMY_APPID()));
+            mListDataCity.add(new CityModel("London", getMY_APPID()));
             Toast.makeText(getApplicationContext(), R.string.strDwnloadCityDefault, Toast.LENGTH_SHORT);
         }
         mNameCity.invalidateViews();
@@ -343,8 +343,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // тестовая кнопка для отработки различных сценариев
-    public void onClickSave(View v) {
-        saveListCity();
-    }
 }

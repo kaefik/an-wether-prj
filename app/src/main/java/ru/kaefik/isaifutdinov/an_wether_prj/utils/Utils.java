@@ -26,7 +26,6 @@ public class Utils {
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0");
-
             InputStream stream = urlConnection.getInputStream();
             InputStreamReader reader = new InputStreamReader(stream);
             BufferedReader bufferedReader = new BufferedReader(reader);
@@ -63,8 +62,7 @@ public class Utils {
                 }
             }
         } catch (JSONException e) {
-//            e.printStackTrace();
-            res = "0";                 // ?????????!!!!!!!!!! сделать адекватную обработку исключения
+            res = "0";
         }
         return res;
     }
@@ -83,23 +81,19 @@ public class Utils {
         String res = "";
         try {
             FileInputStream inputStream = context.openFileInput(filename);
-
             if (inputStream != null) {
                 InputStreamReader isr = new InputStreamReader(inputStream);
                 BufferedReader reader = new BufferedReader(isr);
                 String line;
                 StringBuilder builder = new StringBuilder();
-
                 while ((line = reader.readLine()) != null) {
                     builder.append(line);
                 }
-
                 inputStream.close();
                 res = builder.toString();
             }
         } catch (Throwable t) {
-//            Toast.makeText(getApplicationContext(),
-//                    "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
+            //сделать передачу исключения к уровню повыше, чтобы вывести пользователю сообщение об ошибке
         }
         return res;
     }
@@ -113,8 +107,7 @@ public class Utils {
             osw.write(strText);
             osw.close();
         } catch (Throwable t) {
-//            Toast.makeText(getApplicationContext(),
-//                    "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
+            //сделать передачу исключения к уровню повыше, чтобы вывести пользователю сообщение об ошибке
         }
     }
 

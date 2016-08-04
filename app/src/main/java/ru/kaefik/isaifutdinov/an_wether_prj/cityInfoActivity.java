@@ -50,7 +50,6 @@ public class cityInfoActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,11 +94,11 @@ public class cityInfoActivity extends AppCompatActivity {
         if (mTask != null) {
             mTask.cancel(true);
         }
-
         setResult(RESULT_OK, mCityDataWeather.putExtraIntent(this, MainActivity.class));
         finish();
     }
 
+    //обработка нажатия клавиши Назад
     public void onClickgoBackMainActivity(View view) throws ParseException {
         goBackMainActivity();
     }
@@ -117,12 +116,10 @@ public class cityInfoActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
     }
 
     // обновление данных о погоде
     public void refreshDataWeather() throws ExecutionException, InterruptedException {
-
         if (mTask != null) {
             mTask.cancel(true);
         }
@@ -131,16 +128,15 @@ public class cityInfoActivity extends AppCompatActivity {
             mTask.execute();
             mCityDataWeather = mTask.get(3, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
-            Toast.makeText(this,"Ошибка обновления данных погоды",Toast.LENGTH_SHORT);
+            Toast.makeText(this, R.string.strErrorUpdateCityInfo, Toast.LENGTH_SHORT);
         }
-
         refreshData2View(mCityDataWeather);
     }
 
     // отображение данных о погоде выбранного города
     public void refreshData2View(CityModel cityModel) {
         mNameCity.setText(cityModel.getName());
-        mTempCity.setText(Float.toString(cityModel.getTemp()) + " C");
+        mTempCity.setText(Float.toString(cityModel.getTemp()) + R.string.strCelcium);
         mCloudsCity.setText(Float.toString(cityModel.getClouds()));
         mHuminidityCity.setText(Float.toString(cityModel.getHuminidity()) + " %");
         mPressureCity.setText(Float.toString(cityModel.getPressure() * 0.75f) + " мм рт.ст.");
@@ -148,18 +144,16 @@ public class cityInfoActivity extends AppCompatActivity {
         mWinddirectionCity.setText(Float.toString(cityModel.getWinddirection()) + " град.");
         mImageWeatherConditions.setImageResource(getResourceImageFile("weather" + cityModel.getWeather("icon")));
         mTextViewDescriptionWeather.setText(cityModel.getWeather("description"));
-        if(cityModel.getTimeRefresh()!=null) {
+        if ((cityModel.getTimeRefresh() != null) | (cityModel.getTimeRefresh().trim().equals(""))) {
             mTextTimeRefresh.setText(cityModel.getTimeRefresh().toString());
-        }else{
+        } else {
             mTextTimeRefresh.setText(R.string.unknown);
         }
-
     }
 
     //  из имени ресурса получить идентификатор на ресурс
     public int getResourceImageFile(String name) {
         return getResources().getIdentifier(name, "mipmap", getPackageName());
     }
-
 
 }

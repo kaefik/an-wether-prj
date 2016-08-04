@@ -29,4 +29,5 @@
     <string name="strOstatsya">Оставить</string>
     <string name="strErrorUpdateCityInfo">Ошибка при обновлении данных</string>
     <string name="strDwnloadCityDefault">Загрузка городов по умолчанию.</string>
+    <string name="strCelcium">" C"</string>
 </resources>
