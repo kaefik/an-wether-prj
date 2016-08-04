@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-//            saveListCity();
         }
     }
 
@@ -113,10 +112,10 @@ public class MainActivity extends AppCompatActivity {
                 //removeCityDialog(parent, position);
                 final CityModel selectedItem = (CityModel) parent.getItemAtPosition(position);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Удаление элемента")
-                        .setMessage("Точно хотите удалить город " + selectedItem.getName() + "?")
+                builder.setTitle(R.string.strDeleteIte)
+                        .setMessage(getString(R.string.strDeleteCityQuestion) + selectedItem.getName() + "?")
                         .setCancelable(false)
-                        .setPositiveButton("Удалить",
+                        .setPositiveButton(R.string.strDel,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         mListDataCity.remove(position);
@@ -125,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), getString(R.string.strgorod) + "  " + selectedItem.getName() + " удалён.", Toast.LENGTH_SHORT).show();
                                     }
                                 })
-                        .setNegativeButton("Оставить",
+                        .setNegativeButton(R.string.strOstatsya,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                     }
@@ -152,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             startcityInfoAsyncTask(mListDataCity);
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Ошибка при обновлении данных", Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), R.string.strErrorUpdateCityInfo, Toast.LENGTH_SHORT);
         }
 
     }
@@ -179,11 +178,11 @@ public class MainActivity extends AppCompatActivity {
         try {
             mTask.get(3, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            Toast.makeText(this,"Ошибка обновления данных погоды",Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), R.string.strErrorUpdateCityInfo, Toast.LENGTH_SHORT);
         } catch (ExecutionException e) {
-            Toast.makeText(this,"Ошибка обновления данных погоды",Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), R.string.strErrorUpdateCityInfo, Toast.LENGTH_SHORT);
         } catch (TimeoutException e) {
-            Toast.makeText(this,"Ошибка обновления данных погоды",Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), R.string.strErrorUpdateCityInfo, Toast.LENGTH_SHORT);
         }
         saveListCity();
 
@@ -193,12 +192,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     // прием данных CityModel выбраного города из другое активити
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-//        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case RequestCode.REQUEST_CODE_CITY_WEATHER:
                     CityModel tmpCityData = new CityModel();
-//                    tmpCityData.getMY_APPID(getMY_APPID());
                     try {
                         tmpCityData.getExtraIntent(intent);
                     } catch (ParseException e) {
@@ -223,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         } else {
-            Toast.makeText(getApplicationContext(), "Ошибка при обновлении данных", Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), R.string.strErrorUpdateCityInfo, Toast.LENGTH_SHORT);
         }
         mNameCity.invalidateViews();
     }
@@ -247,17 +244,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {  // обработка нажатия кнопки Назад
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Ого! Важное сообщение!")
-                .setMessage("Точно хотите выйти?!")
+        builder.setTitle(R.string.strImportantMessage)
+                .setMessage(R.string.strQuitQuestion)
 //                .setIcon(R.drawable.ic_android_cat)
                 .setCancelable(false)
-                .setPositiveButton("Остаться",
+                .setPositiveButton(R.string.strostatsya,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Toast.makeText(getApplicationContext(), "Спасибо что решили с нами остаться", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), R.string.strthankyou, Toast.LENGTH_SHORT).show();
                             }
                         })
-                .setNegativeButton("Выйти ",
+                .setNegativeButton(R.string.strQuit,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 MainActivity.super.onBackPressed();
@@ -281,7 +278,6 @@ public class MainActivity extends AppCompatActivity {
 
     // восстановление сохраненых данных о погоде (каждый город - отдельный файл сJosn)
     public void restoreCityInfoFromFile() throws JSONException {
-//        List<CityModel> tmplistDataCity = new ArrayList<CityModel>();
         Boolean flagExistFile = true;
         for (int i = 0; i < mListDataCity.size(); i++) {
             String nameFile = mListDataCity.get(i).getName();
@@ -325,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
             mListDataCity.add(new CityModel("Samara",getMY_APPID()));
             mListDataCity.add(new CityModel("Istanbul",getMY_APPID()));
             mListDataCity.add(new CityModel("London",getMY_APPID()));
-            Toast.makeText(getApplicationContext(), "Загрузка городов по умолчанию.", Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), R.string.strDwnloadCityDefault, Toast.LENGTH_SHORT);
         }
         mNameCity.invalidateViews();
     }

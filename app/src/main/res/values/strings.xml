@@ -18,4 +18,15 @@
     <string name="txtaddcityedit">"Добален новый город: "</string>
     <string name="strgorod">город</string>
     <string name="unknown">неизвестно</string>
+    <string name="strthankyou">Спасибо что решили с нами остаться</string>
+    <string name="strImportantMessage">Ого! Важное сообщение!</string>
+    <string name="strQuitQuestion">Точно хотите выйти?!</string>
+    <string name="strostatsya">Остаться</string>
+    <string name="strQuit">"Выйти "</string>
+    <string name="strDeleteIte">Удаление элемента</string>
+    <string name="strDeleteCityQuestion">"Точно хотите удалить город "</string>
+    <string name="strDel">Удалить</string>
+    <string name="strOstatsya">Оставить</string>
+    <string name="strErrorUpdateCityInfo">Ошибка при обновлении данных</string>
+    <string name="strDwnloadCityDefault">Загрузка городов по умолчанию.</string>
 </resources>
