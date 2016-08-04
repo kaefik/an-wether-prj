@@ -14,22 +14,22 @@ import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
 
 public class CityModelAdapter extends BaseAdapter {
 
-    private List<CityModel> listcity;
-    private LayoutInflater layoutinflater;
+    private List<CityModel> mListcity;
+    private LayoutInflater mLayoutInflater;
 
     public CityModelAdapter(Context context, List<CityModel> listcity) {
-        this.listcity = listcity;
-        layoutinflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.mListcity = listcity;
+        mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return listcity.size();
+        return mListcity.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return listcity.get(position);
+        return mListcity.get(position);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class CityModelAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if (view == null) {
-            view = layoutinflater.inflate(R.layout.itemcity_layout, parent, false);
+            view = mLayoutInflater.inflate(R.layout.itemcity_layout, parent, false);
         }
 
         CityModel cityModel = getCityModel(position);
