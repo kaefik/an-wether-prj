@@ -86,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
         mNameCity = (ListView) findViewById(R.id.listView);
         mEditTextAddNewCity = (EditText) findViewById(R.id.editTextAddNewCity);
 
-        setMY_APPID(getString(R.string.APPID)); // со временем можно сделать настрйоку чтобы можно было в программе менять APPID
+        // TODO: со временем можно сделать настрйоку чтобы можно было в программе менять APPID
+        setMY_APPID(getString(R.string.APPID));
 
         if (mListDataCity == null) {
             mListDataCity = new ArrayList<CityModel>();
@@ -236,7 +237,9 @@ public class MainActivity extends AppCompatActivity {
         mEditTextAddNewCity.setText("");
         // прячем клавиатуру
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mEditTextAddNewCity.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(mEditTextAddNewCity.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
         startcityInfoAsyncTask(mListDataCity);
         saveListCity();
     }
@@ -267,14 +270,14 @@ public class MainActivity extends AppCompatActivity {
 
     // проверка на то что namecity есть в списке имен городов, true - есть, false - нет
     public boolean isExistNameFromList(List<CityModel> listcity, String namecity) {
-        boolean flag = false;
+        boolean flagExistNameCity = false;
         for (int i = 0; i < listcity.size(); i++) {
             if (listcity.get(i).getName().equals(namecity)) {
-                flag = true;
+                flagExistNameCity = true;
                 break;
             }
         }
-        return flag;
+        return flagExistNameCity;
     }
 
     // восстановление сохраненых данных о погоде (каждый город - отдельный файл с Josn)
@@ -282,7 +285,9 @@ public class MainActivity extends AppCompatActivity {
         Boolean flagExistFile = true;
         for (int i = 0; i < mListDataCity.size(); i++) {
             String nameFile = mListDataCity.get(i).getName();
-            mListDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
+            if (nameFile != null) {
+                mListDataCity.get(i).openFile(nameFile + ".txt", getApplicationContext());
+            }
         }
         mNameCity.invalidateViews();
     }
@@ -291,7 +296,9 @@ public class MainActivity extends AppCompatActivity {
     public void saveCityInfoToFile() throws JSONException {
         for (int i = 0; i < mListDataCity.size(); i++) {
             String nameFile = mListDataCity.get(i).getName();
-            mListDataCity.get(i).saveToFile(nameFile + ".txt", getApplicationContext());
+            if (nameFile != null) {
+                mListDataCity.get(i).saveToFile(nameFile + ".txt", getApplicationContext());
+            }
         }
     }
 
@@ -315,6 +322,8 @@ public class MainActivity extends AppCompatActivity {
                 mListDataCity.add(i, new CityModel(stringListCityNames[i]));
             }
         }
+        // если нет ранее сохраненных городов или произошла ошибка чтения сохранненых городов,
+        // то загружаются список по умолчанию
         if (mListDataCity.size() == 0) {
             mListDataCity.add(new CityModel(getString(R.string.Kazan), getMY_APPID()));
             mListDataCity.add(new CityModel(getString(R.string.Moscow), getMY_APPID()));
@@ -329,9 +338,11 @@ public class MainActivity extends AppCompatActivity {
     //сохранение параметра  в файл параметров
     public void saveCityParameters(String parameters, String values) {
         mSPref = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor ed = mSPref.edit();
-        ed.putString(parameters, values);
-        ed.apply();
+        if (mSPref != null) {
+            SharedPreferences.Editor ed = mSPref.edit();
+            ed.putString(parameters, values);
+            ed.apply();
+        }
     }
 
     // загрузка списка городов из файл параметров
@@ -339,6 +350,7 @@ public class MainActivity extends AppCompatActivity {
         String resSet = "";
         mSPref = getPreferences(MODE_PRIVATE);
         resSet = mSPref.getString(parameters, "");
+        if (resSet == null) resSet = "";
         return resSet;
     }
 

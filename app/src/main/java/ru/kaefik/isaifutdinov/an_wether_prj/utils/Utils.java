@@ -20,7 +20,7 @@ public class Utils {
 
     // получение страницы из урла strurl
     static public String getHttpRequestFromUrl(String strurl) {
-        String resultStr = null;
+        String resultStr = "";
         try {
             URL url = new URL(strurl);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -37,9 +37,11 @@ public class Utils {
             bufferedReader.close();
             return resultStr;
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            resultStr = "";
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            resultStr = "";
         }
         return resultStr;
     }

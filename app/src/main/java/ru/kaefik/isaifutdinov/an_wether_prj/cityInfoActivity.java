@@ -145,7 +145,7 @@ public class cityInfoActivity extends AppCompatActivity {
         mWinddirectionCity.setText(Float.toString(cityModel.getWinddirection()) + getString(R.string.gradus));
         mImageWeatherConditions.setImageResource(getResourceImageFile("weather" + cityModel.getWeather("icon")));
         mTextViewDescriptionWeather.setText(cityModel.getWeather("description"));
-        if ((cityModel.getTimeRefresh() != null) | (cityModel.getTimeRefresh().trim().equals(""))) {
+        if ((cityModel.getTimeRefresh() != null) & (!cityModel.getTimeRefresh().trim().equals(""))) {
             mTextTimeRefresh.setText(cityModel.getTimeRefresh().toString());
         } else {
             mTextTimeRefresh.setText(R.string.unknown);
