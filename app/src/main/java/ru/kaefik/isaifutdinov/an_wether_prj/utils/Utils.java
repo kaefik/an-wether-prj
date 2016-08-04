@@ -1,7 +1,6 @@
 package ru.kaefik.isaifutdinov.an_wether_prj.utils;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,13 +11,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 
 public class Utils {
 
@@ -30,6 +26,7 @@ public class Utils {
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0");
+
             InputStream stream = urlConnection.getInputStream();
             InputStreamReader reader = new InputStreamReader(stream);
             BufferedReader bufferedReader = new BufferedReader(reader);

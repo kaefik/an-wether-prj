@@ -21,130 +21,130 @@ import static ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils.getObjFromJson;
 
 public class CityModel {
 
-    private String MY_APPID; // уникальный ключ для доступа к сервису OpenWeatherMap
+    private String mMYAPPID; // уникальный ключ для доступа к сервису OpenWeatherMap
 
-    private long id;
-    private String country; // страна
-    private String name; // название города
-    private float temp; // температура
-    private float clouds; // облачность в %
-    private float huminidity; // влажность
-    private float pressure; // давление
-    private float windspeed; // скорость ветра
-    private float winddirection; // направление ветра
-    private String timeRefresh; // время обновления прогноза погоды
-    private Map weather; // описание и иконка погоды
+    private long mId;
+    private String mCountry; // страна
+    private String mName; // название города
+    private float mTemp; // температура
+    private float mClouds; // облачность в %
+    private float mHuminidity; // влажность
+    private float mPressure; // давление
+    private float mWindspeed; // скорость ветра
+    private float mWinddirection; // направление ветра
+    private String mTimeRefresh; // время обновления прогноза погоды
+    private Map mWeather; // описание и иконка погоды
 
     public CityModel(long id, String country, String name, float temp, float clouds, float huminidity, float pressure, float windspeed, float winddirection, int i) {
-        this.id = id;
-        this.country = country;
-        this.name = name;
-        this.temp = temp;
-        this.clouds = clouds;
-        this.huminidity = huminidity;
-        this.pressure = pressure;
-        this.windspeed = windspeed;
-        this.winddirection = winddirection;
-        this.timeRefresh = "";
-        this.weather = new HashMap<String, String>();
-        this.weather.put("id", "");
-        this.weather.put("icon", "");
-        this.weather.put("description", "");
-        this.weather.put("main", "");
-        setMY_APPID("");
+        this.mId = id;
+        this.mCountry = country;
+        this.mName = name;
+        this.mTemp = temp;
+        this.mClouds = clouds;
+        this.mHuminidity = huminidity;
+        this.mPressure = pressure;
+        this.mWindspeed = windspeed;
+        this.mWinddirection = winddirection;
+        this.mTimeRefresh = "";
+        this.mWeather = new HashMap<String, String>();
+        this.mWeather.put("id", "");
+        this.mWeather.put("icon", "");
+        this.mWeather.put("description", "");
+        this.mWeather.put("main", "");
+        setMYAPPID("");
     }
 
     public CityModel(String name) {
-        this.name = name;
-        this.id = 0;
-        this.country = "";
-        this.temp = 0.00f;
-        this.clouds = 0.00f;
-        this.huminidity = 0.00f;
-        this.pressure = 0.00f;
-        this.windspeed = 0.00f;
-        this.winddirection = 0.00f;
-        this.timeRefresh = "";
-        this.weather = new HashMap<String, String>();
-        this.weather.put("id", "");
-        this.weather.put("icon", "");
-        this.weather.put("description", "");
-        this.weather.put("main", "");
-        setMY_APPID("");
+        this.mName = name;
+        this.mId = 0;
+        this.mCountry = "";
+        this.mTemp = 0.00f;
+        this.mClouds = 0.00f;
+        this.mHuminidity = 0.00f;
+        this.mPressure = 0.00f;
+        this.mWindspeed = 0.00f;
+        this.mWinddirection = 0.00f;
+        this.mTimeRefresh = "";
+        this.mWeather = new HashMap<String, String>();
+        this.mWeather.put("id", "");
+        this.mWeather.put("icon", "");
+        this.mWeather.put("description", "");
+        this.mWeather.put("main", "");
+        setMYAPPID("");
     }
 
     public CityModel(String name,String appid) {
-        this.name = name;
-        this.id = 0;
-        this.country = "";
-        this.temp = 0.00f;
-        this.clouds = 0.00f;
-        this.huminidity = 0.00f;
-        this.pressure = 0.00f;
-        this.windspeed = 0.00f;
-        this.winddirection = 0.00f;
-        this.timeRefresh = "";
-        this.weather = new HashMap<String, String>();
-        this.weather.put("id", "");
-        this.weather.put("icon", "");
-        this.weather.put("description", "");
-        this.weather.put("main", "");
-        setMY_APPID(appid);
+        this.mName = name;
+        this.mId = 0;
+        this.mCountry = "";
+        this.mTemp = 0.00f;
+        this.mClouds = 0.00f;
+        this.mHuminidity = 0.00f;
+        this.mPressure = 0.00f;
+        this.mWindspeed = 0.00f;
+        this.mWinddirection = 0.00f;
+        this.mTimeRefresh = "";
+        this.mWeather = new HashMap<String, String>();
+        this.mWeather.put("id", "");
+        this.mWeather.put("icon", "");
+        this.mWeather.put("description", "");
+        this.mWeather.put("main", "");
+        setMYAPPID(appid);
     }
 
     public CityModel() {
-        this.name = "";
-        this.id = 0;
-        this.country = "";
-        this.temp = 0.00f;
-        this.clouds = 0.00f;
-        this.huminidity = 0.00f;
-        this.pressure = 0.00f;
-        this.windspeed = 0.00f;
-        this.winddirection = 0.00f;
-        this.timeRefresh = "";
-        this.weather = new HashMap<String, String>();
-        this.weather.put("id", "");
-        this.weather.put("icon", "");
-        this.weather.put("description", "");
-        this.weather.put("main", "");
-        setMY_APPID("");
+        this.mName = "";
+        this.mId = 0;
+        this.mCountry = "";
+        this.mTemp = 0.00f;
+        this.mClouds = 0.00f;
+        this.mHuminidity = 0.00f;
+        this.mPressure = 0.00f;
+        this.mWindspeed = 0.00f;
+        this.mWinddirection = 0.00f;
+        this.mTimeRefresh = "";
+        this.mWeather = new HashMap<String, String>();
+        this.mWeather.put("id", "");
+        this.mWeather.put("icon", "");
+        this.mWeather.put("description", "");
+        this.mWeather.put("main", "");
+        setMYAPPID("");
     }
 
     public CityModel(JSONObject jo) throws JSONException, ParseException {
-        this.name = jo.get("name").toString();
-        this.id = Long.parseLong(jo.get("id").toString());
-        this.country = jo.get("country").toString();
-        this.temp = Float.parseFloat(jo.get("temp").toString());
-        this.clouds = Float.parseFloat(jo.get("clouds").toString());
-        this.huminidity = Float.parseFloat(jo.get("huminidity").toString());
-        this.pressure = Float.parseFloat(jo.get("pressure").toString());
-        this.windspeed = Float.parseFloat(jo.get("windspeed").toString());
-        this.winddirection = Float.parseFloat(jo.get("winddirection").toString());
-        this.timeRefresh = jo.get("timeRefresh").toString();
+        this.mName = jo.get("name").toString();
+        this.mId = Long.parseLong(jo.get("id").toString());
+        this.mCountry = jo.get("country").toString();
+        this.mTemp = Float.parseFloat(jo.get("temp").toString());
+        this.mClouds = Float.parseFloat(jo.get("clouds").toString());
+        this.mHuminidity = Float.parseFloat(jo.get("huminidity").toString());
+        this.mPressure = Float.parseFloat(jo.get("pressure").toString());
+        this.mWindspeed = Float.parseFloat(jo.get("windspeed").toString());
+        this.mWinddirection = Float.parseFloat(jo.get("winddirection").toString());
+        this.mTimeRefresh = jo.get("timeRefresh").toString();
 
-        this.weather = new HashMap<String, String>();
-        this.weather.put("id", jo.get("weather-id").toString());
-        this.weather.put("icon", jo.get("weather-icon").toString());
-        this.weather.put("description", jo.get("weather-description").toString());
-        this.weather.put("main", jo.get("weather-main").toString());
-        setMY_APPID(jo.get("appid").toString());
+        this.mWeather = new HashMap<String, String>();
+        this.mWeather.put("id", jo.get("weather-id").toString());
+        this.mWeather.put("icon", jo.get("weather-icon").toString());
+        this.mWeather.put("description", jo.get("weather-description").toString());
+        this.mWeather.put("main", jo.get("weather-main").toString());
+        setMYAPPID(jo.get("appid").toString());
     }
 
     // копирование объекта obj в текущий
     public void CityModel(CityModel obj) {
-        this.name = obj.getName();
-        this.id = obj.getId();
-        this.country = obj.getCountry();
-        this.temp = obj.getTemp();
-        this.clouds = obj.getClouds();
-        this.huminidity = obj.getHuminidity();
-        this.pressure = obj.getPressure();
-        this.windspeed = obj.getWindspeed();
-        this.winddirection = obj.getWinddirection();
-        this.timeRefresh = obj.getTimeRefresh();
-        this.weather = obj.getWeather();
-        setMY_APPID(obj.getMY_APPID());
+        this.mName = obj.getName();
+        this.mId = obj.getId();
+        this.mCountry = obj.getCountry();
+        this.mTemp = obj.getTemp();
+        this.mClouds = obj.getClouds();
+        this.mHuminidity = obj.getHuminidity();
+        this.mPressure = obj.getPressure();
+        this.mWindspeed = obj.getWindspeed();
+        this.mWinddirection = obj.getWinddirection();
+        this.mTimeRefresh = obj.getTimeRefresh();
+        this.mWeather = obj.getWeather();
+        setMYAPPID(obj.getMYAPPID());
     }
 
 
@@ -165,7 +165,7 @@ public class CityModel {
         jo.put("weather-icon", getWeather("icon"));
         jo.put("weather-description", getWeather("description"));
         jo.put("weather-main", getWeather("main"));
-        jo.put("appid", getMY_APPID());
+        jo.put("appid", getMYAPPID());
 
         return jo;
     }
@@ -173,44 +173,44 @@ public class CityModel {
     // обновить время обновления текущей датой
     public void setTimeRefresh() throws ParseException {
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        this.timeRefresh = df.format(new Date());
+        this.mTimeRefresh = df.format(new Date());
     }
 
     public void setTimeRefresh(String timeRefresh) {
-        this.timeRefresh = timeRefresh;
+        this.mTimeRefresh = timeRefresh;
     }
 
     public String getTimeRefresh() {
-        return timeRefresh;
+        return mTimeRefresh;
     }
 
     // получение данных с погоды
     public void getHttpWeather() throws ParseException {
-        //api.openweathermap.org/data/2.5/weather?q=London&APPID=9a4be4eeb7de3b88211989559a0849f7
+        //api.openweathermap.org/data/2.5/mWeather?q=London&APPID=9a4be4eeb7de3b88211989559a0849f7
 
 //        {"coord":{"lon":49.12,"lat":55.79},
-//         "weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01n"}],
-//         "base":"cmc stations","main":{"temp":293.9,"pressure":1015,"humidity":52,"temp_min":293.71,"temp_max":294.15},
-//         "wind":{"speed":3,"deg":50},"clouds":{"all":0},"dt":1469468475,
-//         "sys":{"type":1,"id":7335,"message":0.0089,"country":"RU","sunrise":1469407055,"sunset":1469466078},
-//         "id":551487,"name":"Kazan","cod":200}
+//         "mWeather":[{"mId":800,"main":"Clear","description":"clear sky","icon":"01n"}],
+//         "base":"cmc stations","main":{"mTemp":293.9,"mPressure":1015,"humidity":52,"temp_min":293.71,"temp_max":294.15},
+//         "wind":{"speed":3,"deg":50},"mClouds":{"all":0},"dt":1469468475,
+//         "sys":{"type":1,"mId":7335,"message":0.0089,"mCountry":"RU","sunrise":1469407055,"sunset":1469466078},
+//         "mId":551487,"mName":"Kazan","cod":200}
 
 
-        String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q=" + getName() + "&units=metric&APPID=" + getMY_APPID());
+        String res = getHttpRequestFromUrl("http://api.openweathermap.org/data/2.5/weather?q=" + getName() + "&units=metric&APPID=" + getMYAPPID());
         if (res == null) {
             System.out.println("Ошибка при обновлении данных");
         } else {
-            if (getObjFromJson(res, "name", null).equals(this.name)) { // сделать парсинг параметра name)
+            if (getObjFromJson(res, "name", null).equals(this.mName)) { // сделать парсинг параметра mName)
                 setTemp(Float.parseFloat(getObjFromJson(res, "main", "temp")));
                 setPressure(Float.parseFloat(getObjFromJson(res, "main", "pressure")));
                 setHuminidity(Float.parseFloat(getObjFromJson(res, "main", "humidity")));
                 setWindspeed(Float.parseFloat(getObjFromJson(res, "wind", "speed")));
                 setWinddirection(Float.parseFloat(getObjFromJson(res, "wind", "deg")));
                 setCountry(getObjFromJson(res, "sys", "country"));
-                setId(Long.parseLong(getObjFromJson(res, "id", null))); // сделать парсинг параметра id
+                setId(Long.parseLong(getObjFromJson(res, "id", null))); // сделать парсинг параметра mId
 
                 String ss = getObjFromJson(res, "weather", null);
-//            "weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01n"}]
+//            "mWeather":[{"mId":800,"main":"Clear","description":"clear sky","icon":"01n"}]
                 String tmp1 = ss.substring(1, ss.length() - 1);
                 setWeather("id", (getObjFromJson(tmp1, "id", null)));
                 setWeather("main", (getObjFromJson(tmp1, "main", null)));
@@ -222,97 +222,97 @@ public class CityModel {
     }
 
     public Map getWeather() {
-        return weather;
+        return mWeather;
     }
 
     //  получение содержимого по ключу index
     public String getWeather(String index) {
-        return weather.get(index).toString();
+        return mWeather.get(index).toString();
     }
 
     public void setWeather(String index, String value) {
-        this.weather.put(index, value);
+        this.mWeather.put(index, value);
     }
 
-    public void setMY_APPID(String MY_APPID) {
-        this.MY_APPID = MY_APPID;
+    public void setMYAPPID(String MYAPPID) {
+        this.mMYAPPID = MYAPPID;
     }
 
-    public String getMY_APPID() {
+    public String getMYAPPID() {
 
-        return MY_APPID;
+        return this.mMYAPPID;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public void setCountry(String country) {
-        this.country = country;
+        this.mCountry = country;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     public void setTemp(float temp) {
-        this.temp = temp;
+        this.mTemp = temp;
     }
 
     public void setClouds(float clouds) {
-        this.clouds = clouds;
+        this.mClouds = clouds;
     }
 
     public void setHuminidity(float huminidity) {
-        this.huminidity = huminidity;
+        this.mHuminidity = huminidity;
     }
 
     public void setPressure(float pressure) {
-        this.pressure = pressure;
+        this.mPressure = pressure;
     }
 
     public void setWindspeed(float windspeed) {
-        this.windspeed = windspeed;
+        this.mWindspeed = windspeed;
     }
 
     public void setWinddirection(float winddirection) {
-        this.winddirection = winddirection;
+        this.mWinddirection = winddirection;
     }
 
     public long getId() {
-        return id;
+        return mId;
     }
 
     public String getCountry() {
-        return country;
+        return mCountry;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public float getTemp() {
-        return temp;
+        return mTemp;
     }
 
     public float getClouds() {
-        return clouds;
+        return mClouds;
     }
 
     public float getHuminidity() {
-        return huminidity;
+        return mHuminidity;
     }
 
     public float getPressure() {
-        return pressure;
+        return mPressure;
     }
 
     public float getWindspeed() {
-        return windspeed;
+        return mWindspeed;
     }
 
     public float getWinddirection() {
-        return winddirection;
+        return mWinddirection;
     }
 
 
@@ -330,9 +330,9 @@ public class CityModel {
         intent.putExtra("windspeed", getWindspeed());
         intent.putExtra("winddirection", getWinddirection());
         intent.putExtra("timeRefresh", getTimeRefresh());
-        intent.putExtra("appid", getMY_APPID());
+        intent.putExtra("appid", getMYAPPID());
 
-        //  передача данных параметра weather
+        //  передача данных параметра mWeather
         intent.putExtra("weather-id", getWeather("id"));
         intent.putExtra("weather-icon", getWeather("icon"));
         intent.putExtra("weather-description", getWeather("description"));
@@ -355,13 +355,13 @@ public class CityModel {
         setWinddirection(intent.getFloatExtra("winddirection", 0.0f));
         setTimeRefresh(intent.getStringExtra("timeRefresh"));
 
-        //  получение данных параметра weather
-        setWeather("id", intent.getStringExtra("weather-id"));
+        //  получение данных параметра mWeather
+        setWeather("mId", intent.getStringExtra("weather-id"));
         setWeather("icon", intent.getStringExtra("weather-icon"));
         setWeather("description", intent.getStringExtra("weather-description"));
         setWeather("main", intent.getStringExtra("weather-main"));
 
-        setMY_APPID(intent.getStringExtra("appid"));
+        setMYAPPID(intent.getStringExtra("appid"));
 
 
 //        }
