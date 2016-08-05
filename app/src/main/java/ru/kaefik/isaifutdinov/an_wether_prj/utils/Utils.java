@@ -126,37 +126,37 @@ public class Utils {
 
 
     // TODO: доделать перевод градусов в румбы и отобразить на панели информации о погоде выбранного города
-//    // перевод градусов в румбы (С, В, Ю, З и т д)
-//    public String windGradus2Rumb(Float gradusWind) {
-//        String windRumb = "";
-//
+    // перевод градусов в румбы (С, В, Ю, З и т д)
+    public String windGradus2Rumb(Float gradusWind) {
+        String windRumb = "";
+
+        return windRumb;
+
+    }
+
 //        Map<Float, String> map = new HashMap<Float, String>();
 //        map.put(22.0f, "ССВ");
 //
 //        windRumb = map.get(gradusWind);
-//
-////        System.out.println(map.get("dog"));
-//
-////            case : windRumb = "ССВ";
-////            case 45.0f: windRumb = "СВ";
-////            case 68.0f: windRumb = "ВСВ";
-////            case 90.0f: windRumb = "В";
-////            case 112.0f: windRumb = "ВЮВ";
-////            case 135.0f: windRumb = "ЮВ";
-////            case 158.0f: windRumb = "ЮЮВ";
-////            case 180.0f: windRumb = "Ю";
-////            case 202.0f: windRumb = "ЮЮЗ";
-////            case 225.0f: windRumb = "ЮЗ";
-////            case 248.0f: windRumb = "ЗЮЗ";
-////            case 270.0f: windRumb = "З";
-////            case 292.0f: windRumb = "ЗСЗ";
-////            case 295.0f: windRumb = "СЗ";
-////            case 318.0f: windRumb = "ССЗ";
-//
-//
-//        return windRumb;
-//
-//    }
+
+//        System.out.println(map.get("dog"));
+
+//            case : windRumb = "ССВ";
+//            case 45.0f: windRumb = "СВ";
+//            case 68.0f: windRumb = "ВСВ";
+//            case 90.0f: windRumb = "В";
+//            case 112.0f: windRumb = "ВЮВ";
+//            case 135.0f: windRumb = "ЮВ";
+//            case 158.0f: windRumb = "ЮЮВ";
+//            case 180.0f: windRumb = "Ю";
+//            case 202.0f: windRumb = "ЮЮЗ";
+//            case 225.0f: windRumb = "ЮЗ";
+//            case 248.0f: windRumb = "ЗЮЗ";
+//            case 270.0f: windRumb = "З";
+//            case 292.0f: windRumb = "ЗСЗ";
+//            case 295.0f: windRumb = "СЗ";
+//            case 318.0f: windRumb = "ССЗ";
+
 
     // возвращает ближайшее из двух чисел ch1 или ch2 число ch
 //    public Float getNearNumber(Float ch,Float ch1,Float ch2){
