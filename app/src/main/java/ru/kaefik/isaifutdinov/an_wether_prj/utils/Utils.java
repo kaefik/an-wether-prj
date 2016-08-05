@@ -1,3 +1,10 @@
+/*
+  * Copyright (C) 2016 Ilnur Sayfutdinov (Ильнур Сайфутдинов)
+  * e-mail: ilnursoft@gmail.com
+  * MIT License
+  * https://opensource.org/licenses/mit-license.php
+*/
+
 package ru.kaefik.isaifutdinov.an_wether_prj.utils;
 
 import android.content.Context;
@@ -16,6 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+// Класс утилитных функций
 public class Utils {
 
     // получение страницы из урла strurl

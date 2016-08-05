@@ -1,3 +1,10 @@
+/*
+  * Copyright (C) 2016 Ilnur Sayfutdinov (Ильнур Сайфутдинов)
+  * e-mail: ilnursoft@gmail.com
+  * MIT License
+  * https://opensource.org/licenses/mit-license.php
+*/
+
 package ru.kaefik.isaifutdinov.an_wether_prj.adapter;
 
 import android.content.Context;

@@ -1,3 +1,10 @@
+/*
+  * Copyright (C) 2016 Ilnur Sayfutdinov (Ильнур Сайфутдинов)
+  * e-mail: ilnursoft@gmail.com
+  * MIT License
+  * https://opensource.org/licenses/mit-license.php
+*/
+
 package ru.kaefik.isaifutdinov.an_wether_prj;
 
 import android.app.AlertDialog;
@@ -30,6 +37,7 @@ import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
 import ru.kaefik.isaifutdinov.an_wether_prj.utils.RequestCode;
 import ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils;
 
+// главный экран activity
 public class MainActivity extends AppCompatActivity {
 
     private ListView mNameCity;

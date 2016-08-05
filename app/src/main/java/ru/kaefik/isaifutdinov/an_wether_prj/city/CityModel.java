@@ -1,3 +1,10 @@
+/*
+  * Copyright (C) 2016 Ilnur Sayfutdinov (Ильнур Сайфутдинов)
+  * e-mail: ilnursoft@gmail.com
+  * MIT License
+  * https://opensource.org/licenses/mit-license.php
+*/
+
 package ru.kaefik.isaifutdinov.an_wether_prj.city;
 
 
@@ -19,6 +26,7 @@ import ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils;
 import static ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils.getHttpRequestFromUrl;
 import static ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils.getObjFromJson;
 
+// класс информации о погоде города
 public class CityModel {
 
     private String mMYAPPID; // уникальный ключ для доступа к сервису OpenWeatherMap

@@ -1,3 +1,10 @@
+/*
+  * Copyright (C) 2016 Ilnur Sayfutdinov (Ильнур Сайфутдинов)
+  * e-mail: ilnursoft@gmail.com
+  * MIT License
+  * https://opensource.org/licenses/mit-license.php
+*/
+
 package ru.kaefik.isaifutdinov.an_wether_prj;
 
 import android.os.AsyncTask;
@@ -15,6 +22,7 @@ import java.util.concurrent.TimeoutException;
 
 import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
 
+// второй экран activity который отображает подробную информацию о выбранном городе
 public class cityInfoActivity extends AppCompatActivity {
 
     TextView mNameCity;
