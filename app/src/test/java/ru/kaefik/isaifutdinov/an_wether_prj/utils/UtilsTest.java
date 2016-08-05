@@ -9,6 +9,7 @@
 package ru.kaefik.isaifutdinov.an_wether_prj.utils;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,6 +27,8 @@ public class UtilsTest {
 
     @Test
     public void testWindGradus2Rumb() throws Exception {
-//        assertEquals();
+        // public String windGradus2Rumb(Float gradusWind)
+        Assert.assertEquals("С",Utils.windGradus2Rumb(0f));
+        Assert.assertEquals("С",Utils.windGradus2Rumb(360f));
     }
 }

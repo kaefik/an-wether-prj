@@ -127,8 +127,33 @@ public class Utils {
 
     // TODO: доделать перевод градусов в румбы и отобразить на панели информации о погоде выбранного города
     // перевод градусов в румбы (С, В, Ю, З и т д)
-    public String windGradus2Rumb(Float gradusWind) {
+    public static String windGradus2Rumb(Float gradusWind) {
         String windRumb = "";
+
+        if ((gradusWind == 0f) | (gradusWind == 360f)) {
+            windRumb = "С";
+        }
+        if (gradusWind == 45f) {
+            windRumb = "СВ";
+        }
+        if (gradusWind == 90f) {
+            windRumb = "В";
+        }
+        if (gradusWind == 135f) {
+            windRumb = "ЮВ";
+        }
+        if (gradusWind == 180f) {
+            windRumb = "Ю";
+        }
+        if (gradusWind == 225f) {
+            windRumb = "ЮЗ";
+        }
+        if (gradusWind == 270f) {
+            windRumb = "З";
+        }
+        if (gradusWind == 295f) {
+            windRumb = "СЗ";
+        }
 
         return windRumb;
 
