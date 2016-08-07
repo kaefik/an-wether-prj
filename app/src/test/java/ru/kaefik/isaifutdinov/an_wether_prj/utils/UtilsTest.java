@@ -27,8 +27,16 @@ public class UtilsTest {
 
     @Test
     public void testWindGradus2Rumb() throws Exception {
-        // public String windGradus2Rumb(Float gradusWind)
         Assert.assertEquals("С",Utils.windGradus2Rumb(0f));
         Assert.assertEquals("С",Utils.windGradus2Rumb(360f));
+        Assert.assertEquals("СВ",Utils.windGradus2Rumb(45f));
+        Assert.assertEquals("",Utils.windGradus2Rumb(-1f));
+        Assert.assertEquals("",Utils.windGradus2Rumb(360.5f));
+        Assert.assertEquals("В",Utils.windGradus2Rumb(90f));
+        Assert.assertEquals("ЮВ",Utils.windGradus2Rumb(135f));
+        Assert.assertEquals("Ю",Utils.windGradus2Rumb(180f));
+        Assert.assertEquals("ЮЗ",Utils.windGradus2Rumb(225f));
+        Assert.assertEquals("З",Utils.windGradus2Rumb(270f));
+        Assert.assertEquals("СЗ",Utils.windGradus2Rumb(295f));
     }
 }
