@@ -67,7 +67,7 @@ public class cityInfoActivity extends AppCompatActivity {
 
         mNameCity = (TextView) findViewById(R.id.nameCity);
         mTempCity = (TextView) findViewById(R.id.tempCity);
-        mCloudsCity = (TextView) findViewById(R.id.cloudsCity);
+//        mCloudsCity = (TextView) findViewById(R.id.cloudsCity);
         mHuminidityCity = (TextView) findViewById(R.id.huminidityCity);
         mPressureCity = (TextView) findViewById(R.id.pressureCity);
         mWindspeedCity = (TextView) findViewById(R.id.windspeedCity);
@@ -147,7 +147,7 @@ public class cityInfoActivity extends AppCompatActivity {
     public void refreshData2View(CityModel cityModel) {
         mNameCity.setText(cityModel.getName());
         mTempCity.setText(Float.toString(cityModel.getTemp()) + getString(R.string.strCelcium));
-        mCloudsCity.setText(Float.toString(cityModel.getClouds()));
+//        mCloudsCity.setText(Float.toString(cityModel.getClouds()));
         mHuminidityCity.setText(Float.toString(cityModel.getHuminidity()) + getString(R.string.znak_procent));
         mPressureCity.setText(Float.toString(cityModel.getPressure() * 0.75f) + getString(R.string.mm_rt_st));
         mWindspeedCity.setText(Float.toString(cityModel.getWindspeed()) + getString(R.string.metr_v_sec));
@@ -159,6 +159,7 @@ public class cityInfoActivity extends AppCompatActivity {
             mTextTimeRefresh.setText(R.string.unknown);
         }
         mWinddirectionCity.setText(Utils.windGradus2Rumb(cityModel.getWinddirection()));
+
 
     }
 

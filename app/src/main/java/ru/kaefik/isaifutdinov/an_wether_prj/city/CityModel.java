@@ -218,7 +218,7 @@ public class CityModel {
                 String tmp1 = ss.substring(1, ss.length() - 1);
                 setWeather("id", (getObjFromJson(tmp1, "id", null)));
                 setWeather("main", (getObjFromJson(tmp1, "main", null)));
-                setWeather("description", (getObjFromJson(tmp1, "description", null)));
+                setWeather("description", translateWeatherDescription((getObjFromJson(tmp1, "description", null))));
                 setWeather("icon", (getObjFromJson(tmp1, "icon", null)));
                 setTimeRefresh();
             }
@@ -382,4 +382,22 @@ public class CityModel {
         return flagStatus;
     }
 
+    // перевод описания погоды с английского на русский
+    public String translateWeatherDescription(String descWeather) {
+        Map translateweather = new HashMap<String, String>();
+        translateweather.put("clear sky", "ясное небо");
+        translateweather.put("few clouds", "несколько облаков");
+        translateweather.put("scattered clouds", "рассеянные облака");
+        translateweather.put("broken clouds", "облачность с просветами");
+        translateweather.put("shower rain", "ливень");
+        translateweather.put("rain", "дождь");
+        translateweather.put("thunderstorm", "гроза");
+        translateweather.put("snow", "снег");
+        translateweather.put("mist", "туман");
+        if (translateweather.get(descWeather) != null) {
+            return translateweather.get(descWeather).toString();
+        } else {
+            return "неизвестно";
+        }
+    }
 }
