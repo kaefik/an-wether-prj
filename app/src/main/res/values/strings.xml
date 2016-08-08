@@ -2,16 +2,15 @@
     <string name="app_name">OpenWeatherMap Client</string>
     <string name="today">СЕЙЧАС</string>
     <string name="gorod">город</string>
-    <string name="descweather">описание погоды</string>
-    <string name="temp">температура</string>
-    <string name="winddirection">направление ветра</string>
-    <string name="pressure">давление</string>
-    <string name="huminidity">влажность</string>
-    <string name="windspeed">скорость ветра</string>
+    <string name="descweather">оп-е погоды</string>
+    <string name="temp">тем-ра</string>
+    <string name="pressure">дав-е</string>
+    <string name="huminidity">вл-ть</string>
+    <string name="windspeed">ск-ть и напр-е</string>
     <string name="clouds">clouds</string>
     <string name="refreshtime">Обновлено около:</string>
     <string name="refresh">ОБНОВИТЬ</string>
-    <string name="txtviborcity">Выбрать город</string>
+    <string name="txtviborcity">К списку</string>
     <string name="txtlistcity">Список городов</string>
     <string name="txtaddcity">Добавь свой город</string>
     <string name="txtplus">+</string>
@@ -40,4 +39,5 @@
     <string name="Samara">Samara</string>
     <string name="Istanbul">Istanbul</string>
     <string name="London">London</string>
+    <string name="veter">ветер</string>
 </resources>

@@ -31,7 +31,7 @@ public class cityInfoActivity extends AppCompatActivity {
     TextView mCloudsCity;
     TextView mHuminidityCity;
     TextView mPressureCity;
-    TextView mWindspeedCity;
+    TextView mWindCity;
     TextView mWinddirectionCity;
     TextView mTextTimeRefresh;
     ImageView mImageWeatherConditions;
@@ -70,8 +70,8 @@ public class cityInfoActivity extends AppCompatActivity {
 //        mCloudsCity = (TextView) findViewById(R.id.cloudsCity);
         mHuminidityCity = (TextView) findViewById(R.id.huminidityCity);
         mPressureCity = (TextView) findViewById(R.id.pressureCity);
-        mWindspeedCity = (TextView) findViewById(R.id.windspeedCity);
-        mWinddirectionCity = (TextView) findViewById(R.id.winddirectionCity);
+        mWindCity = (TextView) findViewById(R.id.windCity);
+//        mWinddirectionCity = (TextView) findViewById(R.id.winddirectionCity);
         mTextTimeRefresh = (TextView) findViewById(R.id.textTimeRefresh);
         mImageWeatherConditions = (ImageView) findViewById(R.id.imageWeatherConditions);
         mTextViewDescriptionWeather = (TextView) findViewById(R.id.textViewDescriptionWeather);
@@ -150,7 +150,6 @@ public class cityInfoActivity extends AppCompatActivity {
 //        mCloudsCity.setText(Float.toString(cityModel.getClouds()));
         mHuminidityCity.setText(Float.toString(cityModel.getHuminidity()) + getString(R.string.znak_procent));
         mPressureCity.setText(Float.toString(cityModel.getPressure() * 0.75f) + getString(R.string.mm_rt_st));
-        mWindspeedCity.setText(Float.toString(cityModel.getWindspeed()) + getString(R.string.metr_v_sec));
         mImageWeatherConditions.setImageResource(getResourceImageFile("weather" + cityModel.getWeather("icon")));
         mTextViewDescriptionWeather.setText(cityModel.getWeather("description"));
         if ((cityModel.getTimeRefresh() != null) & (!cityModel.getTimeRefresh().trim().equals(""))) {
@@ -158,7 +157,9 @@ public class cityInfoActivity extends AppCompatActivity {
         } else {
             mTextTimeRefresh.setText(R.string.unknown);
         }
-        mWinddirectionCity.setText(Utils.windGradus2Rumb(cityModel.getWinddirection()));
+
+        mWindCity.setText(Utils.windGradus2Rumb(cityModel.getWinddirection())+" ( "+Float.toString(cityModel.getWindspeed())+ getString(R.string.metr_v_sec)+" )");
+//        mWinddirectionCity.setText();
 
 
     }
