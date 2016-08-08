@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import ru.kaefik.isaifutdinov.an_wether_prj.city.CityModel;
+import ru.kaefik.isaifutdinov.an_wether_prj.utils.Utils;
 
 // второй экран activity который отображает подробную информацию о выбранном городе
 public class cityInfoActivity extends AppCompatActivity {
@@ -150,7 +151,6 @@ public class cityInfoActivity extends AppCompatActivity {
         mHuminidityCity.setText(Float.toString(cityModel.getHuminidity()) + getString(R.string.znak_procent));
         mPressureCity.setText(Float.toString(cityModel.getPressure() * 0.75f) + getString(R.string.mm_rt_st));
         mWindspeedCity.setText(Float.toString(cityModel.getWindspeed()) + getString(R.string.metr_v_sec));
-        mWinddirectionCity.setText(Float.toString(cityModel.getWinddirection()) + getString(R.string.gradus));
         mImageWeatherConditions.setImageResource(getResourceImageFile("weather" + cityModel.getWeather("icon")));
         mTextViewDescriptionWeather.setText(cityModel.getWeather("description"));
         if ((cityModel.getTimeRefresh() != null) & (!cityModel.getTimeRefresh().trim().equals(""))) {
@@ -158,6 +158,8 @@ public class cityInfoActivity extends AppCompatActivity {
         } else {
             mTextTimeRefresh.setText(R.string.unknown);
         }
+        mWinddirectionCity.setText(Utils.windGradus2Rumb(cityModel.getWinddirection()));
+
     }
 
     //  из имени ресурса получить идентификатор на ресурс
