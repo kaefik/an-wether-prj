@@ -131,48 +131,74 @@ public class Utils {
         String windRumb = "";
 
 
-            if ((gradusWind < 0) | (gradusWind > 360)) {
-                windRumb = "";
-            }
+        if ((gradusWind < 0) | (gradusWind > 360)) {
+            windRumb = "";
+        }
 
-            if ((gradusWind == 0f) | (gradusWind == 360f)) {
-                windRumb = "С";
-            }
-            if (gradusWind == 45f) {
-                windRumb = "СВ";
-            }
-            if (gradusWind == 90f) {
-                windRumb = "В";
-            }
-            if (gradusWind == 135f) {
-                windRumb = "ЮВ";
-            }
-            if (gradusWind == 180f) {
-                windRumb = "Ю";
-            }
-            if (gradusWind == 225f) {
-                windRumb = "ЮЗ";
-            }
-            if (gradusWind == 270f) {
-                windRumb = "З";
-            }
-            if (gradusWind == 295f) {
-                windRumb = "СЗ";
-            }
+        if ((gradusWind >= 0) & (gradusWind <= 45)) {
+            gradusWind = Utils.getNearNumber(gradusWind, 0f, 45f);
+        }
+        if ((gradusWind >= 45) & (gradusWind <= 90)) {
+            gradusWind = Utils.getNearNumber(gradusWind, 45f, 90f);
+        }
+        if ((gradusWind >= 90) & (gradusWind <= 135)) {
+            gradusWind = Utils.getNearNumber(gradusWind, 90f, 135f);
+        }
+        if ((gradusWind >= 135) & (gradusWind <= 180)) {
+            gradusWind = Utils.getNearNumber(gradusWind, 135f, 180f);
+        }
+        if ((gradusWind >= 180) & (gradusWind <= 225)) {
+            gradusWind = Utils.getNearNumber(gradusWind, 180f, 225f);
+        }
+        if ((gradusWind >= 225) & (gradusWind <= 270)) {
+            gradusWind = Utils.getNearNumber(gradusWind, 225f, 270f);
+        }
+        if ((gradusWind >= 270) & (gradusWind <= 315)) {
+            gradusWind = Utils.getNearNumber(gradusWind, 270f, 315f);
+        }
+        if ((gradusWind >= 315) & (gradusWind <= 360)) {
+            gradusWind = Utils.getNearNumber(gradusWind, 315f, 360f);
+        }
+
+
+        if ((gradusWind == 0f) | (gradusWind == 360f)) {
+            windRumb = "С";
+        }
+        if (gradusWind == 45f) {
+            windRumb = "СВ";
+        }
+        if (gradusWind == 90f) {
+            windRumb = "В";
+        }
+        if (gradusWind == 135f) {
+            windRumb = "ЮВ";
+        }
+        if (gradusWind == 180f) {
+            windRumb = "Ю";
+        }
+        if (gradusWind == 225f) {
+            windRumb = "ЮЗ";
+        }
+        if (gradusWind == 270f) {
+            windRumb = "З";
+        }
+        if (gradusWind == 315f) {
+            windRumb = "СЗ";
+        }
         return windRumb;
 
     }
 
     // возвращает ближайшее из двух чисел ch1 или ch2 число ch
-//    public Float getNearNumber(Float ch,Float ch1,Float ch2){
-//        Float d =  abs(ch2-ch1)/2;
-//        if (ch<=ch1+d){
-//            return ch1;
-//        } else{
-//            return ch2;
-//        }
-//
-//    }
+    public static Float getNearNumber(Float ch, Float ch1, Float ch2) {
+        Float d = Math.abs(ch2 - ch1) / 2;
+        if (ch <= ch1 + d) {
+            return ch1;
+        } else {
+            return ch2;
+        }
+
+    }
 
 
 }
