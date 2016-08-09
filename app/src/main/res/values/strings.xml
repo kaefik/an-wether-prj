@@ -9,7 +9,7 @@
     <string name="windspeed">СВ (25 м/с)</string>
     <string name="clouds">clouds</string>
     <string name="refreshtime">Обновлено около:</string>
-    <string name="refresh">ОБНОВИТЬ</string>
+    <string name="refresh">Обновить</string>
     <string name="txtviborcity">К списку</string>
     <string name="txtlistcity">Города</string>
     <string name="txtaddcity">Добавь свой город (En)</string>
@@ -40,4 +40,5 @@
     <string name="Istanbul">Istanbul</string>
     <string name="London">London</string>
     <string name="veter">ветер</string>
+    <string name="about">О программе</string>
 </resources>

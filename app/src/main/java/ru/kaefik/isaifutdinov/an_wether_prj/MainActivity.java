@@ -163,8 +163,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    // добавление меню в текущую активити
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main_items);
+        getMenuInflater().inflate(R.menu.menu_main_items,menu);
         return true;
     }
 
