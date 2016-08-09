@@ -28,7 +28,7 @@ import java.util.Map;
 // Класс утилитных функций
 public class Utils {
 
-    static Map translateweather = new HashMap<String, String>();
+    static Map mTranslateWeather = new HashMap<String, String>();
 
     // получение страницы из урла strurl
     static public String getHttpRequestFromUrl(String strurl) {
@@ -134,7 +134,6 @@ public class Utils {
     public static String windGradus2Rumb(Float gradusWind) {
         String windRumb = "";
 
-
         if ((gradusWind < 0) | (gradusWind > 360)) {
             windRumb = "";
         }
@@ -163,7 +162,6 @@ public class Utils {
         if ((gradusWind >= 315) & (gradusWind <= 360)) {
             gradusWind = Utils.getNearNumber(gradusWind, 315f, 360f);
         }
-
 
         if ((gradusWind == 0f) | (gradusWind == 360f)) {
             windRumb = "С";
@@ -207,70 +205,69 @@ public class Utils {
     // создание перевода описания погоды с английского на русский
     // (http://openweathermap.org/weather-conditions)
     public static void createTranslateWeatherDescription() {
-//        Map translateweather = new HashMap<String, String>();
-        translateweather.put("clear sky", "ясное небо");
-        translateweather.put("few clouds", "малооблачно");
-        translateweather.put("scattered clouds", "малооблачно");
-        translateweather.put("broken clouds", "облачность с просветами");
-        translateweather.put("shower rain", "ливень");
-        translateweather.put("rain", "дождь");
-        translateweather.put("thunderstorm", "гроза");
-        translateweather.put("snow", "снег");
-        translateweather.put("mist", "туман");
+        mTranslateWeather.put("clear sky", "ясное небо");
+        mTranslateWeather.put("few clouds", "малооблачно");
+        mTranslateWeather.put("scattered clouds", "малооблачно");
+        mTranslateWeather.put("broken clouds", "облачность с просветами");
+        mTranslateWeather.put("shower rain", "ливень");
+        mTranslateWeather.put("rain", "дождь");
+        mTranslateWeather.put("thunderstorm", "гроза");
+        mTranslateWeather.put("snow", "снег");
+        mTranslateWeather.put("mist", "туман");
         //----Rain
-        translateweather.put("light rain", "легкий дождь");
-        translateweather.put("moderate rain", "небольшой дождь");
-        translateweather.put("heavy intensity rain", "сильный дождь");
-        translateweather.put("very heavy rain", "очень сильный дождь");
-        translateweather.put("extreme rain", "экстремальный дождь");
-        translateweather.put("freezing rain", "ледяной дождь");
-        translateweather.put("light intensity shower rain", "легкий ливень");
-        translateweather.put("shower rain", "ливень");
-        translateweather.put("heavy intensity shower rain", "сильный ливень");
-        translateweather.put("ragged shower rain", "ливень стеной");
+        mTranslateWeather.put("light rain", "легкий дождь");
+        mTranslateWeather.put("moderate rain", "небольшой дождь");
+        mTranslateWeather.put("heavy intensity rain", "сильный дождь");
+        mTranslateWeather.put("very heavy rain", "очень сильный дождь");
+        mTranslateWeather.put("extreme rain", "экстремальный дождь");
+        mTranslateWeather.put("freezing rain", "ледяной дождь");
+        mTranslateWeather.put("light intensity shower rain", "легкий ливень");
+        mTranslateWeather.put("shower rain", "ливень");
+        mTranslateWeather.put("heavy intensity shower rain", "сильный ливень");
+        mTranslateWeather.put("ragged shower rain", "ливень стеной");
         //----Snow
-        translateweather.put("light snow ", "легкий снег");
-        translateweather.put("heavy snow", "снегопад");
-        translateweather.put("sleet", "дождь со снегом");
-        translateweather.put("shower sleet", "дождь со снегом");
-        translateweather.put("light rain and snow", "легкий дождь со снегом");
-        translateweather.put("rain and snow", "дождь со снегом");
-        translateweather.put("light shower snow", "легкий снег");
-        translateweather.put("shower snow", "снег");
-        translateweather.put("heavy shower snow", "тяжелый снегопад");
+        mTranslateWeather.put("light snow ", "легкий снег");
+        mTranslateWeather.put("heavy snow", "снегопад");
+        mTranslateWeather.put("sleet", "дождь со снегом");
+        mTranslateWeather.put("shower sleet", "дождь со снегом");
+        mTranslateWeather.put("light rain and snow", "легкий дождь со снегом");
+        mTranslateWeather.put("rain and snow", "дождь со снегом");
+        mTranslateWeather.put("light shower snow", "легкий снег");
+        mTranslateWeather.put("shower snow", "снег");
+        mTranslateWeather.put("heavy shower snow", "тяжелый снегопад");
         //----Atmosphere
-        translateweather.put("smoke", "смок");
-        translateweather.put("haze", "дамка");
-        translateweather.put("sand, dust whirls", "песок");
-        translateweather.put("fog", "туман");
-        translateweather.put("sand", "песок");
-        translateweather.put("dust", "пыль");
-        translateweather.put("volcanic ash", "вулканический пепел");
-        translateweather.put("squalls", "шквалы ветра");
-        translateweather.put("tornado", "торнадо");
+        mTranslateWeather.put("smoke", "смок");
+        mTranslateWeather.put("haze", "дамка");
+        mTranslateWeather.put("sand, dust whirls", "песок");
+        mTranslateWeather.put("fog", "туман");
+        mTranslateWeather.put("sand", "песок");
+        mTranslateWeather.put("dust", "пыль");
+        mTranslateWeather.put("volcanic ash", "вулканический пепел");
+        mTranslateWeather.put("squalls", "шквалы ветра");
+        mTranslateWeather.put("tornado", "торнадо");
         //----Clouds
-        translateweather.put("overcast clouds", "пасмурно");
+        mTranslateWeather.put("overcast clouds", "пасмурно");
         //----Thunderstorm
-        translateweather.put("thunderstorm with light rain", "легкий дождь с грозой");
-        translateweather.put("thunderstorm with rain", "дождь с грозой");
-        translateweather.put("thunderstorm with heavy rain", "сильный дождь с грозой");
-        translateweather.put("light thunderstorm", "легкая гроза");
-        translateweather.put("thunderstorm", "гроза");
-        translateweather.put("heavy thunderstorm", "сильная гроза");
-        translateweather.put("ragged thunderstorm", "сильная гроза");
-        translateweather.put("thunderstorm with light drizzle", "гроза с легкой изморосью");
-        translateweather.put("thunderstorm with drizzle", "мелкий дождь с грозой");
-        translateweather.put("thunderstorm with heavy drizzle", "гроза с сильной изморозью");
+        mTranslateWeather.put("thunderstorm with light rain", "легкий дождь с грозой");
+        mTranslateWeather.put("thunderstorm with rain", "дождь с грозой");
+        mTranslateWeather.put("thunderstorm with heavy rain", "сильный дождь с грозой");
+        mTranslateWeather.put("light thunderstorm", "легкая гроза");
+        mTranslateWeather.put("thunderstorm", "гроза");
+        mTranslateWeather.put("heavy thunderstorm", "сильная гроза");
+        mTranslateWeather.put("ragged thunderstorm", "сильная гроза");
+        mTranslateWeather.put("thunderstorm with light drizzle", "гроза с легкой изморосью");
+        mTranslateWeather.put("thunderstorm with drizzle", "мелкий дождь с грозой");
+        mTranslateWeather.put("thunderstorm with heavy drizzle", "гроза с сильной изморозью");
         //----Drizzle
-        translateweather.put("light intensity drizzle", "легкая изморось");
-        translateweather.put("drizzle", "изморось");
-        translateweather.put("heavy intensity drizzle", "сильная изморось");
-        translateweather.put("light intensity drizzle rain", "дождь с изморосью");
-        translateweather.put("drizzle rain", "изморось с дождем");
-        translateweather.put("heavy intensity drizzle rain", "сильный дождь с изморосью");
-        translateweather.put("shower rain and drizzle", "ливень с изморосью");
-        translateweather.put("heavy shower rain and drizzle", "сильный ливень с изморосью");
-        translateweather.put("shower drizzle", "крупная изморось");
+        mTranslateWeather.put("light intensity drizzle", "легкая изморось");
+        mTranslateWeather.put("drizzle", "изморось");
+        mTranslateWeather.put("heavy intensity drizzle", "сильная изморось");
+        mTranslateWeather.put("light intensity drizzle rain", "дождь с изморосью");
+        mTranslateWeather.put("drizzle rain", "изморось с дождем");
+        mTranslateWeather.put("heavy intensity drizzle rain", "сильный дождь с изморосью");
+        mTranslateWeather.put("shower rain and drizzle", "ливень с изморосью");
+        mTranslateWeather.put("heavy shower rain and drizzle", "сильный ливень с изморосью");
+        mTranslateWeather.put("shower drizzle", "крупная изморось");
     }
 
 
@@ -278,8 +275,8 @@ public class Utils {
     // (http://openweathermap.org/weather-conditions)
     public static String translateWeatherDescription(String descWeather) {
         //--------
-        if (translateweather.get(descWeather) != null) {
-            return translateweather.get(descWeather).toString();
+        if (mTranslateWeather.get(descWeather) != null) {
+            return mTranslateWeather.get(descWeather).toString();
         } else {
             return "неизвестно";
         }
