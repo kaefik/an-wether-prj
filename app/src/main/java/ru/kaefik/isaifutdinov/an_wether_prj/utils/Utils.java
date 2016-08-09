@@ -129,7 +129,6 @@ public class Utils {
     //----- END работа  с файлами
 
 
-    // TODO: доделать перевод градусов в румбы и отобразить на панели информации о погоде выбранного города
     // перевод градусов в румбы (С, В, Ю, З и т д)
     public static String windGradus2Rumb(Float gradusWind) {
         String windRumb = "";

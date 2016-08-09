@@ -12,7 +12,7 @@
     <string name="refresh">ОБНОВИТЬ</string>
     <string name="txtviborcity">К списку</string>
     <string name="txtlistcity">Список городов</string>
-    <string name="txtaddcity">Добавь свой город</string>
+    <string name="txtaddcity">Добавь свой город (En)</string>
     <string name="txtplus">+</string>
     <string name="txtaddcityedit">"Добален новый город: "</string>
     <string name="strgorod">город</string>
