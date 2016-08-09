@@ -59,7 +59,6 @@ public class CityModelAdapter extends BaseAdapter {
         ImageView imageWeather = (ImageView) view.findViewById(R.id.imageWeather);
         textView.setText(cityModel.getTemp() + " C" + "   " +cityModel.getName());
         imageWeather.setImageURI(Uri.parse("android.resource://ru.kaefik.isaifutdinov.an_wether_prj/mipmap/" + "weather" + cityModel.getWeather("icon")));
-
         return view;
     }
 
