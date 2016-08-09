@@ -3,10 +3,10 @@
     <string name="today">СЕЙЧАС</string>
     <string name="gorod">город</string>
     <string name="descweather">оп-е погоды</string>
-    <string name="temp">тем-ра</string>
-    <string name="pressure">дав-е</string>
-    <string name="huminidity">вл-ть</string>
-    <string name="windspeed">ск-ть и напр-е</string>
+    <string name="temp">21 C</string>
+    <string name="pressure">750 мм рт. ст.</string>
+    <string name="huminidity">83%</string>
+    <string name="windspeed">СВ (25 м/с)</string>
     <string name="clouds">clouds</string>
     <string name="refreshtime">Обновлено около:</string>
     <string name="refresh">ОБНОВИТЬ</string>
