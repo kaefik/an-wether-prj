@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -161,6 +162,11 @@ public class MainActivity extends AppCompatActivity {
         startcityInfoAsyncTask(mListDataCity);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main_items);
+        return true;
+    }
 
     // ручное обновление погоды в списке
     public void onClickRefreshCityInfo(View v) throws JSONException {
