@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         mNameCity = (ListView) findViewById(R.id.listView);
         mEditTextAddNewCity = (EditText) findViewById(R.id.editTextAddNewCity);
 
+        Utils.createTranslateWeatherDescription();
+
         // TODO: со временем можно сделать настрйоку чтобы можно было в программе менять APPID
         setMY_APPID(getString(R.string.APPID));
 
