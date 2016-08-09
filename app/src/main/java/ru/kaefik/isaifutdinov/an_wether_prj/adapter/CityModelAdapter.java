@@ -8,10 +8,12 @@
 package ru.kaefik.isaifutdinov.an_wether_prj.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -54,7 +56,10 @@ public class CityModelAdapter extends BaseAdapter {
         }
         CityModel cityModel = getCityModel(position);
         TextView textView = (TextView) view.findViewById(R.id.textItemCity);
+        ImageView imageWeather = (ImageView) view.findViewById(R.id.imageWeather);
         textView.setText(cityModel.getName() + "   " + cityModel.getTemp() + " C");
+        imageWeather.setImageURI(Uri.parse("android.resource://ru.kaefik.isaifutdinov.an_wether_prj/mipmap/" + "weather" + cityModel.getWeather("icon")));
+
         return view;
     }
 
