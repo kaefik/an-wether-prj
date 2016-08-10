@@ -41,4 +41,8 @@
     <string name="London">London</string>
     <string name="veter">ветер</string>
     <string name="about">О программе</string>
+    <string name="btnOK">OK</string>
+    <string name="aboutAuthor">Ilnur Saifutdinov</string>
+    <string name="aboutEmail">ilnursoft@gmail.com</string>
+    <string name="aboutGitHubApp">https://github.com/kaefik/an-wether-prj</string>
 </resources>

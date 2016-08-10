@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -77,11 +78,7 @@ public class MainActivity extends AppCompatActivity {
         // после обновления всех прогнозов, сохранение данных в файлах
         protected void onPostExecute(List<CityModel> values) {
             super.onPostExecute(values);
-            try {
-                saveCityInfoToFile();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            saveCityInfoToFile();
         }
     }
 
@@ -137,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                                         mListDataCity.remove(position);
                                         mNameCity.invalidateViews();
                                         saveListCity();
+                                        saveCityInfoToFile();
                                         Toast.makeText(getApplicationContext(), getString(R.string.strgorod) + "  " + selectedItem.getName() + " удалён.", Toast.LENGTH_SHORT).show();
                                     }
                                 })
@@ -165,18 +163,35 @@ public class MainActivity extends AppCompatActivity {
     @Override
     // добавление меню в текущую активити
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main_items,menu);
+        getMenuInflater().inflate(R.menu.menu_main_items, menu);
         return true;
     }
 
-    // ручное обновление погоды в списке
-    public void onClickRefreshCityInfo(View v) throws JSONException {
-        try {
-            startcityInfoAsyncTask(mListDataCity);
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), R.string.strErrorUpdateCityInfo, Toast.LENGTH_SHORT);
+    @Override
+    // обработка нажатия на пункты меню
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.refreshMenu) {  // обработка выбора пункта меню обновить информацию о городах
+            try {
+                startcityInfoAsyncTask(mListDataCity);
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), R.string.strErrorUpdateCityInfo, Toast.LENGTH_SHORT);
+            }
         }
+        return super.onOptionsItemSelected(item);
+
     }
+
+//    // ручное обновление погоды в списке
+//    public void onClickRefreshCityInfo(View v) throws JSONException {
+//        try {
+//            startcityInfoAsyncTask(mListDataCity);
+//        } catch (Exception e) {
+//            Toast.makeText(getApplicationContext(), R.string.strErrorUpdateCityInfo, Toast.LENGTH_SHORT);
+//        }
+//    }
 
 
     public String getMY_APPID() {
@@ -205,9 +220,9 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), R.string.strErrorUpdateCityInfo, Toast.LENGTH_SHORT);
         }
         saveListCity();
+        saveCityInfoToFile();
 
     }
-
 
     @Override
     // прием данных CityModel выбраного города из другое активити
@@ -259,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
         }
         startcityInfoAsyncTask(mListDataCity);
         saveListCity();
+        saveCityInfoToFile();
     }
 
     @Override
@@ -310,11 +326,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //сохранение данных о погоде каждый город в отдельный файл
-    public void saveCityInfoToFile() throws JSONException {
+    public void saveCityInfoToFile() {
         for (int i = 0; i < mListDataCity.size(); i++) {
             String nameFile = mListDataCity.get(i).getName();
             if (nameFile != null) {
-                mListDataCity.get(i).saveToFile(nameFile + ".txt", getApplicationContext());
+                try {
+                    mListDataCity.get(i).saveToFile(nameFile + ".txt", getApplicationContext());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
