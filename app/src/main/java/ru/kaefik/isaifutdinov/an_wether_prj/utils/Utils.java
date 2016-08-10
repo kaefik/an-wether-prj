@@ -204,7 +204,7 @@ public class Utils {
     // создание перевода описания погоды с английского на русский
     // (http://openweathermap.org/weather-conditions)
     public static void createTranslateWeatherDescription() {
-        mTranslateWeather.put("clear sky", "ясное небо");
+        mTranslateWeather.put("clear sky", "ясно");
         mTranslateWeather.put("few clouds", "малооблачно");
         mTranslateWeather.put("scattered clouds", "малооблачно");
         mTranslateWeather.put("broken clouds", "облачность с просветами");
