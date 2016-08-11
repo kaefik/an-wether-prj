@@ -1,5 +1,5 @@
 /*
-  * Copyright (C) 2016 Ilnur Sayfutdinov (Ильнур Сайфутдинов)
+  * Copyright (C) 2016 Ilnur Saifutdinov (Ильнур Сайфутдинов)
   * e-mail: ilnursoft@gmail.com
   * MIT License
   * https://opensource.org/licenses/mit-license.php
@@ -108,11 +108,6 @@ public class cityInfoActivity extends AppCompatActivity {
         finish();
     }
 
-    //обработка нажатия клавиши Назад
-    public void onClickgoBackMainActivity(View view) throws ParseException {
-        goBackMainActivity();
-    }
-
     // обновление данных о погоде
     public void onClickRefreshDataWeather(View view) throws ExecutionException, InterruptedException {
         refreshDataWeather();
@@ -159,9 +154,6 @@ public class cityInfoActivity extends AppCompatActivity {
         }
 
         mWindCity.setText(Utils.windGradus2Rumb(cityModel.getWinddirection())+" ( "+Float.toString(cityModel.getWindspeed())+ getString(R.string.metr_v_sec)+" )");
-//        mWinddirectionCity.setText();
-
-
     }
 
     //  из имени ресурса получить идентификатор на ресурс

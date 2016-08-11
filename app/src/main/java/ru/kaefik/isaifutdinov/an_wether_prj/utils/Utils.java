@@ -1,5 +1,5 @@
 /*
-  * Copyright (C) 2016 Ilnur Sayfutdinov (Ильнур Сайфутдинов)
+  * Copyright (C) 2016 Ilnur Saifutdinov (Ильнур Сайфутдинов)
   * e-mail: ilnursoft@gmail.com
   * MIT License
   * https://opensource.org/licenses/mit-license.php

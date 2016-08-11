@@ -1,5 +1,5 @@
 /*
-  * Copyright (C) 2016 Ilnur Sayfutdinov (Ильнур Сайфутдинов)
+  * Copyright (C) 2016 Ilnur Saifutdinov (Ильнур Сайфутдинов)
   * e-mail: ilnursoft@gmail.com
   * MIT License
   * https://opensource.org/licenses/mit-license.php
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onProgressUpdate(CityModel... values) {
             super.onProgressUpdate(values);
             mNameCity.invalidateViews();
-            MainActivity.this.setProgressBarIndeterminateVisibility(false);
+            MainActivity.this.setProgressBarIndeterminateVisibility(true);
         }
 
         @Override
@@ -160,6 +160,13 @@ public class MainActivity extends AppCompatActivity {
         startcityInfoAsyncTask(mListDataCity);
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startcityInfoAsyncTask(mListDataCity);
+    }
+
     @Override
     // добавление меню в текущую активити
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -184,16 +191,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    // ручное обновление погоды в списке
-//    public void onClickRefreshCityInfo(View v) throws JSONException {
-//        try {
-//            startcityInfoAsyncTask(mListDataCity);
-//        } catch (Exception e) {
-//            Toast.makeText(getApplicationContext(), R.string.strErrorUpdateCityInfo, Toast.LENGTH_SHORT);
-//        }
-//    }
-
-
     public String getMY_APPID() {
         return mMY_APPID;
     }
@@ -202,7 +199,6 @@ public class MainActivity extends AppCompatActivity {
 
         this.mMY_APPID = MY_APPID;
     }
-
 
     // запуск задание cityInfoAsyncTask на обновления информации списка городов
     public void startcityInfoAsyncTask(List<CityModel> listCity) {
